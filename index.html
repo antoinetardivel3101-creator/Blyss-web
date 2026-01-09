@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blyss - La plateforme dédiée aux professionnels ongulaires</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --blyss-pink: #eb5e9d;
+            --blyss-bg: #feeef2;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--blyss-bg);
+            color: #1a1a1a;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            scrollbar-width: none;
+        }
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Barre de défilement personnalisée Premium "Floating" */
+        .custom-scrollbar {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(235, 94, 157, 0.3) transparent;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 14px; /* Largeur globale incluant l'espace vide */
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+            margin-block: 20px; /* Marge haut/bas pour ne pas toucher les coins arrondis */
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: rgba(235, 94, 157, 0.4);
+            border-radius: 20px;
+            border: 5px solid transparent; /* Crée l'effet "flottant" en utilisant la bordure comme espacement */
+            background-clip: content-box; /* La couleur ne s'applique qu'à l'intérieur de la bordure */
+            transition: background-color 0.3s ease;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background-color: #eb5e9d;
+        }
+
+        /* Support pour Firefox */
+        @supports (scrollbar-width: thin) {
+            .custom-scrollbar {
+                scrollbar-gutter: stable; /* Évite le saut de contenu */
+            }
+        }
+
+        .font-serif-elegant { font-family: 'Instrument Serif', serif; }
+        .font-outfit { font-family: 'Outfit', sans-serif; }
+        
+        .glass-light {
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 40px rgba(235, 94, 157, 0.05);
+        }
+
+        .grainy-bg {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3%3Cfilter id='noiseFilter'%3%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        /* Animations de dérive (Drift) pour les blobs de couleur */
+        @keyframes drift {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        .animate-drift-slow { animation: drift 25s infinite ease-in-out; }
+        .animate-drift-medium { animation: drift 18s infinite ease-in-out; }
+        .animate-drift-fast { animation: drift 12s infinite ease-in-out; }
+
+        .pricing-card {
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .pricing-card:hover {
+            transform: translateY(-12px);
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 5s ease-in-out infinite;
+        }
+        
+        /* Animation du Splash Screen */
+        @keyframes draw-reveal {
+            0% { 
+                -webkit-mask-position: 100% 100%; 
+                mask-position: 100% 100%;
+            }
+            100% { 
+                -webkit-mask-position: 0% 0%; 
+                mask-position: 0% 0%;
+            }
+        }
+        
+        .animate-draw {
+            -webkit-mask-image: linear-gradient(-45deg, black 50%, transparent 50%);
+            mask-image: linear-gradient(-45deg, black 50%, transparent 50%);
+            -webkit-mask-size: 300%;
+            mask-size: 300%;
+            animation: draw-reveal 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        ::selection {
+            background-color: rgba(235, 94, 157, 0.2);
+            color: #eb5e9d;
+        }
+        
+        main section {
+            position: relative;
+            background: transparent;
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@18.3.1",
+    "react/": "https://esm.sh/react@18.3.1/",
+    "react-dom": "https://esm.sh/react-dom@18.3.1",
+    "react-dom/": "https://esm.sh/react-dom@18.3.1/",
+    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+    "@google/genai": "https://esm.sh/@google/genai@1.34.0",
+    "lucide-react": "https://esm.sh/lucide-react@0.474.0?deps=react@18.3.1"
+  }
+}
+</script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>
