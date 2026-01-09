@@ -51,7 +51,8 @@ import {
   Building2,
   Twitter,
   Linkedin,
-  Facebook
+  Facebook,
+  CheckCircle
 } from 'lucide-react';
 import { GlassCard } from './Visuals';
 import { geminiService } from '../services/geminiService';
@@ -1008,51 +1009,155 @@ export const PricingPage: React.FC<{ onJoin: () => void }> = ({ onJoin }) => {
 };
 
 export const JoinUsPage: React.FC = () => {
+  const [step, setStep] = useState(1);
+  const [formData, setFormData] = useState({
+    name: '', email: '', password: '',
+    salonName: '', role: '', instagram: ''
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   return (
-    <div className="pt-32 pb-20 px-6 min-h-screen flex flex-col items-center">
-       <div className="text-center mb-12">
-          <h1 className="text-5xl md:text-7xl font-serif-elegant italic mb-4">Rejoignez <span className="text-[#eb5e9d]">l'aventure.</span></h1>
-          <p className="text-gray-500">Commencez votre essai gratuit de 14 jours.</p>
-       </div>
+    <div className="min-h-screen flex flex-col md:flex-row bg-white">
+      
+      {/* Left Side - Form */}
+      <div className="w-full md:w-1/2 flex flex-col justify-center px-6 py-24 md:px-16 lg:px-24 xl:px-32 relative">
+        <div className="max-w-md mx-auto w-full animate-in fade-in slide-in-from-left-8 duration-700">
+           
+           <div className="mb-10">
+              <h1 className="text-4xl md:text-5xl font-serif-elegant italic mb-3 text-gray-900">
+                Créez votre <span className="text-[#eb5e9d]">Espace.</span>
+              </h1>
+              <p className="text-gray-500 font-light text-lg">
+                Rejoignez Blyss et transformez votre activité.
+              </p>
+           </div>
 
-       <GlassCard className="w-full max-w-lg p-10">
-          <form className="space-y-5">
-             <div className="grid grid-cols-2 gap-4">
-                 <div className="space-y-1">
-                   <label className="text-xs font-bold text-gray-500 uppercase">Prénom</label>
-                   <input type="text" className="w-full bg-white/50 border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-[#eb5e9d] transition-all" placeholder="Julie" />
-                 </div>
-                 <div className="space-y-1">
-                   <label className="text-xs font-bold text-gray-500 uppercase">Nom</label>
-                   <input type="text" className="w-full bg-white/50 border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-[#eb5e9d] transition-all" placeholder="Nailartist" />
-                 </div>
-             </div>
+           {/* Simple Steps Indicator */}
+           <div className="flex items-center gap-2 mb-8">
+              <div className={`h-1.5 w-8 rounded-full transition-colors ${step >= 1 ? 'bg-[#eb5e9d]' : 'bg-gray-100'}`}></div>
+              <div className={`h-1.5 w-8 rounded-full transition-colors ${step >= 2 ? 'bg-[#eb5e9d]' : 'bg-gray-100'}`}></div>
+           </div>
 
-             <div className="space-y-1">
-               <label className="text-xs font-bold text-gray-500 uppercase">Nom du Salon</label>
-               <input type="text" className="w-full bg-white/50 border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-[#eb5e9d] transition-all" placeholder="Blyss Institut" />
-             </div>
+           {step === 1 ? (
+             <div className="space-y-5 animate-in fade-in duration-300">
+                <div className="space-y-1.5">
+                   <label className="text-xs font-bold text-gray-400 uppercase tracking-wider">Nom Complet</label>
+                   <input 
+                      type="text" 
+                      name="name"
+                      placeholder="Julie Nailartist"
+                      value={formData.name}
+                      onChange={handleChange}
+                      className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-3.5 outline-none focus:border-[#eb5e9d] focus:bg-white focus:ring-4 focus:ring-pink-50 transition-all"
+                   />
+                </div>
+                <div className="space-y-1.5">
+                   <label className="text-xs font-bold text-gray-400 uppercase tracking-wider">Email</label>
+                   <input 
+                      type="email" 
+                      name="email"
+                      placeholder="julie@exemple.com"
+                      value={formData.email}
+                      onChange={handleChange}
+                      className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-3.5 outline-none focus:border-[#eb5e9d] focus:bg-white focus:ring-4 focus:ring-pink-50 transition-all"
+                   />
+                </div>
+                <div className="space-y-1.5">
+                   <label className="text-xs font-bold text-gray-400 uppercase tracking-wider">Mot de passe</label>
+                   <input 
+                      type="password" 
+                      name="password"
+                      placeholder="••••••••"
+                      value={formData.password}
+                      onChange={handleChange}
+                      className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-3.5 outline-none focus:border-[#eb5e9d] focus:bg-white focus:ring-4 focus:ring-pink-50 transition-all"
+                   />
+                </div>
 
-             <div className="space-y-1">
-               <label className="text-xs font-bold text-gray-500 uppercase">Email</label>
-               <input type="email" className="w-full bg-white/50 border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-[#eb5e9d] transition-all" placeholder="julie@example.com" />
+                <button 
+                  onClick={() => setStep(2)}
+                  className="w-full bg-black text-white py-4 rounded-xl font-bold mt-4 hover:bg-gray-800 transition-colors flex items-center justify-center gap-2 group"
+                >
+                  Continuer <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                </button>
              </div>
+           ) : (
+             <div className="space-y-5 animate-in fade-in duration-300">
+                <button onClick={() => setStep(1)} className="text-sm text-gray-400 hover:text-gray-600 flex items-center gap-1 mb-2 font-medium">
+                  <ArrowLeft size={14} /> Retour
+                </button>
 
-             <div className="space-y-1">
-               <label className="text-xs font-bold text-gray-500 uppercase">Mot de passe</label>
-               <input type="password" className="w-full bg-white/50 border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-[#eb5e9d] transition-all" placeholder="••••••••" />
-             </div>
+                <div className="space-y-1.5">
+                   <label className="text-xs font-bold text-gray-400 uppercase tracking-wider">Nom du Salon</label>
+                   <input 
+                      type="text" 
+                      name="salonName"
+                      placeholder="Institut Blyss"
+                      value={formData.salonName}
+                      onChange={handleChange}
+                      className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-3.5 outline-none focus:border-[#eb5e9d] focus:bg-white focus:ring-4 focus:ring-pink-50 transition-all"
+                   />
+                </div>
+                
+                <div className="space-y-1.5">
+                   <label className="text-xs font-bold text-gray-400 uppercase tracking-wider">Votre Niveau</label>
+                   <div className="grid grid-cols-3 gap-3">
+                      {['Débutante', 'Intermédiaire', 'Experte'].map((lvl) => (
+                        <div 
+                          key={lvl}
+                          onClick={() => setFormData({...formData, role: lvl})}
+                          className={`cursor-pointer border rounded-xl py-3 text-center text-xs font-bold transition-all ${formData.role === lvl ? 'border-[#eb5e9d] bg-pink-50 text-[#eb5e9d]' : 'border-gray-100 bg-white text-gray-500 hover:border-gray-200'}`}
+                        >
+                          {lvl}
+                        </div>
+                      ))}
+                   </div>
+                </div>
 
-             <div className="pt-4">
-                 <button type="button" className="w-full bg-[#eb5e9d] text-white py-4 rounded-xl font-bold hover:bg-pink-600 transition-colors shadow-lg shadow-pink-200">
-                    Créer mon compte
-                 </button>
-                 <p className="text-xs text-center text-gray-400 mt-4">
-                    En vous inscrivant, vous acceptez nos <span className="underline cursor-pointer">CGU</span> et notre <span className="underline cursor-pointer">Politique de confidentialité</span>.
-                 </p>
+                <button 
+                  className="w-full bg-[#eb5e9d] text-white py-4 rounded-xl font-bold mt-4 hover:bg-pink-600 transition-colors shadow-lg shadow-pink-200"
+                >
+                  Commencer maintenant
+                </button>
+                <p className="text-center text-[10px] text-gray-400 mt-2">
+                  En cliquant, vous acceptez les CGU et la Politique de Confidentialité.
+                </p>
              </div>
-          </form>
-       </GlassCard>
+           )}
+           
+           <div className="mt-10 pt-6 border-t border-gray-50 flex items-center justify-between text-xs text-gray-400 font-medium">
+              <span className="flex items-center gap-1.5"><CheckCircle2 size={14} className="text-[#eb5e9d]" /> Sans engagement</span>
+              <span className="flex items-center gap-1.5"><CheckCircle2 size={14} className="text-[#eb5e9d]" /> Données sécurisées</span>
+           </div>
+        </div>
+      </div>
+
+      {/* Right Side - Visual */}
+      <div className="hidden md:block w-1/2 relative bg-gray-100">
+         <img 
+            src="https://images.unsplash.com/photo-1519017635425-63628ee3e56c?q=80&w=1974&auto=format&fit=crop" 
+            className="absolute inset-0 w-full h-full object-cover"
+            alt="Workspace"
+         />
+         <div className="absolute inset-0 bg-black/20 backdrop-blur-[1px]"></div>
+         
+         <div className="absolute bottom-16 left-12 right-12 text-white">
+            <h2 className="text-4xl font-serif-elegant italic mb-4">"Tout est devenu plus simple."</h2>
+            <div className="flex items-center gap-4">
+               <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md p-0.5">
+                  <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100" className="w-full h-full rounded-full object-cover" alt="User" />
+               </div>
+               <div>
+                  <p className="font-bold text-sm">Clara M.</p>
+                  <p className="text-xs text-white/80">Prothésiste depuis 3 ans</p>
+               </div>
+            </div>
+         </div>
+      </div>
+
     </div>
   );
 };
