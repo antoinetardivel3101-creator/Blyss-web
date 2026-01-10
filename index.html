@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Blyss - La plateforme dédiée aux professionnels ongulaires</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
@@ -12,6 +12,10 @@
             --blyss-bg: #feeef2;
         }
         
+        html, body {
+            overscroll-behavior-y: none; /* Empêche le "pull-to-refresh" accidentel sur mobile */
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--blyss-bg);
@@ -20,42 +24,38 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             scrollbar-width: none;
+            -webkit-tap-highlight-color: transparent; /* Supprime le flash bleu au clic sur mobile */
         }
         body::-webkit-scrollbar {
             display: none;
         }
 
-        /* Barre de défilement personnalisée Premium "Floating" */
-        .custom-scrollbar {
-            scrollbar-width: thin;
-            scrollbar-color: rgba(235, 94, 157, 0.3) transparent;
-        }
-        
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 14px; /* Largeur globale incluant l'espace vide */
-        }
-
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: transparent;
-            margin-block: 20px; /* Marge haut/bas pour ne pas toucher les coins arrondis */
-        }
-
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background-color: rgba(235, 94, 157, 0.4);
-            border-radius: 20px;
-            border: 5px solid transparent; /* Crée l'effet "flottant" en utilisant la bordure comme espacement */
-            background-clip: content-box; /* La couleur ne s'applique qu'à l'intérieur de la bordure */
-            transition: background-color 0.3s ease;
-        }
-
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background-color: #eb5e9d;
-        }
-
-        /* Support pour Firefox */
-        @supports (scrollbar-width: thin) {
+        /* Barre de défilement personnalisée Premium "Floating" - Visible uniquement sur Desktop */
+        @media (min-width: 768px) {
             .custom-scrollbar {
-                scrollbar-gutter: stable; /* Évite le saut de contenu */
+                scrollbar-width: thin;
+                scrollbar-color: rgba(235, 94, 157, 0.3) transparent;
+            }
+            
+            .custom-scrollbar::-webkit-scrollbar {
+                width: 10px;
+            }
+
+            .custom-scrollbar::-webkit-scrollbar-track {
+                background: transparent;
+                margin-block: 10px;
+            }
+
+            .custom-scrollbar::-webkit-scrollbar-thumb {
+                background-color: rgba(235, 94, 157, 0.4);
+                border-radius: 20px;
+                border: 3px solid transparent;
+                background-clip: content-box;
+                transition: background-color 0.3s ease;
+            }
+
+            .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+                background-color: #eb5e9d;
             }
         }
 
@@ -63,10 +63,11 @@
         .font-outfit { font-family: 'Outfit', sans-serif; }
         
         .glass-light {
-            background: rgba(255, 255, 255, 0.45);
-            backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 10px 40px rgba(235, 94, 157, 0.05);
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 10px 40px -10px rgba(235, 94, 157, 0.1);
         }
 
         .grainy-bg {
@@ -92,17 +93,17 @@
             transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .pricing-card:hover {
-            transform: translateY(-12px);
-            background: rgba(255, 255, 255, 0.8);
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.95);
         }
 
         @keyframes float {
             0% { transform: translateY(0px); }
-            50% { transform: translateY(-12px); }
+            50% { transform: translateY(-10px); }
             100% { transform: translateY(0px); }
         }
         .animate-float {
-            animation: float 5s ease-in-out infinite;
+            animation: float 6s ease-in-out infinite;
         }
         
         /* Animation du Splash Screen */
@@ -133,6 +134,21 @@
         main section {
             position: relative;
             background: transparent;
+        }
+
+        /* Utilitaires pour masquer la scrollbar horizontalement sur mobile tout en gardant le scroll */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        /* Indicateur de scroll pour les tableaux sur mobile */
+        .scroll-indicator-mask {
+            mask-image: linear-gradient(to right, black 85%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
         }
     </style>
 <script type="importmap">

@@ -63,7 +63,7 @@ const BlyssLogo: React.FC<{ onClick?: () => void }> = ({ onClick }) => (
     <img 
       src="https://i.ibb.co/35940F13/B3-B.png" 
       alt="Blyss Logo" 
-      className="w-12 h-12 md:w-16 md:h-16 object-contain transition-all duration-700 group-hover:scale-110 group-hover:rotate-[10deg]" 
+      className="w-10 h-10 md:w-16 md:h-16 object-contain transition-all duration-700 group-hover:scale-110 group-hover:rotate-[10deg]" 
     />
   </div>
 );
@@ -71,7 +71,8 @@ const BlyssLogo: React.FC<{ onClick?: () => void }> = ({ onClick }) => (
 /* --- PHONE MOCKUP COMPONENT IPHONE 17 STYLE --- */
 const PhoneMockup: React.FC<{ type: 'home' | 'calendar' | 'stats' | 'overview'; className?: string }> = ({ type, className = "" }) => {
   return (
-    <div className={`relative w-[310px] h-[630px] bg-[#e3e3e3] rounded-[60px] p-[4px] shadow-[0_0_2px_rgba(0,0,0,0.1),0_20px_40px_-10px_rgba(0,0,0,0.2)] ring-1 ring-white/50 shrink-0 ${className}`}>
+    // Base width reduced to 280px for better mobile fit on small screens, expands on md
+    <div className={`relative w-[280px] md:w-[310px] h-[580px] md:h-[630px] bg-[#e3e3e3] rounded-[45px] md:rounded-[60px] p-[4px] shadow-[0_0_2px_rgba(0,0,0,0.1),0_20px_40px_-10px_rgba(0,0,0,0.2)] ring-1 ring-white/50 shrink-0 select-none ${className}`}>
       
       {/* Side Buttons */}
       <div className="absolute top-28 -left-[2px] w-[3px] h-7 bg-[#bdbdbd] rounded-l-md"></div>
@@ -80,47 +81,47 @@ const PhoneMockup: React.FC<{ type: 'home' | 'calendar' | 'stats' | 'overview'; 
       <div className="absolute top-44 -right-[2px] w-[3px] h-20 bg-[#bdbdbd] rounded-r-md"></div>
 
       {/* Titanium Frame Bezel */}
-      <div className="w-full h-full bg-[#1c1c1c] rounded-[56px] p-[8px] shadow-inner">
+      <div className="w-full h-full bg-[#1c1c1c] rounded-[42px] md:rounded-[56px] p-[8px] shadow-inner">
         {/* Screen */}
-        <div className="w-full h-full bg-[#FDFBFD] rounded-[48px] overflow-hidden flex flex-col font-inter relative isolate">
+        <div className="w-full h-full bg-[#FDFBFD] rounded-[34px] md:rounded-[48px] overflow-hidden flex flex-col font-inter relative isolate">
           
           {/* Dynamic Island */}
           <div className="absolute top-0 left-0 right-0 h-[32px] z-50 flex justify-center pointer-events-none">
-             <div className="w-[100px] h-[28px] bg-black rounded-b-[18px] flex items-center justify-center gap-2 shadow-sm mt-0">
+             <div className="w-[80px] md:w-[100px] h-[24px] md:h-[28px] bg-black rounded-b-[16px] md:rounded-b-[18px] flex items-center justify-center gap-2 shadow-sm mt-0">
                 <div className="w-1.5 h-1.5 rounded-full bg-[#1a1a1a]"></div>
                 <div className="w-1.5 h-1.5 rounded-full bg-[#101010]"></div>
              </div>
           </div>
 
           {/* Status Bar */}
-          <div className="h-12 w-full flex items-end justify-between px-7 pb-2 z-40 text-gray-900 select-none">
-            <span className="text-[14px] font-semibold tracking-wide">9:41</span>
+          <div className="h-9 md:h-12 w-full flex items-end justify-between px-5 md:px-7 pb-1 md:pb-2 z-40 text-gray-900 select-none">
+            <span className="text-[12px] md:text-[14px] font-semibold tracking-wide">9:41</span>
             <div className="flex gap-1.5 items-center">
-              <Wifi size={16} strokeWidth={2.5} />
-              <Battery size={20} strokeWidth={2.5} />
+              <Wifi size={14} strokeWidth={2.5} />
+              <Battery size={18} strokeWidth={2.5} />
             </div>
           </div>
 
           {/* Scrollable Content Area - No Scrollbar */}
           <div 
-             className="flex-1 overflow-y-auto relative px-5 pt-0 pb-24 space-y-5 [&::-webkit-scrollbar]:hidden"
+             className="flex-1 overflow-y-auto relative px-4 md:px-5 pt-0 pb-24 space-y-4 md:space-y-5 [&::-webkit-scrollbar]:hidden"
              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
             {/* Sticky Header */}
-            <div className="py-2 flex justify-between items-center sticky top-0 z-30 bg-[#FDFBFD]/90 backdrop-blur-xl -mx-5 px-5 transition-all">
+            <div className="py-2 flex justify-between items-center sticky top-0 z-30 bg-[#FDFBFD]/90 backdrop-blur-xl -mx-5 px-5 transition-all border-b border-transparent">
                <div className="flex items-center gap-3">
                   <div className="relative group cursor-pointer">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-pink-100 to-white p-0.5 shadow-sm ring-2 ring-transparent group-hover:ring-pink-100 transition-all">
+                    <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-to-tr from-pink-100 to-white p-0.5 shadow-sm ring-2 ring-transparent group-hover:ring-pink-100 transition-all">
                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80" className="w-full h-full rounded-full object-cover" alt="Profile" />
                     </div>
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Bonjour</span>
-                    <span className="text-sm font-bold text-gray-800 leading-none">Julie N.</span>
+                    <span className="text-[9px] md:text-[10px] text-gray-400 font-medium uppercase tracking-wider">Bonjour</span>
+                    <span className="text-xs md:text-sm font-bold text-gray-800 leading-none">Julie N.</span>
                   </div>
                </div>
-               <div className="w-10 h-10 rounded-full bg-white border border-gray-100 shadow-sm flex items-center justify-center text-gray-400 relative hover:bg-gray-50 transition-colors cursor-pointer">
-                 <Bell size={18} />
+               <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white border border-gray-100 shadow-sm flex items-center justify-center text-gray-400 relative hover:bg-gray-50 transition-colors cursor-pointer">
+                 <Bell size={16} />
                  <span className="absolute top-2.5 right-3 w-1.5 h-1.5 bg-[#eb5e9d] rounded-full ring-2 ring-white"></span>
                </div>
             </div>
@@ -129,7 +130,7 @@ const PhoneMockup: React.FC<{ type: 'home' | 'calendar' | 'stats' | 'overview'; 
             {type === 'home' && (
               <>
               {/* Revenue Card Premium */}
-              <div className="w-full bg-gradient-to-br from-[#eb5e9d] via-[#f472b6] to-[#fb7185] rounded-[2rem] p-6 text-white shadow-xl shadow-pink-200/40 relative overflow-hidden group hover:scale-[1.02] transition-transform duration-500">
+              <div className="w-full bg-gradient-to-br from-[#eb5e9d] via-[#f472b6] to-[#fb7185] rounded-[2rem] p-5 md:p-6 text-white shadow-xl shadow-pink-200/40 relative overflow-hidden group hover:scale-[1.02] transition-transform duration-500">
                  {/* Decorative circles */}
                  <div className="absolute -top-10 -right-10 w-32 h-32 bg-white/20 rounded-full blur-2xl"></div>
                  <div className="absolute bottom-0 left-0 w-24 h-24 bg-purple-500/20 rounded-full blur-2xl"></div>
@@ -138,7 +139,7 @@ const PhoneMockup: React.FC<{ type: 'home' | 'calendar' | 'stats' | 'overview'; 
                    <div className="flex justify-between items-start mb-6">
                      <div>
                        <div className="text-pink-100 text-xs font-medium mb-1">Chiffre d'affaires</div>
-                       <div className="text-3xl font-bold tracking-tight">845,00 €</div>
+                       <div className="text-2xl md:text-3xl font-bold tracking-tight">845,00 €</div>
                      </div>
                      <div className="bg-white/20 backdrop-blur-md px-2 py-1 rounded-lg text-[10px] font-bold flex items-center gap-1">
                        <TrendingUp size={10} /> +12%
@@ -147,12 +148,12 @@ const PhoneMockup: React.FC<{ type: 'home' | 'calendar' | 'stats' | 'overview'; 
                    
                    <div className="flex gap-2">
                       <div className="flex-1 bg-white/10 backdrop-blur-sm rounded-xl p-2.5 border border-white/10 hover:bg-white/20 transition-colors">
-                        <div className="text-[10px] text-pink-100 opacity-80">RDV</div>
-                        <div className="text-lg font-bold">8</div>
+                        <div className="text-[9px] md:text-[10px] text-pink-100 opacity-80">RDV</div>
+                        <div className="text-base md:text-lg font-bold">8</div>
                       </div>
                       <div className="flex-1 bg-white/10 backdrop-blur-sm rounded-xl p-2.5 border border-white/10 hover:bg-white/20 transition-colors">
-                        <div className="text-[10px] text-pink-100 opacity-80">Panier Moy.</div>
-                        <div className="text-lg font-bold">65€</div>
+                        <div className="text-[9px] md:text-[10px] text-pink-100 opacity-80">Panier Moy.</div>
+                        <div className="text-base md:text-lg font-bold">65€</div>
                       </div>
                    </div>
                  </div>
@@ -161,18 +162,18 @@ const PhoneMockup: React.FC<{ type: 'home' | 'calendar' | 'stats' | 'overview'; 
               {/* Quick Actions Grid */}
               <div>
                 <h4 className="text-xs font-bold text-gray-800 mb-3 ml-1">Actions Rapides</h4>
-                <div className="grid grid-cols-4 gap-3">
+                <div className="grid grid-cols-4 gap-2 md:gap-3">
                    {[
                      { icon: <Plus size={18} />, label: "Nouveau", color: "bg-gray-900 text-white" },
                      { icon: <User size={18} />, label: "Clients", color: "bg-white text-gray-600 border border-gray-100 hover:border-[#eb5e9d] hover:text-[#eb5e9d]" },
                      { icon: <MessageCircle size={18} />, label: "Message", color: "bg-white text-gray-600 border border-gray-100 hover:border-[#eb5e9d] hover:text-[#eb5e9d]" },
                      { icon: <Sparkles size={18} />, label: "Galerie", color: "bg-white text-gray-600 border border-gray-100 hover:border-[#eb5e9d] hover:text-[#eb5e9d]" }
                    ].map((action, i) => (
-                     <div key={i} className="flex flex-col items-center gap-2 group cursor-pointer">
-                       <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-sm ${action.color} transition-all duration-300 active:scale-95`}>
+                     <div key={i} className="flex flex-col items-center gap-1.5 md:gap-2 group cursor-pointer">
+                       <div className={`w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center shadow-sm ${action.color} transition-all duration-300 active:scale-95`}>
                          {action.icon}
                        </div>
-                       <span className="text-[10px] font-medium text-gray-500 group-hover:text-gray-800 transition-colors">{action.label}</span>
+                       <span className="text-[9px] md:text-[10px] font-medium text-gray-500 group-hover:text-gray-800 transition-colors">{action.label}</span>
                      </div>
                    ))}
                 </div>
@@ -184,18 +185,18 @@ const PhoneMockup: React.FC<{ type: 'home' | 'calendar' | 'stats' | 'overview'; 
                   <h4 className="text-xs font-bold text-gray-800">Prochain Client</h4>
                   <span className="text-[10px] text-[#eb5e9d] font-bold cursor-pointer hover:underline">14:00</span>
                 </div>
-                <div className="bg-white p-4 rounded-[1.5rem] border border-gray-100 shadow-lg shadow-gray-100/50 flex items-center gap-4 hover:border-pink-100 transition-colors cursor-pointer">
+                <div className="bg-white p-3 md:p-4 rounded-[1.5rem] border border-gray-100 shadow-lg shadow-gray-100/50 flex items-center gap-3 md:gap-4 hover:border-pink-100 transition-colors cursor-pointer">
                    <div className="relative">
-                     <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" className="w-12 h-12 rounded-2xl object-cover" alt="Client" />
+                     <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" className="w-10 h-10 md:w-12 md:h-12 rounded-2xl object-cover" alt="Client" />
                      <div className="absolute -bottom-1 -right-1 bg-white p-0.5 rounded-full">
                        <div className="bg-[#eb5e9d] rounded-full p-0.5">
-                         <Clock size={10} className="text-white" />
+                         <Clock size={8} className="text-white" />
                        </div>
                      </div>
                    </div>
-                   <div className="flex-1">
-                      <div className="text-sm font-bold text-gray-800">Sarah Connor</div>
-                      <div className="text-[11px] text-gray-400 mt-0.5">Remplissage Gel • Babyboomer</div>
+                   <div className="flex-1 min-w-0">
+                      <div className="text-xs md:text-sm font-bold text-gray-800 truncate">Sarah Connor</div>
+                      <div className="text-[10px] md:text-[11px] text-gray-400 mt-0.5 truncate">Remplissage Gel • Babyboomer</div>
                       <div className="flex gap-2 mt-2">
                         <span className="bg-pink-50 text-[#eb5e9d] px-2 py-0.5 rounded-md text-[9px] font-bold uppercase tracking-wide">Confirmé</span>
                         <span className="bg-gray-50 text-gray-500 px-2 py-0.5 rounded-md text-[9px] font-medium">1h30</span>
@@ -210,19 +211,19 @@ const PhoneMockup: React.FC<{ type: 'home' | 'calendar' | 'stats' | 'overview'; 
                <>
                  <div className="flex justify-between items-center px-1">
                     <div className="flex items-center gap-2">
-                      <h4 className="text-lg font-bold text-gray-800">Octobre</h4>
-                      <span className="text-lg text-gray-400 font-medium">2024</span>
+                      <h4 className="text-base md:text-lg font-bold text-gray-800">Octobre</h4>
+                      <span className="text-base md:text-lg text-gray-400 font-medium">2024</span>
                     </div>
-                    <div className="w-8 h-8 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-600 hover:bg-white hover:shadow-sm transition-all cursor-pointer">
+                    <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-600 hover:bg-white hover:shadow-sm transition-all cursor-pointer">
                       <Calendar size={14} />
                     </div>
                  </div>
                  
-                 <div className="flex justify-between items-center bg-white p-3 rounded-2xl border border-gray-100 shadow-sm">
+                 <div className="flex justify-between items-center bg-white p-2.5 md:p-3 rounded-2xl border border-gray-100 shadow-sm">
                    {['L', 'M', 'M', 'J', 'V', 'S'].map((d, i) => (
-                     <div key={i} className={`flex flex-col items-center gap-2 ${i === 2 ? 'text-[#eb5e9d]' : 'text-gray-400'}`}>
-                       <span className="text-[10px] font-medium">{d}</span>
-                       <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all ${i === 2 ? 'bg-[#eb5e9d] text-white shadow-md shadow-pink-200 scale-110' : 'bg-transparent text-gray-600 hover:bg-gray-50'}`}>
+                     <div key={i} className={`flex flex-col items-center gap-1.5 md:gap-2 ${i === 2 ? 'text-[#eb5e9d]' : 'text-gray-400'}`}>
+                       <span className="text-[9px] md:text-[10px] font-medium">{d}</span>
+                       <div className={`w-7 h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center text-[10px] md:text-xs font-bold transition-all ${i === 2 ? 'bg-[#eb5e9d] text-white shadow-md shadow-pink-200 scale-110' : 'bg-transparent text-gray-600 hover:bg-gray-50'}`}>
                          {22 + i}
                        </div>
                        {i === 2 && <div className="w-1 h-1 bg-[#eb5e9d] rounded-full"></div>}
@@ -230,23 +231,23 @@ const PhoneMockup: React.FC<{ type: 'home' | 'calendar' | 'stats' | 'overview'; 
                    ))}
                  </div>
 
-                 <div className="relative pl-4 space-y-6">
-                   <div className="absolute left-[1.65rem] top-2 bottom-0 w-[2px] bg-gradient-to-b from-gray-100 via-gray-100 to-transparent"></div>
+                 <div className="relative pl-3 md:pl-4 space-y-5 md:space-y-6">
+                   <div className="absolute left-[1.4rem] md:left-[1.65rem] top-2 bottom-0 w-[2px] bg-gradient-to-b from-gray-100 via-gray-100 to-transparent"></div>
                    {[
                      { time: '09:00', end: '10:30', client: 'Léa M.', task: 'Pose Complète', color: 'bg-[#feeef2] border-l-[#eb5e9d] text-[#be185d]', icon: '💅' },
                      { time: '11:00', end: '12:00', client: 'Sophie D.', task: 'Dépose + Soin', color: 'bg-blue-50 border-l-blue-400 text-blue-700', icon: '✨' },
                      { time: '13:30', end: '14:00', client: 'Pause', task: 'Déjeuner', color: 'bg-gray-50 border-l-gray-300 text-gray-500', icon: '🥗' },
                      { time: '14:00', end: '15:30', client: 'Emma W.', task: 'Nail Art 3D', color: 'bg-purple-50 border-l-purple-400 text-purple-700', icon: '🎨' }
                    ].map((item, i) => (
-                     <div key={i} className="relative pl-8 group">
-                       <div className="absolute left-[1.35rem] top-3 w-3 h-3 bg-white border-[3px] border-gray-200 rounded-full z-10 group-hover:border-[#eb5e9d] transition-colors"></div>
-                       <div className={`p-4 rounded-2xl border-l-4 ${item.color} shadow-sm transition-transform hover:scale-[1.02] active:scale-95 cursor-pointer`}>
+                     <div key={i} className="relative pl-7 md:pl-8 group">
+                       <div className="absolute left-[1.15rem] md:left-[1.35rem] top-3 w-3 h-3 bg-white border-[3px] border-gray-200 rounded-full z-10 group-hover:border-[#eb5e9d] transition-colors"></div>
+                       <div className={`p-3 md:p-4 rounded-2xl border-l-4 ${item.color} shadow-sm transition-transform hover:scale-[1.02] active:scale-95 cursor-pointer`}>
                           <div className="flex justify-between items-start mb-1">
-                            <span className="text-xs font-bold opacity-80">{item.time} - {item.end}</span>
+                            <span className="text-[10px] md:text-xs font-bold opacity-80">{item.time} - {item.end}</span>
                             <span className="text-xs">{item.icon}</span>
                           </div>
-                          <div className="font-bold text-sm mb-0.5">{item.client}</div>
-                          <div className="text-[11px] opacity-70 font-medium">{item.task}</div>
+                          <div className="font-bold text-xs md:text-sm mb-0.5">{item.client}</div>
+                          <div className="text-[10px] md:text-[11px] opacity-70 font-medium">{item.task}</div>
                        </div>
                      </div>
                    ))}
@@ -264,20 +265,20 @@ const PhoneMockup: React.FC<{ type: 'home' | 'calendar' | 'stats' | 'overview'; 
                      </select>
                   </div>
 
-                  <div className="bg-white p-5 rounded-[2rem] border border-gray-100 shadow-xl shadow-gray-100/50">
+                  <div className="bg-white p-4 md:p-5 rounded-[2rem] border border-gray-100 shadow-xl shadow-gray-100/50">
                      <div className="flex gap-4 mb-6">
                         <div>
-                          <div className="text-[10px] text-gray-400 font-medium uppercase tracking-wide">Revenus</div>
-                          <div className="text-2xl font-bold text-gray-800">2,450€</div>
+                          <div className="text-[9px] md:text-[10px] text-gray-400 font-medium uppercase tracking-wide">Revenus</div>
+                          <div className="text-xl md:text-2xl font-bold text-gray-800">2,450€</div>
                         </div>
                         <div className="h-auto w-px bg-gray-100"></div>
                         <div>
-                          <div className="text-[10px] text-gray-400 font-medium uppercase tracking-wide">Rendez-vous</div>
-                          <div className="text-2xl font-bold text-gray-800">42</div>
+                          <div className="text-[9px] md:text-[10px] text-gray-400 font-medium uppercase tracking-wide">Rendez-vous</div>
+                          <div className="text-xl md:text-2xl font-bold text-gray-800">42</div>
                         </div>
                      </div>
                      
-                     <div className="flex items-end justify-between gap-2 h-32 w-full pt-4 border-t border-dashed border-gray-100">
+                     <div className="flex items-end justify-between gap-2 h-28 md:h-32 w-full pt-4 border-t border-dashed border-gray-100">
                         {[35, 55, 30, 85, 45, 95, 60].map((h, i) => (
                           <div key={i} className="flex flex-col items-center gap-2 flex-1 group cursor-pointer">
                              <div className="w-full bg-gray-50 rounded-full relative h-full flex items-end overflow-hidden group-hover:bg-gray-100 transition-colors">
@@ -288,7 +289,7 @@ const PhoneMockup: React.FC<{ type: 'home' | 'calendar' | 'stats' | 'overview'; 
                                   {i === 5 && <div className="absolute top-0 left-0 right-0 h-1/2 bg-white/20 blur-sm"></div>}
                                 </div>
                              </div>
-                             <span className={`text-[9px] font-bold ${i === 5 ? 'text-[#eb5e9d]' : 'text-gray-300'}`}>
+                             <span className={`text-[8px] md:text-[9px] font-bold ${i === 5 ? 'text-[#eb5e9d]' : 'text-gray-300'}`}>
                                {['L', 'M', 'M', 'J', 'V', 'S', 'D'][i]}
                              </span>
                           </div>
@@ -297,18 +298,18 @@ const PhoneMockup: React.FC<{ type: 'home' | 'calendar' | 'stats' | 'overview'; 
                   </div>
 
                   <h4 className="text-xs font-bold text-gray-800 mb-2 mt-2">Top Prestations</h4>
-                  <div className="space-y-3">
+                  <div className="space-y-2 md:space-y-3">
                      {[
                        { name: 'Pose Complète', count: '1,240€', percent: 60, color: 'bg-purple-500' },
                        { name: 'Remplissage', count: '850€', percent: 30, color: 'bg-pink-500' },
                        { name: 'Nail Art', count: '360€', percent: 10, color: 'bg-blue-400' },
                      ].map((item, i) => (
-                       <div key={i} className="bg-white p-3 rounded-2xl border border-gray-50 shadow-sm flex items-center gap-3 hover:shadow-md transition-shadow">
-                          <div className={`w-10 h-10 rounded-xl ${item.color} bg-opacity-10 flex items-center justify-center text-${item.color.replace('bg-', '')}`}>
-                            <Star size={16} className={item.color.replace('bg-', 'text-')} fill="currentColor" />
+                       <div key={i} className="bg-white p-2.5 md:p-3 rounded-2xl border border-gray-50 shadow-sm flex items-center gap-3 hover:shadow-md transition-shadow">
+                          <div className={`w-9 h-9 md:w-10 md:h-10 rounded-xl ${item.color} bg-opacity-10 flex items-center justify-center text-${item.color.replace('bg-', '')}`}>
+                            <Star size={14} className={item.color.replace('bg-', 'text-')} fill="currentColor" />
                           </div>
                           <div className="flex-1">
-                            <div className="flex justify-between text-[11px] mb-1.5">
+                            <div className="flex justify-between text-[10px] md:text-[11px] mb-1.5">
                                <span className="font-bold text-gray-700">{item.name}</span>
                                <span className="font-bold text-gray-900">{item.count}</span>
                             </div>
@@ -419,31 +420,31 @@ const PhoneMockup: React.FC<{ type: 'home' | 'calendar' | 'stats' | 'overview'; 
           </div>
 
           {/* Bottom Nav */}
-          <div className="absolute bottom-6 left-4 right-4 h-16 bg-white/90 backdrop-blur-2xl rounded-[2.5rem] shadow-[0_10px_40px_-10px_rgba(0,0,0,0.15)] border border-white/50 flex justify-around items-center px-2 z-40">
-             <div className={`p-3 rounded-full transition-all cursor-pointer ${type === 'home' || type === 'overview' ? 'text-[#eb5e9d] bg-pink-50' : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50'}`}>
-               <Store size={22} strokeWidth={type === 'home' || type === 'overview' ? 2.5 : 2} />
+          <div className="absolute bottom-6 left-4 right-4 h-14 md:h-16 bg-white/90 backdrop-blur-2xl rounded-[2.5rem] shadow-[0_10px_40px_-10px_rgba(0,0,0,0.15)] border border-white/50 flex justify-around items-center px-2 z-40">
+             <div className={`p-2.5 md:p-3 rounded-full transition-all cursor-pointer ${type === 'home' || type === 'overview' ? 'text-[#eb5e9d] bg-pink-50' : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50'}`}>
+               <Store size={20} className="md:w-[22px] md:h-[22px]" strokeWidth={type === 'home' || type === 'overview' ? 2.5 : 2} />
              </div>
-             <div className={`p-3 rounded-full transition-all cursor-pointer ${type === 'calendar' ? 'text-[#eb5e9d] bg-pink-50' : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50'}`}>
-               <Calendar size={22} strokeWidth={type === 'calendar' ? 2.5 : 2} />
+             <div className={`p-2.5 md:p-3 rounded-full transition-all cursor-pointer ${type === 'calendar' ? 'text-[#eb5e9d] bg-pink-50' : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50'}`}>
+               <Calendar size={20} className="md:w-[22px] md:h-[22px]" strokeWidth={type === 'calendar' ? 2.5 : 2} />
              </div>
              
              {/* Main Action */}
-             <div className="relative -top-6 cursor-pointer group">
-               <div className="w-16 h-16 bg-[#eb5e9d] rounded-full text-white flex items-center justify-center shadow-xl shadow-pink-300 ring-4 ring-[#FDFBFD] transform transition-transform group-hover:scale-105 group-active:scale-95">
-                  <Plus size={28} />
+             <div className="relative -top-5 md:-top-6 cursor-pointer group">
+               <div className="w-14 h-14 md:w-16 md:h-16 bg-[#eb5e9d] rounded-full text-white flex items-center justify-center shadow-xl shadow-pink-300 ring-4 ring-[#FDFBFD] transform transition-transform group-hover:scale-105 group-active:scale-95">
+                  <Plus size={24} className="md:w-[28px] md:h-[28px]" />
                </div>
              </div>
 
-             <div className={`p-3 rounded-full transition-all cursor-pointer ${type === 'stats' ? 'text-[#eb5e9d] bg-pink-50' : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50'}`}>
-               <PieChart size={22} strokeWidth={type === 'stats' ? 2.5 : 2} />
+             <div className={`p-2.5 md:p-3 rounded-full transition-all cursor-pointer ${type === 'stats' ? 'text-[#eb5e9d] bg-pink-50' : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50'}`}>
+               <PieChart size={20} className="md:w-[22px] md:h-[22px]" strokeWidth={type === 'stats' ? 2.5 : 2} />
              </div>
-             <div className="p-3 rounded-full text-gray-400 hover:text-gray-600 hover:bg-gray-50 transition-all cursor-pointer">
-               <User size={22} strokeWidth={2} />
+             <div className="p-2.5 md:p-3 rounded-full text-gray-400 hover:text-gray-600 hover:bg-gray-50 transition-all cursor-pointer">
+               <User size={20} className="md:w-[22px] md:h-[22px]" strokeWidth={2} />
              </div>
           </div>
 
           {/* Home Indicator */}
-          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1.5 bg-black/80 rounded-full z-50 pointer-events-none"></div>
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-24 md:w-32 h-1.5 bg-black/80 rounded-full z-50 pointer-events-none"></div>
 
         </div>
       </div>
@@ -462,7 +463,7 @@ export const Navbar: React.FC<{ scrolled: boolean; currentPage: PageView; setCur
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled || currentPage !== 'home' || isMobileMenuOpen ? 'bg-white/80 backdrop-blur-xl border-b border-pink-100/30 py-2 shadow-sm' : 'bg-transparent py-4'}`}>
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled || currentPage !== 'home' || isMobileMenuOpen ? 'bg-white/85 backdrop-blur-xl border-b border-pink-100/50 py-3 md:py-2 shadow-sm' : 'bg-transparent py-4'}`}>
         <div className="container mx-auto px-6 md:px-12 flex items-center justify-between max-w-7xl">
           <BlyssLogo onClick={() => handleNav('home')} />
           
@@ -486,39 +487,41 @@ export const Navbar: React.FC<{ scrolled: boolean; currentPage: PageView; setCur
 
           {/* Mobile Menu Button */}
           <button 
-            className="md:hidden w-10 h-10 rounded-full bg-pink-50 text-[#eb5e9d] flex items-center justify-center hover:bg-[#eb5e9d] hover:text-white transition-colors"
+            className="md:hidden w-11 h-11 rounded-full bg-white/60 backdrop-blur-md border border-white/50 text-[#eb5e9d] flex items-center justify-center hover:bg-[#eb5e9d] hover:text-white transition-colors active:scale-95 shadow-sm"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Menu"
           >
-            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
       </nav>
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-40 bg-white/95 backdrop-blur-3xl pt-24 px-6 animate-in slide-in-from-top-10 duration-300 md:hidden flex flex-col">
-          <div className="flex flex-col gap-6 text-xl font-medium text-gray-800">
+        <div className="fixed inset-0 z-40 bg-white/95 backdrop-blur-3xl pt-28 px-6 animate-in slide-in-from-top-10 duration-300 md:hidden flex flex-col h-screen">
+          <div className="flex flex-col gap-4 text-lg font-medium text-gray-800">
              <button 
                onClick={() => handleNav('home')} 
-               className={`flex items-center justify-between p-4 rounded-2xl ${currentPage === 'home' ? 'bg-pink-50 text-[#eb5e9d]' : 'hover:bg-gray-50'}`}
+               className={`flex items-center justify-between p-5 rounded-2xl border transition-all active:scale-[0.98] ${currentPage === 'home' ? 'bg-pink-50 border-pink-100 text-[#eb5e9d]' : 'bg-white border-gray-50 shadow-sm'}`}
              >
                Découvrir <ChevronRight size={20} className="opacity-50" />
              </button>
              <button 
                onClick={() => handleNav('pricing')} 
-               className={`flex items-center justify-between p-4 rounded-2xl ${currentPage === 'pricing' ? 'bg-pink-50 text-[#eb5e9d]' : 'hover:bg-gray-50'}`}
+               className={`flex items-center justify-between p-5 rounded-2xl border transition-all active:scale-[0.98] ${currentPage === 'pricing' ? 'bg-pink-50 border-pink-100 text-[#eb5e9d]' : 'bg-white border-gray-50 shadow-sm'}`}
              >
                Tarifs <ChevronRight size={20} className="opacity-50" />
              </button>
              <button 
                onClick={() => handleNav('download')}
-               className="bg-[#eb5e9d] text-white p-5 rounded-2xl font-bold shadow-lg shadow-pink-200 text-center mt-4"
+               className="bg-[#eb5e9d] text-white p-5 rounded-2xl font-bold shadow-lg shadow-pink-200 text-center mt-6 active:scale-95 transition-transform text-lg"
              >
                Télécharger l'app
              </button>
           </div>
-          <div className="mt-auto mb-12 text-center text-gray-400 text-sm">
-            <p>Blyss - Élevez votre art.</p>
+          <div className="mt-auto mb-12 text-center text-gray-400 text-sm pb-8">
+            <p className="font-serif-elegant italic text-xl text-gray-800 mb-2">Blyss</p>
+            <p>Élevez votre art.</p>
           </div>
         </div>
       )}
@@ -528,26 +531,26 @@ export const Navbar: React.FC<{ scrolled: boolean; currentPage: PageView; setCur
 
 export const Hero: React.FC<{ onJoin?: () => void }> = ({ onJoin }) => {
   return (
-    <section className="relative pt-28 pb-12 px-6">
+    <section className="relative pt-28 md:pt-32 pb-12 px-6 overflow-hidden">
       {/* Background Giant Logo - Watermark style with increased opacity */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[90vw] md:w-[80vw] max-w-[800px] opacity-[0.12] pointer-events-none z-0 select-none mix-blend-multiply">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[140vw] md:w-[80vw] max-w-[800px] opacity-[0.06] md:opacity-[0.12] pointer-events-none z-0 select-none mix-blend-multiply transform -translate-y-10 md:translate-y-0">
          <img src="https://i.ibb.co/1YVVTQTc/B3-B2.png" alt="" className="w-full h-auto" />
       </div>
 
       <div className="container mx-auto flex flex-col items-center text-center max-w-7xl relative z-10">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-pink-50/80 backdrop-blur-sm text-[#eb5e9d] rounded-full text-[9px] font-black uppercase tracking-[0.2em] mb-4 animate-in fade-in slide-in-from-bottom-2 duration-1000 shadow-sm border border-pink-100/50">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-pink-50/80 backdrop-blur-sm text-[#eb5e9d] rounded-full text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] mb-6 animate-in fade-in slide-in-from-bottom-2 duration-1000 shadow-sm border border-pink-100/50">
            <Sparkles size={12} /> La révolution du Nail Art
         </div>
-        <h1 className="text-5xl sm:text-6xl md:text-8xl font-serif-elegant italic mb-4 leading-tight md:leading-[1.1] tracking-tight animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-100">
+        <h1 className="text-4xl sm:text-6xl md:text-8xl font-serif-elegant italic mb-6 leading-[1.1] md:leading-[1.1] tracking-tight animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-100">
           Sublimez votre <br className="hidden md:block"/> <span className="text-[#eb5e9d] drop-shadow-sm italic">quotidien.</span>
         </h1>
-        <p className="text-gray-500 text-base md:text-xl max-w-xl mb-8 leading-relaxed animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-200 font-light px-4">
+        <p className="text-gray-500 text-base md:text-xl max-w-xl mb-8 leading-relaxed animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-200 font-light px-2 md:px-4">
           La plateforme de gestion intuitive conçue exclusivement pour les prothésistes ongulaires passionnées.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300 z-20 relative w-full sm:w-auto px-4 sm:px-0">
           <button 
             onClick={onJoin}
-            className="bg-[#eb5e9d] text-white px-10 py-4 rounded-xl font-bold text-base shadow-xl shadow-pink-200/50 flex items-center justify-center gap-3 group transition-all hover:scale-105 hover:bg-pink-600 active:scale-95 cursor-pointer w-full sm:w-auto"
+            className="bg-[#eb5e9d] text-white px-8 md:px-10 py-4 rounded-xl font-bold text-base shadow-xl shadow-pink-200/50 flex items-center justify-center gap-3 group transition-all hover:scale-105 hover:bg-pink-600 active:scale-95 cursor-pointer w-full sm:w-auto"
           >
             Commencer l'aventure <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
           </button>
@@ -558,29 +561,29 @@ export const Hero: React.FC<{ onJoin?: () => void }> = ({ onJoin }) => {
 };
 
 export const Mission: React.FC = () => (
-  <section className="py-16 px-6 bg-white overflow-hidden relative">
+  <section className="py-16 md:py-20 px-6 bg-white overflow-hidden relative">
     <div className="container mx-auto max-w-7xl">
-      <div className="flex flex-col md:flex-row gap-16 items-center">
-        <div className="md:w-1/2 relative z-10 order-2 md:order-1">
-          <div className="w-12 h-1 bg-[#eb5e9d] mb-8 rounded-full shadow-sm"></div>
+      <div className="flex flex-col md:flex-row gap-12 md:gap-16 items-center">
+        <div className="md:w-1/2 relative z-10 order-2 md:order-1 text-center md:text-left">
+          <div className="w-12 h-1 bg-[#eb5e9d] mb-6 md:mb-8 rounded-full shadow-sm mx-auto md:mx-0"></div>
           <h2 className="text-4xl md:text-7xl font-serif-elegant italic mb-6 leading-tight">Élevez la <br/> <span className="text-[#eb5e9d] drop-shadow-sm">beauté</span> de votre métier.</h2>
-          <div className="space-y-8">
+          <div className="space-y-6 md:space-y-8">
             <div>
-              <h4 className="font-bold text-2xl mb-2 text-gray-900 tracking-tight">Le temps de créer</h4>
-              <p className="text-gray-500 text-lg font-light leading-relaxed">Nous pensons que votre énergie doit être dédiée à votre art, pas à vos relances. Blyss est votre assistant invisible qui gère tout en arrière-plan.</p>
+              <h4 className="font-bold text-xl md:text-2xl mb-2 text-gray-900 tracking-tight">Le temps de créer</h4>
+              <p className="text-gray-500 text-base md:text-lg font-light leading-relaxed">Nous pensons que votre énergie doit être dédiée à votre art, pas à vos relances. Blyss est votre assistant invisible qui gère tout en arrière-plan.</p>
             </div>
-            <div className="relative p-8 bg-pink-50/40 rounded-[2.5rem] border border-pink-100/50 italic text-gray-700 text-lg shadow-sm">
+            <div className="relative p-6 md:p-8 bg-pink-50/40 rounded-[2rem] md:rounded-[2.5rem] border border-pink-100/50 italic text-gray-700 text-base md:text-lg shadow-sm">
               "Blyss est né de la volonté de redonner de la valeur au temps des créatrices. C'est l'outil que nous aurions aimé avoir à nos débuts."
               <br/><span className="font-bold text-[#eb5e9d] mt-4 block not-italic font-outfit text-xs tracking-widest uppercase">— Noah, Fondateur de Blyss</span>
             </div>
           </div>
         </div>
-        <div className="md:w-1/2 relative group order-1 md:order-2 w-full">
-           <div className="grid grid-cols-2 gap-4 md:gap-6 relative z-10">
-              <img src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=800&auto=format&fit=crop" className="rounded-[2rem] md:rounded-[3rem] shadow-2xl transform -rotate-3 group-hover:rotate-0 transition-all duration-1000 ease-out" alt="Nail Studio" />
-              <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=800&auto=format&fit=crop" className="rounded-[2rem] md:rounded-[3rem] shadow-2xl mt-12 transform rotate-3 group-hover:rotate-0 transition-all duration-1000 delay-100 ease-out" alt="Manicure" />
+        <div className="md:w-1/2 relative group order-1 md:order-2 w-full px-4 md:px-0">
+           <div className="grid grid-cols-2 gap-3 md:gap-6 relative z-10">
+              <img src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=800&auto=format&fit=crop" className="rounded-[1.5rem] md:rounded-[3rem] shadow-2xl transform -rotate-2 md:-rotate-3 group-hover:rotate-0 transition-all duration-1000 ease-out" alt="Nail Studio" />
+              <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=800&auto=format&fit=crop" className="rounded-[1.5rem] md:rounded-[3rem] shadow-2xl mt-6 md:mt-12 transform rotate-2 md:rotate-3 group-hover:rotate-0 transition-all duration-1000 delay-100 ease-out" alt="Manicure" />
            </div>
-           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[130%] h-[130%] bg-pink-100/30 blur-[100px] -z-0 rounded-full"></div>
+           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[130%] h-[130%] bg-pink-100/30 blur-[60px] md:blur-[100px] -z-0 rounded-full"></div>
         </div>
       </div>
     </div>
@@ -588,21 +591,20 @@ export const Mission: React.FC = () => (
 );
 
 export const Features: React.FC = () => (
-  <section className="py-16 px-6 bg-white" id="features">
+  <section className="py-16 md:py-20 px-6 bg-white" id="features">
     <div className="container mx-auto max-w-7xl">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-12">
         {[
-          { icon: <Calendar size={40} />, title: "Agenda Predictif", desc: "La réservation intelligente qui s'adapte à vos pauses et optimise chaque créneau.", color: "bg-pink-100/80 text-[#eb5e9d]" },
-          // Changement couleurs: Galerie Inédite (Maintenant en rose)
-          { icon: <Sparkles size={40} />, title: "Galerie Inédite", desc: "Exposez vos chefs-d'œuvre avec un rendu professionnel qui convertit vos abonnés.", color: "bg-pink-100/80 text-[#eb5e9d]" },
-          { icon: <ShieldCheck size={40} />, title: "Sécurité Totale", desc: "Terminé les 'No-shows'. Vos revenus sont garantis grâce aux acomptes automatisés.", color: "bg-pink-100/80 text-[#eb5e9d]" }
+          { icon: <Calendar size={32} className="md:w-10 md:h-10" />, title: "Agenda Predictif", desc: "La réservation intelligente qui s'adapte à vos pauses et optimise chaque créneau.", color: "bg-pink-100/80 text-[#eb5e9d]" },
+          { icon: <Sparkles size={32} className="md:w-10 md:h-10" />, title: "Galerie Inédite", desc: "Exposez vos chefs-d'œuvre avec un rendu professionnel qui convertit vos abonnés.", color: "bg-pink-100/80 text-[#eb5e9d]" },
+          { icon: <ShieldCheck size={32} className="md:w-10 md:h-10" />, title: "Sécurité Totale", desc: "Terminé les 'No-shows'. Vos revenus sont garantis grâce aux acomptes automatisés.", color: "bg-pink-100/80 text-[#eb5e9d]" }
         ].map((feature, i) => (
-          <div key={i} className="flex flex-col items-center text-center group cursor-default">
-            <div className={`w-20 h-20 ${feature.color} rounded-[1.75rem] flex items-center justify-center mb-6 transition-all duration-700 group-hover:scale-110 group-hover:rotate-[15deg] shadow-sm`}>
+          <div key={i} className="flex flex-col items-center text-center group cursor-default p-4 md:p-0">
+            <div className={`w-16 h-16 md:w-20 md:h-20 ${feature.color} rounded-[1.5rem] md:rounded-[1.75rem] flex items-center justify-center mb-5 md:mb-6 transition-all duration-700 group-hover:scale-110 group-hover:rotate-[15deg] shadow-sm`}>
               {feature.icon}
             </div>
-            <h3 className="text-2xl font-bold mb-3 text-gray-800 tracking-tight">{feature.title}</h3>
-            <p className="text-gray-500 leading-relaxed max-w-xs text-base font-light">{feature.desc}</p>
+            <h3 className="text-xl md:text-2xl font-bold mb-2 md:mb-3 text-gray-800 tracking-tight">{feature.title}</h3>
+            <p className="text-gray-500 leading-relaxed max-w-xs text-sm md:text-base font-light">{feature.desc}</p>
           </div>
         ))}
       </div>
@@ -612,27 +614,27 @@ export const Features: React.FC = () => (
 
 export const AppShowcase: React.FC = () => {
   return (
-    <section className="py-16 relative overflow-hidden bg-transparent">
-      <div className="container mx-auto px-6 md:px-12 flex flex-col lg:flex-row items-center gap-16 max-w-7xl">
-        <div className="lg:w-1/2 relative z-10 text-center lg:text-left">
+    <section className="py-16 md:py-24 relative overflow-hidden bg-transparent">
+      <div className="container mx-auto px-6 md:px-12 flex flex-col lg:flex-row items-center gap-12 md:gap-16 max-w-7xl">
+        <div className="lg:w-1/2 relative z-10 text-center lg:text-left order-2 lg:order-1">
           <h2 className="text-4xl md:text-7xl font-serif-elegant italic mb-8 leading-tight">Tout votre salon <br/> dans votre <span className="text-[#eb5e9d]">poche.</span></h2>
-          <div className="grid grid-cols-2 gap-4 md:gap-6">
+          <div className="grid grid-cols-2 gap-3 md:gap-6">
             {[
               { label: "Planning", icon: <Calendar size={24} />, color: "text-purple-500", bg: "bg-purple-50" },
               { label: "Clientes", icon: <User size={24} />, color: "text-[#eb5e9d]", bg: "bg-pink-50" },
               { label: "Services", icon: <Zap size={24} />, color: "text-amber-500", bg: "bg-amber-50" },
               { label: "Fidélité", icon: <Heart size={24} />, color: "text-red-500", bg: "bg-red-50" }
             ].map((item, i) => (
-              <GlassCard key={i} className="p-6 md:p-8 flex flex-col items-center text-center hover:bg-white transition-all border-2 border-pink-50 hover:border-pink-200 hover:shadow-xl hover:shadow-pink-100/50 group bg-white/60">
-                <div className={`${item.color} ${item.bg} p-4 rounded-2xl mb-4 transition-transform duration-500 group-hover:scale-[1.2] shadow-sm`}>{item.icon}</div>
-                <span className="font-bold text-gray-800 text-lg group-hover:text-[#eb5e9d] transition-colors">Votre {item.label}</span>
+              <GlassCard key={i} className="p-4 md:p-8 flex flex-col items-center text-center hover:bg-white transition-all border-2 border-pink-50 hover:border-pink-200 hover:shadow-xl hover:shadow-pink-100/50 group bg-white/60 active:scale-95 duration-200">
+                <div className={`${item.color} ${item.bg} p-3 md:p-4 rounded-2xl mb-3 md:mb-4 transition-transform duration-500 group-hover:scale-[1.2] shadow-sm`}>{item.icon}</div>
+                <span className="font-bold text-gray-800 text-sm md:text-lg group-hover:text-[#eb5e9d] transition-colors">Votre {item.label}</span>
               </GlassCard>
             ))}
           </div>
         </div>
-        <div className="lg:w-1/2 relative flex justify-center items-center w-full">
+        <div className="lg:w-1/2 relative flex justify-center items-center w-full order-1 lg:order-2 mb-8 lg:mb-0">
            {/* Phone Mockup with Overview (Planning, Clients, Services) - Floating Animation */}
-           <div className="relative z-10 transform scale-90 md:scale-100 origin-center">
+           <div className="relative z-10 transform scale-100 origin-center">
              <PhoneMockup type="overview" className="shadow-2xl animate-float" />
            </div>
            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-pink-100/40 blur-[80px] -z-10 rounded-full"></div>
@@ -644,48 +646,48 @@ export const AppShowcase: React.FC = () => {
 
 export const DownloadAppSection: React.FC = () => {
   return (
-    <section className="py-20 px-6 overflow-hidden">
+    <section className="py-16 md:py-24 px-4 md:px-6 overflow-hidden">
       <div className="container mx-auto max-w-7xl">
-        <div className="bg-[#1a1a1a] rounded-[3rem] p-8 md:p-16 text-white relative overflow-hidden flex flex-col items-center text-center">
+        <div className="bg-[#1a1a1a] rounded-[2.5rem] md:rounded-[3rem] p-8 md:p-16 text-white relative overflow-hidden flex flex-col items-center text-center">
           {/* Background Blobs */}
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#eb5e9d]/20 rounded-full blur-[120px] pointer-events-none"></div>
           <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-500/20 rounded-full blur-[100px] pointer-events-none"></div>
 
-          <div className="relative z-10 max-w-3xl mx-auto mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/10 rounded-full text-xs font-bold uppercase tracking-wider mb-6 border border-white/10">
+          <div className="relative z-10 max-w-3xl mx-auto mb-10 md:mb-16">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/10 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider mb-6 border border-white/10">
               <Smartphone size={12} className="text-[#eb5e9d]" /> Disponible sur iOS & Android
             </div>
-            <h2 className="text-4xl md:text-7xl font-serif-elegant italic mb-6 leading-tight">
+            <h2 className="text-3xl md:text-7xl font-serif-elegant italic mb-6 leading-tight">
               Tout votre empire <br/><span className="text-[#eb5e9d]">dans votre poche.</span>
             </h2>
-            <p className="text-gray-400 text-base md:text-lg mb-8 font-light max-w-lg mx-auto">
+            <p className="text-gray-400 text-sm md:text-lg mb-8 font-light max-w-lg mx-auto leading-relaxed">
               Retrouvez toutes les fonctionnalités de Blyss où que vous soyez. 
               Gérez votre planning, encaissez vos clientes et suivez vos stats en temps réel.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button className="bg-white text-[#1a1a1a] px-8 py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:scale-105 transition-transform w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center w-full sm:w-auto">
+                <button className="bg-white text-[#1a1a1a] px-8 py-3.5 rounded-xl font-bold flex items-center justify-center gap-2 hover:scale-105 active:scale-95 transition-all w-full sm:w-auto">
                     <Apple size={20} /> App Store
                 </button>
-                <button className="bg-white/10 text-white border border-white/20 px-8 py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-white/20 transition-all w-full sm:w-auto">
+                <button className="bg-white/10 text-white border border-white/20 px-8 py-3.5 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-white/20 active:scale-95 transition-all w-full sm:w-auto">
                     <Play size={20} /> Google Play
                 </button>
             </div>
           </div>
 
-          {/* 3 Phones Display */}
-          <div className="relative z-10 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-0 mt-8 w-full max-w-full overflow-hidden md:overflow-visible">
+          {/* 3 Phones Display - Optimised for Mobile (Vertical Stack visual fix) */}
+          <div className="relative z-10 flex flex-col md:flex-row items-center justify-center gap-0 mt-8 w-full max-w-full">
              {/* Phone Left - Calendar */}
-             <div className="transform scale-75 md:translate-x-16 md:rotate-[-12deg] md:scale-90 z-0 opacity-90 hover:opacity-100 hover:z-20 transition-all duration-500 -mb-24 md:mb-0">
+             <div className="transform scale-[0.8] md:scale-90 translate-y-24 md:translate-y-0 md:translate-x-16 md:rotate-[-12deg] z-0 opacity-80 md:opacity-90 hover:opacity-100 hover:z-20 transition-all duration-500 -mb-40 md:mb-0">
                 <PhoneMockup type="calendar" className="shadow-2xl" />
              </div>
              
              {/* Phone Center - Home */}
-             <div className="z-10 transform scale-90 md:-translate-y-12 hover:scale-105 transition-transform duration-500">
+             <div className="z-20 transform scale-100 md:scale-105 md:-translate-y-12 hover:scale-[1.02] transition-transform duration-500">
                 <PhoneMockup type="home" className="shadow-[0_0_50px_rgba(235,94,157,0.4)] border-4 border-[#eb5e9d]/30" />
              </div>
 
              {/* Phone Right - Stats */}
-             <div className="transform scale-75 md:-translate-x-16 md:rotate-[12deg] md:scale-90 z-0 opacity-90 hover:opacity-100 hover:z-20 transition-all duration-500 -mt-24 md:mt-0">
+             <div className="transform scale-[0.8] md:scale-90 -translate-y-24 md:-translate-y-0 md:-translate-x-16 md:rotate-[12deg] z-10 md:z-0 opacity-80 md:opacity-90 hover:opacity-100 hover:z-20 transition-all duration-500 -mt-40 md:mt-0">
                 <PhoneMockup type="stats" className="shadow-2xl" />
              </div>
           </div>
@@ -707,7 +709,7 @@ interface PricingTierProps {
 }
 
 const PricingTier: React.FC<PricingTierProps> = ({ title, price, engagement, features, recommended = false, onSelect, isCustomQuote = false }) => (
-  <div className={`pricing-card flex flex-col p-8 rounded-[2.5rem] bg-white transition-all duration-700 ${recommended ? 'border-2 border-[#eb5e9d] shadow-[0_30px_60px_-10px_rgba(235,94,157,0.15)] scale-100 md:scale-105 z-10' : 'border border-pink-50 shadow-xl shadow-gray-200/30 hover:border-pink-200'} relative group`}>
+  <div className={`pricing-card flex flex-col p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] bg-white transition-all duration-700 ${recommended ? 'border-2 border-[#eb5e9d] shadow-[0_30px_60px_-10px_rgba(235,94,157,0.15)] scale-100 md:scale-105 z-10' : 'border border-pink-50 shadow-xl shadow-gray-200/30 hover:border-pink-200'} relative group`}>
     {recommended && (
       <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#eb5e9d] text-white px-6 py-1.5 rounded-full text-[8px] font-black uppercase tracking-[0.2em] shadow-lg">
         Plus populaire
@@ -728,7 +730,7 @@ const PricingTier: React.FC<PricingTierProps> = ({ title, price, engagement, fea
           <div className="w-5 h-5 rounded-full bg-pink-50 flex items-center justify-center flex-shrink-0 mt-0.5 transition-transform duration-300 group-hover:scale-110">
             <Check size={12} className="text-[#eb5e9d]" />
           </div>
-          <span className="text-gray-600 text-xs leading-tight font-medium">{f}</span>
+          <span className="text-gray-600 text-sm leading-tight font-medium">{f}</span>
         </div>
       ))}
     </div>
@@ -807,39 +809,39 @@ const PricingModal: React.FC<{ planType: 'start' | 'signature' | 'serenite' | 's
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/40 backdrop-blur-md transition-opacity animate-in fade-in" onClick={onClose}></div>
-      <GlassCard className="relative z-10 w-full max-w-2xl max-h-[90vh] overflow-y-auto !p-0 shadow-2xl animate-in zoom-in-95 duration-300 bg-white/90 custom-scrollbar">
+      <GlassCard className="relative z-10 w-full max-w-2xl max-h-[90vh] overflow-y-auto !p-0 shadow-2xl animate-in zoom-in-95 duration-300 bg-white/95 md:bg-white/90 custom-scrollbar flex flex-col">
         
         {/* Header */}
-        <div className="bg-gradient-to-r from-pink-50 to-white p-8 border-b border-pink-100 relative overflow-hidden">
-          <button onClick={onClose} className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-white/50 hover:bg-white text-gray-500 hover:text-gray-800 transition-all">
-            <X size={18} />
+        <div className="bg-gradient-to-r from-pink-50 to-white p-6 md:p-8 border-b border-pink-100 relative overflow-hidden shrink-0">
+          <button onClick={onClose} className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-white/50 hover:bg-white text-gray-500 hover:text-gray-800 transition-all z-20 cursor-pointer shadow-sm active:scale-95">
+            <X size={20} />
           </button>
-          <div className="absolute -right-10 -top-10 w-40 h-40 bg-[#eb5e9d]/10 rounded-full blur-3xl"></div>
+          <div className="absolute -right-10 -top-10 w-40 h-40 bg-[#eb5e9d]/10 rounded-full blur-3xl pointer-events-none"></div>
           
-          <div className="flex items-start gap-6 relative z-10 flex-col md:flex-row">
-            <div className="w-16 h-16 rounded-2xl bg-[#eb5e9d] flex items-center justify-center shadow-lg shadow-pink-300/50 shrink-0">
+          <div className="flex items-start gap-4 md:gap-6 relative z-10 flex-col md:flex-row">
+            <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-[#eb5e9d] flex items-center justify-center shadow-lg shadow-pink-300/50 shrink-0">
               {plan.icon}
             </div>
             <div>
               <div className="flex items-center gap-3 mb-1">
-                <h3 className="text-3xl font-serif-elegant italic">{plan.title}</h3>
+                <h3 className="text-2xl md:text-3xl font-serif-elegant italic">{plan.title}</h3>
                 {/* @ts-ignore */}
-                {plan.tag && <span className="bg-[#eb5e9d] text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">{plan.tag}</span>}
+                {plan.tag && <span className="bg-[#eb5e9d] text-white text-[9px] md:text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">{plan.tag}</span>}
               </div>
-              <p className="text-gray-500 text-sm leading-relaxed max-w-sm mb-3">{plan.description}</p>
+              <p className="text-gray-500 text-xs md:text-sm leading-relaxed max-w-sm mb-3">{plan.description}</p>
               <div className="flex items-baseline gap-1">
-                <span className={`font-black text-[#eb5e9d] ${planType === 'salons' ? 'text-3xl' : 'text-4xl'}`}>{plan.price}</span>
+                <span className={`font-black text-[#eb5e9d] ${planType === 'salons' ? 'text-2xl md:text-3xl' : 'text-3xl md:text-4xl'}`}>{plan.price}</span>
                 {planType !== 'salons' && <span className="text-gray-400 font-bold text-sm">€/mois</span>}
               </div>
             </div>
           </div>
         </div>
 
-        {/* Content */}
-        <div className="p-8 space-y-8">
+        {/* Content - Scrollable */}
+        <div className="p-6 md:p-8 space-y-6 md:space-y-8 overflow-y-auto">
            {Object.entries(plan.features).map(([category, items], idx) => (
              <div key={idx}>
-               <h4 className="flex items-center gap-2 font-bold text-gray-800 mb-4 text-sm uppercase tracking-wider">
+               <h4 className="flex items-center gap-2 font-bold text-gray-800 mb-3 md:mb-4 text-xs md:text-sm uppercase tracking-wider sticky top-0 bg-white/95 py-2 backdrop-blur-sm z-10">
                  {category === "Gestion Quotidienne" && <Briefcase size={16} className="text-pink-400" />}
                  {category === "Visibilité" && <Eye size={16} className="text-pink-400" />}
                  {category === "Support" && <HelpCircle size={16} className="text-pink-400" />}
@@ -852,10 +854,10 @@ const PricingModal: React.FC<{ planType: 'start' | 'signature' | 'serenite' | 's
                  {category.includes("Tout inclus") && <CheckCircle2 size={16} className="text-green-500" />}
                  {category}
                </h4>
-               <div className="grid md:grid-cols-2 gap-3">
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3">
                  {/* @ts-ignore */}
                  {items.map((item, i) => (
-                   <div key={i} className="flex items-start gap-2 text-sm text-gray-600 bg-gray-50/50 p-2.5 rounded-xl border border-gray-100">
+                   <div key={i} className="flex items-start gap-2 text-xs md:text-sm text-gray-600 bg-gray-50/50 p-2 md:p-2.5 rounded-xl border border-gray-100">
                      <Check size={14} className="text-[#eb5e9d] mt-0.5 shrink-0" />
                      <span className="leading-tight">{item}</span>
                    </div>
@@ -866,19 +868,19 @@ const PricingModal: React.FC<{ planType: 'start' | 'signature' | 'serenite' | 's
         </div>
 
         {/* Footer */}
-        <div className="p-6 border-t border-gray-100 bg-gray-50 flex justify-end gap-4">
-          <button onClick={onClose} className="px-6 py-3 rounded-xl font-bold text-gray-500 hover:bg-gray-200 transition-colors">
+        <div className="p-5 md:p-6 border-t border-gray-100 bg-gray-50 flex justify-end gap-3 md:gap-4 shrink-0">
+          <button onClick={onClose} className="px-5 md:px-6 py-3 rounded-xl font-bold text-gray-500 hover:bg-gray-200 transition-colors text-sm">
             Fermer
           </button>
           <button 
             onClick={handleChoice} 
             disabled={isRedirecting}
-            className={`px-8 py-3 rounded-xl font-bold bg-[#eb5e9d] text-white shadow-lg hover:bg-pink-600 transition-all flex items-center gap-2 ${isRedirecting ? 'opacity-90 cursor-wait' : 'hover:scale-105 active:scale-95'}`}
+            className={`px-6 md:px-8 py-3 rounded-xl font-bold bg-[#eb5e9d] text-white shadow-lg hover:bg-pink-600 transition-all flex items-center gap-2 text-sm active:scale-95 ${isRedirecting ? 'opacity-90 cursor-wait' : 'hover:scale-105'}`}
           >
             {isRedirecting ? (
               <>
                 <Loader2 className="animate-spin" size={18} />
-                Redirection...
+                <span className="hidden md:inline">Redirection...</span>
               </>
             ) : (
               <>{planType === 'salons' ? 'Demander un devis' : 'Choisir cette offre'} <ArrowRight size={18} /></>
@@ -904,9 +906,9 @@ export const PricingSection: React.FC<{ onSeeDetails: () => void; onJoin: () => 
   };
 
   return (
-    <section className="py-20 px-6" id="pricing">
+    <section className="py-16 md:py-20 px-6" id="pricing">
       <div className="container mx-auto max-w-7xl">
-        <div className="text-center mb-12">
+        <div className="text-center mb-10 md:mb-12">
           <h2 className="text-4xl md:text-7xl font-serif-elegant italic mb-4">Libérez votre <span className="text-[#eb5e9d]">Potentiel.</span></h2>
           <p className="text-gray-500 max-w-xl mx-auto text-lg font-light leading-relaxed">
             Un abonnement clair, sans frais cachés, pour transformer votre passion en business rentable.
@@ -914,7 +916,7 @@ export const PricingSection: React.FC<{ onSeeDetails: () => void; onJoin: () => 
         </div>
         
         {/* GRILLE PRINCIPALE : 3 Colonnes pour les offres principales */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-8 max-w-6xl mx-auto items-stretch mb-8 md:mb-10">
           <PricingTier 
             title="Start" 
             price="34,90" 
@@ -959,7 +961,7 @@ export const PricingSection: React.FC<{ onSeeDetails: () => void; onJoin: () => 
         <div className="max-w-4xl mx-auto">
            <div 
              onClick={() => handleSelect('salons')}
-             className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6 hover:shadow-md hover:border-pink-200 transition-all cursor-pointer group"
+             className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6 hover:shadow-md hover:border-pink-200 transition-all cursor-pointer group active:scale-[0.98]"
            >
               <div className="flex items-center gap-4">
                  <div className="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center text-gray-600 group-hover:bg-[#eb5e9d] group-hover:text-white transition-colors">
@@ -970,7 +972,7 @@ export const PricingSection: React.FC<{ onSeeDetails: () => void; onJoin: () => 
                     <p className="text-sm text-gray-500">Une solution sur-mesure pour les grandes structures.</p>
                  </div>
               </div>
-              <div className="flex items-center gap-4 mt-4 md:mt-0">
+              <div className="flex items-center gap-4 mt-4 md:mt-0 w-full md:w-auto justify-between md:justify-end">
                  <span className="text-sm font-bold text-gray-400 uppercase tracking-wider">Sur Devis</span>
                  <button className="px-6 py-2.5 rounded-xl bg-gray-50 text-gray-600 font-bold text-sm group-hover:bg-[#eb5e9d] group-hover:text-white transition-colors">
                    Nous contacter
@@ -981,7 +983,7 @@ export const PricingSection: React.FC<{ onSeeDetails: () => void; onJoin: () => 
 
         {onSeeDetails && (
           <div className="mt-12 text-center">
-            <button onClick={onSeeDetails} className="inline-flex items-center gap-2 px-8 py-4 bg-white/60 backdrop-blur-md border border-pink-100 rounded-2xl text-[#eb5e9d] font-bold hover:bg-white hover:shadow-lg transition-all group text-sm w-full md:w-auto justify-center">
+            <button onClick={onSeeDetails} className="inline-flex items-center gap-2 px-8 py-4 bg-white/60 backdrop-blur-md border border-pink-100 rounded-2xl text-[#eb5e9d] font-bold hover:bg-white hover:shadow-lg transition-all group text-sm w-full md:w-auto justify-center active:scale-95">
               Comparer toutes les fonctionnalités <ChevronRight size={18} className="group-hover:translate-x-1" />
             </button>
           </div>
@@ -1003,25 +1005,28 @@ export const PricingPage: React.FC<{ onJoin: () => void }> = ({ onJoin }) => {
   const [showTable, setShowTable] = useState(false);
 
   return (
-    <div className="pt-32 pb-20 px-6 min-h-screen">
+    <div className="pt-28 md:pt-32 pb-20 px-6 min-h-screen">
        <div className="container mx-auto max-w-7xl text-center mb-16">
-          <h1 className="text-6xl md:text-8xl font-serif-elegant italic mb-6">Nos <span className="text-[#eb5e9d]">Offres</span></h1>
-          <p className="text-gray-500 text-xl max-w-2xl mx-auto">Choisissez le plan qui correspond à votre ambition. Changez à tout moment.</p>
+          <h1 className="text-5xl md:text-8xl font-serif-elegant italic mb-6">Nos <span className="text-[#eb5e9d]">Offres</span></h1>
+          <p className="text-gray-500 text-lg md:text-xl max-w-2xl mx-auto">Choisissez le plan qui correspond à votre ambition. Changez à tout moment.</p>
        </div>
        
        <PricingSection onSeeDetails={() => setShowTable(!showTable)} onJoin={onJoin} />
 
        {showTable && (
          <div className="container mx-auto max-w-5xl mt-12 animate-in fade-in slide-in-from-bottom-8">
-            <GlassCard className="overflow-hidden p-0">
-               <div className="overflow-x-auto">
-                 <table className="w-full text-left border-collapse min-w-[600px]">
+            <GlassCard className="overflow-hidden p-0 relative">
+               {/* Visual hint for scrolling on mobile */}
+               <div className="md:hidden absolute top-0 right-0 bottom-0 w-8 bg-gradient-to-l from-white/80 to-transparent pointer-events-none z-10" />
+               
+               <div className="overflow-x-auto pb-4 md:pb-0 scroll-indicator-mask">
+                 <table className="w-full text-left border-collapse min-w-[600px] md:min-w-0">
                    <thead>
                      <tr className="bg-pink-50/50 border-b border-pink-100">
-                       <th className="p-6 text-gray-500 font-medium">Fonctionnalités</th>
-                       <th className="p-6 text-center font-bold text-gray-800">Start</th>
-                       <th className="p-6 text-center font-bold text-[#eb5e9d]">Signature</th>
-                       <th className="p-6 text-center font-bold text-gray-800">Sérénité</th>
+                       <th className="p-4 md:p-6 text-gray-500 font-medium text-sm md:text-base sticky left-0 bg-pink-50/90 backdrop-blur-sm md:bg-transparent z-10">Fonctionnalités</th>
+                       <th className="p-4 md:p-6 text-center font-bold text-gray-800 text-sm md:text-base">Start</th>
+                       <th className="p-4 md:p-6 text-center font-bold text-[#eb5e9d] text-sm md:text-base bg-pink-50/30">Signature</th>
+                       <th className="p-4 md:p-6 text-center font-bold text-gray-800 text-sm md:text-base">Sérénité</th>
                      </tr>
                    </thead>
                    <tbody className="divide-y divide-gray-100">
@@ -1035,15 +1040,15 @@ export const PricingPage: React.FC<{ onJoin: () => void }> = ({ onJoin }) => {
                        { name: "Campagnes Marketing", start: false, sign: false, ser: true },
                      ].map((row, i) => (
                        <tr key={i} className="hover:bg-pink-50/30 transition-colors">
-                         <td className="p-6 font-medium text-gray-700">{row.name}</td>
-                         <td className="p-6 text-center text-gray-600">
-                           {typeof row.start === 'boolean' ? (row.start ? <Check className="mx-auto text-green-500" size={18} /> : <Minus className="mx-auto text-gray-300" size={18} />) : row.start}
+                         <td className="p-4 md:p-6 font-medium text-gray-700 text-sm md:text-base sticky left-0 bg-white md:bg-transparent z-10 shadow-[2px_0_5px_rgba(0,0,0,0.05)] md:shadow-none">{row.name}</td>
+                         <td className="p-4 md:p-6 text-center text-gray-600">
+                           {typeof row.start === 'boolean' ? (row.start ? <Check className="mx-auto text-green-500" size={16} /> : <Minus className="mx-auto text-gray-300" size={16} />) : row.start}
                          </td>
-                         <td className="p-6 text-center text-gray-800 font-bold bg-pink-50/30">
-                           {typeof row.sign === 'boolean' ? (row.sign ? <Check className="mx-auto text-[#eb5e9d]" size={18} /> : <Minus className="mx-auto text-gray-300" size={18} />) : row.sign}
+                         <td className="p-4 md:p-6 text-center text-gray-800 font-bold bg-pink-50/30">
+                           {typeof row.sign === 'boolean' ? (row.sign ? <Check className="mx-auto text-[#eb5e9d]" size={16} /> : <Minus className="mx-auto text-gray-300" size={16} />) : row.sign}
                          </td>
-                         <td className="p-6 text-center text-gray-600">
-                           {typeof row.ser === 'boolean' ? (row.ser ? <Check className="mx-auto text-green-500" size={18} /> : <Minus className="mx-auto text-gray-300" size={18} />) : row.ser}
+                         <td className="p-4 md:p-6 text-center text-gray-600">
+                           {typeof row.ser === 'boolean' ? (row.ser ? <Check className="mx-auto text-green-500" size={16} /> : <Minus className="mx-auto text-gray-300" size={16} />) : row.ser}
                          </td>
                        </tr>
                      ))}
@@ -1051,6 +1056,7 @@ export const PricingPage: React.FC<{ onJoin: () => void }> = ({ onJoin }) => {
                  </table>
                </div>
             </GlassCard>
+            <p className="text-center text-gray-400 text-xs mt-3 md:hidden">Glissez vers la droite pour voir tout le tableau →</p>
          </div>
        )}
     </div>
@@ -1104,15 +1110,16 @@ export const FloatingAIChat: React.FC = () => {
       {/* Trigger Button */}
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-8 right-8 z-[60] w-16 h-16 rounded-full shadow-2xl shadow-pink-300 flex items-center justify-center transition-all duration-300 hover:scale-110 ${isOpen ? 'bg-white text-gray-800 rotate-90' : 'bg-[#eb5e9d] text-white'}`}
+        className={`fixed bottom-6 md:bottom-8 right-5 md:right-8 z-[60] w-14 h-14 md:w-16 md:h-16 rounded-full shadow-2xl shadow-pink-300 flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 ${isOpen ? 'bg-white text-gray-800 rotate-90' : 'bg-[#eb5e9d] text-white'}`}
+        aria-label="Assistant IA"
       >
-        {isOpen ? <X size={28} /> : <MessageCircle size={32} />}
+        {isOpen ? <X size={24} /> : <MessageCircle size={28} />}
       </button>
 
       {/* Chat Window */}
-      <div className={`fixed bottom-28 right-8 z-[60] w-[90vw] md:w-[400px] h-[500px] bg-white/90 backdrop-blur-xl rounded-[2rem] shadow-2xl border border-white/50 flex flex-col transition-all duration-500 origin-bottom-right ${isOpen ? 'scale-100 opacity-100 translate-y-0' : 'scale-75 opacity-0 translate-y-10 pointer-events-none'}`}>
+      <div className={`fixed bottom-24 md:bottom-28 right-4 md:right-8 z-[60] w-[calc(100vw-32px)] md:w-[400px] h-[60vh] md:h-[500px] bg-white/90 backdrop-blur-xl rounded-[2rem] shadow-2xl border border-white/50 flex flex-col transition-all duration-500 origin-bottom-right ${isOpen ? 'scale-100 opacity-100 translate-y-0' : 'scale-75 opacity-0 translate-y-10 pointer-events-none'}`}>
          {/* Header */}
-         <div className="p-5 border-b border-gray-100 flex items-center gap-3 bg-white/50 rounded-t-[2rem]">
+         <div className="p-4 md:p-5 border-b border-gray-100 flex items-center gap-3 bg-white/50 rounded-t-[2rem]">
             <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#eb5e9d] to-pink-200 flex items-center justify-center text-white">
                <Sparkles size={20} />
             </div>
@@ -1123,10 +1130,10 @@ export const FloatingAIChat: React.FC = () => {
          </div>
 
          {/* Messages */}
-         <div className="flex-1 overflow-y-auto p-5 space-y-4">
+         <div className="flex-1 overflow-y-auto p-4 md:p-5 space-y-4">
             {messages.map((msg, i) => (
               <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[80%] p-4 rounded-2xl text-sm leading-relaxed ${msg.role === 'user' ? 'bg-[#eb5e9d] text-white rounded-tr-sm' : 'bg-gray-100 text-gray-700 rounded-tl-sm'}`}>
+                <div className={`max-w-[85%] p-3 md:p-4 rounded-2xl text-sm leading-relaxed ${msg.role === 'user' ? 'bg-[#eb5e9d] text-white rounded-tr-sm' : 'bg-gray-100 text-gray-700 rounded-tl-sm'}`}>
                   {msg.text}
                 </div>
               </div>
@@ -1165,12 +1172,12 @@ export const FloatingAIChat: React.FC = () => {
 
 export const Footer: React.FC<{ setCurrentPage: (p: PageView) => void }> = ({ setCurrentPage }) => {
   return (
-    <footer className="bg-white pt-20 pb-10 px-6 border-t border-pink-50">
+    <footer className="bg-white pt-16 md:pt-20 pb-10 px-6 border-t border-pink-50">
        <div className="container mx-auto max-w-7xl">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-             <div className="col-span-1 md:col-span-1">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-12 mb-12 md:mb-16 text-center md:text-left">
+             <div className="col-span-1 md:col-span-1 flex flex-col items-center md:items-start">
                 <BlyssLogo onClick={() => setCurrentPage('home')} />
-                <p className="mt-6 text-gray-500 text-sm leading-relaxed">
+                <p className="mt-6 text-gray-500 text-sm leading-relaxed max-w-xs md:max-w-none">
                   La première suite logicielle dédiée à l'élévation des prothésistes ongulaires indépendantes.
                 </p>
              </div>
@@ -1201,12 +1208,12 @@ export const Footer: React.FC<{ setCurrentPage: (p: PageView) => void }> = ({ se
                </ul>
              </div>
           </div>
-          <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-gray-100 gap-4">
+          <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-gray-100 gap-6 md:gap-4">
              <span className="text-gray-400 text-xs">© 2024 Blyss Inc. All rights reserved.</span>
              <div className="flex gap-4">
-                <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-[#eb5e9d] hover:text-white transition-colors cursor-pointer"><Instagram size={16} /></div>
-                <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-[#eb5e9d] hover:text-white transition-colors cursor-pointer"><Twitter size={16} /></div>
-                <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-[#eb5e9d] hover:text-white transition-colors cursor-pointer"><Linkedin size={16} /></div>
+                <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-[#eb5e9d] hover:text-white transition-colors cursor-pointer active:scale-95"><Instagram size={16} /></div>
+                <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-[#eb5e9d] hover:text-white transition-colors cursor-pointer active:scale-95"><Twitter size={16} /></div>
+                <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-[#eb5e9d] hover:text-white transition-colors cursor-pointer active:scale-95"><Linkedin size={16} /></div>
              </div>
           </div>
        </div>

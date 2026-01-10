@@ -3,7 +3,8 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig(({ mode }) => {
   // Charge les variables d'environnement (système ou .env)
-  const env = loadEnv(mode, process.cwd(), '');
+  // Fix: Property 'cwd' does not exist on type 'Process' - use '.' instead
+  const env = loadEnv(mode, '.', '');
   
   return {
     plugins: [react()],
