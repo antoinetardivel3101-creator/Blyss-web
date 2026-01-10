@@ -60,17 +60,18 @@ import { PageView } from '../App';
 
 const BlyssLogo: React.FC<{ onClick?: () => void }> = ({ onClick }) => (
   <div className="flex items-center gap-3 group cursor-pointer" onClick={onClick}>
-    <div className="w-12 h-12 md:w-16 md:h-16 bg-pink-50 rounded-2xl flex items-center justify-center transition-all duration-700 group-hover:scale-110 group-hover:rotate-[10deg] shadow-sm border border-pink-100/50">
-       <img src="https://i.ibb.co/35940F13/B3-B.png" alt="Blyss Logo" className="w-7 h-7 md:w-9 md:h-9 object-contain" />
-    </div>
-    <span className="text-2xl md:text-3xl font-outfit font-bold tracking-tighter text-[#1a1a1a] group-hover:text-[#eb5e9d] transition-colors">BLYSS</span>
+    <img 
+      src="https://i.ibb.co/35940F13/B3-B.png" 
+      alt="Blyss Logo" 
+      className="w-12 h-12 md:w-16 md:h-16 object-contain transition-all duration-700 group-hover:scale-110 group-hover:rotate-[10deg]" 
+    />
   </div>
 );
 
 /* --- PHONE MOCKUP COMPONENT IPHONE 17 STYLE --- */
 const PhoneMockup: React.FC<{ type: 'home' | 'calendar' | 'stats' | 'overview'; className?: string }> = ({ type, className = "" }) => {
   return (
-    <div className={`relative w-[310px] h-[630px] bg-[#e3e3e3] rounded-[60px] p-[4px] shadow-[0_0_2px_rgba(0,0,0,0.1),0_20px_40px_-10px_rgba(0,0,0,0.2)] ring-1 ring-white/50 ${className}`}>
+    <div className={`relative w-[310px] h-[630px] bg-[#e3e3e3] rounded-[60px] p-[4px] shadow-[0_0_2px_rgba(0,0,0,0.1),0_20px_40px_-10px_rgba(0,0,0,0.2)] ring-1 ring-white/50 shrink-0 ${className}`}>
       
       {/* Side Buttons */}
       <div className="absolute top-28 -left-[2px] w-[3px] h-7 bg-[#bdbdbd] rounded-l-md"></div>
@@ -452,28 +453,76 @@ const PhoneMockup: React.FC<{ type: 'home' | 'calendar' | 'stats' | 'overview'; 
 
 
 export const Navbar: React.FC<{ scrolled: boolean; currentPage: PageView; setCurrentPage: (p: PageView) => void }> = ({ scrolled, currentPage, setCurrentPage }) => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const handleNav = (page: PageView) => {
+    setCurrentPage(page);
+    setIsMobileMenuOpen(false);
+  };
+
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled || currentPage !== 'home' ? 'bg-white/80 backdrop-blur-xl border-b border-pink-100/30 py-2 shadow-sm' : 'bg-transparent py-4'}`}>
-      <div className="container mx-auto px-6 md:px-12 flex items-center justify-between max-w-7xl">
-        <BlyssLogo onClick={() => setCurrentPage('home')} />
-        <div className="hidden md:flex items-center gap-8 font-medium text-gray-600">
-          <button onClick={() => setCurrentPage('home')} className={`hover:text-[#eb5e9d] transition-all relative group ${currentPage === 'home' ? 'text-[#eb5e9d] font-bold' : ''}`}>
-            Découvrir
-            <span className={`absolute -bottom-1 left-0 h-0.5 bg-[#eb5e9d] rounded-full transition-all duration-300 ${currentPage === 'home' ? 'w-full' : 'w-0 group-hover:w-full'}`} />
-          </button>
-          <button onClick={() => setCurrentPage('pricing')} className={`hover:text-[#eb5e9d] transition-all relative group ${currentPage === 'pricing' ? 'text-[#eb5e9d] font-bold' : ''}`}>
-            Tarifs
-            <span className={`absolute -bottom-1 left-0 h-0.5 bg-[#eb5e9d] rounded-full transition-all duration-300 ${currentPage === 'pricing' ? 'w-full' : 'w-0 group-hover:w-full'}`} />
-          </button>
+    <>
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled || currentPage !== 'home' || isMobileMenuOpen ? 'bg-white/80 backdrop-blur-xl border-b border-pink-100/30 py-2 shadow-sm' : 'bg-transparent py-4'}`}>
+        <div className="container mx-auto px-6 md:px-12 flex items-center justify-between max-w-7xl">
+          <BlyssLogo onClick={() => handleNav('home')} />
+          
+          {/* Desktop Menu */}
+          <div className="hidden md:flex items-center gap-8 font-medium text-gray-600">
+            <button onClick={() => handleNav('home')} className={`hover:text-[#eb5e9d] transition-all relative group ${currentPage === 'home' ? 'text-[#eb5e9d] font-bold' : ''}`}>
+              Découvrir
+              <span className={`absolute -bottom-1 left-0 h-0.5 bg-[#eb5e9d] rounded-full transition-all duration-300 ${currentPage === 'home' ? 'w-full' : 'w-0 group-hover:w-full'}`} />
+            </button>
+            <button onClick={() => handleNav('pricing')} className={`hover:text-[#eb5e9d] transition-all relative group ${currentPage === 'pricing' ? 'text-[#eb5e9d] font-bold' : ''}`}>
+              Tarifs
+              <span className={`absolute -bottom-1 left-0 h-0.5 bg-[#eb5e9d] rounded-full transition-all duration-300 ${currentPage === 'pricing' ? 'w-full' : 'w-0 group-hover:w-full'}`} />
+            </button>
+            <button 
+              onClick={() => handleNav('download')}
+              className="bg-[#eb5e9d] text-white px-6 py-2.5 rounded-full font-bold shadow-[0_10px_20px_-5px_rgba(235,94,157,0.3)] hover:shadow-[0_15px_30px_-5px_rgba(235,94_157,0.4)] hover:scale-105 active:scale-95 transition-all text-sm"
+            >
+              Télécharger l'app
+            </button>
+          </div>
+
+          {/* Mobile Menu Button */}
           <button 
-            onClick={() => setCurrentPage('join')}
-            className="bg-[#eb5e9d] text-white px-6 py-2.5 rounded-full font-bold shadow-[0_10px_20px_-5px_rgba(235,94,157,0.3)] hover:shadow-[0_15px_30px_-5px_rgba(235,94_157,0.4)] hover:scale-105 active:scale-95 transition-all text-sm"
+            className="md:hidden w-10 h-10 rounded-full bg-pink-50 text-[#eb5e9d] flex items-center justify-center hover:bg-[#eb5e9d] hover:text-white transition-colors"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
-            Nous rejoindre
+            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
-      </div>
-    </nav>
+      </nav>
+
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-40 bg-white/95 backdrop-blur-3xl pt-24 px-6 animate-in slide-in-from-top-10 duration-300 md:hidden flex flex-col">
+          <div className="flex flex-col gap-6 text-xl font-medium text-gray-800">
+             <button 
+               onClick={() => handleNav('home')} 
+               className={`flex items-center justify-between p-4 rounded-2xl ${currentPage === 'home' ? 'bg-pink-50 text-[#eb5e9d]' : 'hover:bg-gray-50'}`}
+             >
+               Découvrir <ChevronRight size={20} className="opacity-50" />
+             </button>
+             <button 
+               onClick={() => handleNav('pricing')} 
+               className={`flex items-center justify-between p-4 rounded-2xl ${currentPage === 'pricing' ? 'bg-pink-50 text-[#eb5e9d]' : 'hover:bg-gray-50'}`}
+             >
+               Tarifs <ChevronRight size={20} className="opacity-50" />
+             </button>
+             <button 
+               onClick={() => handleNav('download')}
+               className="bg-[#eb5e9d] text-white p-5 rounded-2xl font-bold shadow-lg shadow-pink-200 text-center mt-4"
+             >
+               Télécharger l'app
+             </button>
+          </div>
+          <div className="mt-auto mb-12 text-center text-gray-400 text-sm">
+            <p>Blyss - Élevez votre art.</p>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
@@ -481,7 +530,7 @@ export const Hero: React.FC<{ onJoin?: () => void }> = ({ onJoin }) => {
   return (
     <section className="relative pt-28 pb-12 px-6">
       {/* Background Giant Logo - Watermark style with increased opacity */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80vw] max-w-[800px] opacity-[0.12] pointer-events-none z-0 select-none mix-blend-multiply">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[90vw] md:w-[80vw] max-w-[800px] opacity-[0.12] pointer-events-none z-0 select-none mix-blend-multiply">
          <img src="https://i.ibb.co/1YVVTQTc/B3-B2.png" alt="" className="w-full h-auto" />
       </div>
 
@@ -489,16 +538,16 @@ export const Hero: React.FC<{ onJoin?: () => void }> = ({ onJoin }) => {
         <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-pink-50/80 backdrop-blur-sm text-[#eb5e9d] rounded-full text-[9px] font-black uppercase tracking-[0.2em] mb-4 animate-in fade-in slide-in-from-bottom-2 duration-1000 shadow-sm border border-pink-100/50">
            <Sparkles size={12} /> La révolution du Nail Art
         </div>
-        <h1 className="text-5xl md:text-8xl font-serif-elegant italic mb-4 leading-tight md:leading-[1.1] tracking-tight animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-100">
-          Sublimez votre <br/> <span className="text-[#eb5e9d] drop-shadow-sm italic">quotidien.</span>
+        <h1 className="text-5xl sm:text-6xl md:text-8xl font-serif-elegant italic mb-4 leading-tight md:leading-[1.1] tracking-tight animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-100">
+          Sublimez votre <br className="hidden md:block"/> <span className="text-[#eb5e9d] drop-shadow-sm italic">quotidien.</span>
         </h1>
-        <p className="text-gray-500 text-base md:text-xl max-w-xl mb-8 leading-relaxed animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-200 font-light">
+        <p className="text-gray-500 text-base md:text-xl max-w-xl mb-8 leading-relaxed animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-200 font-light px-4">
           La plateforme de gestion intuitive conçue exclusivement pour les prothésistes ongulaires passionnées.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300 z-20 relative">
+        <div className="flex flex-col sm:flex-row gap-4 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300 z-20 relative w-full sm:w-auto px-4 sm:px-0">
           <button 
             onClick={onJoin}
-            className="bg-[#eb5e9d] text-white px-10 py-4 rounded-xl font-bold text-base shadow-xl shadow-pink-200/50 flex items-center gap-3 group transition-all hover:scale-105 hover:bg-pink-600 active:scale-95 cursor-pointer"
+            className="bg-[#eb5e9d] text-white px-10 py-4 rounded-xl font-bold text-base shadow-xl shadow-pink-200/50 flex items-center justify-center gap-3 group transition-all hover:scale-105 hover:bg-pink-600 active:scale-95 cursor-pointer w-full sm:w-auto"
           >
             Commencer l'aventure <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
           </button>
@@ -512,9 +561,9 @@ export const Mission: React.FC = () => (
   <section className="py-16 px-6 bg-white overflow-hidden relative">
     <div className="container mx-auto max-w-7xl">
       <div className="flex flex-col md:flex-row gap-16 items-center">
-        <div className="md:w-1/2 relative z-10">
+        <div className="md:w-1/2 relative z-10 order-2 md:order-1">
           <div className="w-12 h-1 bg-[#eb5e9d] mb-8 rounded-full shadow-sm"></div>
-          <h2 className="text-5xl md:text-7xl font-serif-elegant italic mb-6 leading-tight">Élevez la <br/> <span className="text-[#eb5e9d] drop-shadow-sm">beauté</span> de votre métier.</h2>
+          <h2 className="text-4xl md:text-7xl font-serif-elegant italic mb-6 leading-tight">Élevez la <br/> <span className="text-[#eb5e9d] drop-shadow-sm">beauté</span> de votre métier.</h2>
           <div className="space-y-8">
             <div>
               <h4 className="font-bold text-2xl mb-2 text-gray-900 tracking-tight">Le temps de créer</h4>
@@ -526,10 +575,10 @@ export const Mission: React.FC = () => (
             </div>
           </div>
         </div>
-        <div className="md:w-1/2 relative group">
-           <div className="grid grid-cols-2 gap-6 relative z-10">
-              <img src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=800&auto=format&fit=crop" className="rounded-[3rem] shadow-2xl transform -rotate-3 group-hover:rotate-0 transition-all duration-1000 ease-out" alt="Nail Studio" />
-              <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=800&auto=format&fit=crop" className="rounded-[3rem] shadow-2xl mt-12 transform rotate-3 group-hover:rotate-0 transition-all duration-1000 delay-100 ease-out" alt="Manicure" />
+        <div className="md:w-1/2 relative group order-1 md:order-2 w-full">
+           <div className="grid grid-cols-2 gap-4 md:gap-6 relative z-10">
+              <img src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=800&auto=format&fit=crop" className="rounded-[2rem] md:rounded-[3rem] shadow-2xl transform -rotate-3 group-hover:rotate-0 transition-all duration-1000 ease-out" alt="Nail Studio" />
+              <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=800&auto=format&fit=crop" className="rounded-[2rem] md:rounded-[3rem] shadow-2xl mt-12 transform rotate-3 group-hover:rotate-0 transition-all duration-1000 delay-100 ease-out" alt="Manicure" />
            </div>
            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[130%] h-[130%] bg-pink-100/30 blur-[100px] -z-0 rounded-full"></div>
         </div>
@@ -565,26 +614,26 @@ export const AppShowcase: React.FC = () => {
   return (
     <section className="py-16 relative overflow-hidden bg-transparent">
       <div className="container mx-auto px-6 md:px-12 flex flex-col lg:flex-row items-center gap-16 max-w-7xl">
-        <div className="lg:w-1/2 relative z-10">
-          <h2 className="text-5xl md:text-7xl font-serif-elegant italic mb-8 leading-tight">Tout votre salon <br/> dans votre <span className="text-[#eb5e9d]">poche.</span></h2>
-          <div className="grid grid-cols-2 gap-6">
+        <div className="lg:w-1/2 relative z-10 text-center lg:text-left">
+          <h2 className="text-4xl md:text-7xl font-serif-elegant italic mb-8 leading-tight">Tout votre salon <br/> dans votre <span className="text-[#eb5e9d]">poche.</span></h2>
+          <div className="grid grid-cols-2 gap-4 md:gap-6">
             {[
               { label: "Planning", icon: <Calendar size={24} />, color: "text-purple-500", bg: "bg-purple-50" },
               { label: "Clientes", icon: <User size={24} />, color: "text-[#eb5e9d]", bg: "bg-pink-50" },
               { label: "Services", icon: <Zap size={24} />, color: "text-amber-500", bg: "bg-amber-50" },
               { label: "Fidélité", icon: <Heart size={24} />, color: "text-red-500", bg: "bg-red-50" }
             ].map((item, i) => (
-              <GlassCard key={i} className="p-8 flex flex-col items-center text-center hover:bg-white transition-all border-2 border-pink-50 hover:border-pink-200 hover:shadow-xl hover:shadow-pink-100/50 group bg-white/60">
+              <GlassCard key={i} className="p-6 md:p-8 flex flex-col items-center text-center hover:bg-white transition-all border-2 border-pink-50 hover:border-pink-200 hover:shadow-xl hover:shadow-pink-100/50 group bg-white/60">
                 <div className={`${item.color} ${item.bg} p-4 rounded-2xl mb-4 transition-transform duration-500 group-hover:scale-[1.2] shadow-sm`}>{item.icon}</div>
                 <span className="font-bold text-gray-800 text-lg group-hover:text-[#eb5e9d] transition-colors">Votre {item.label}</span>
               </GlassCard>
             ))}
           </div>
         </div>
-        <div className="lg:w-1/2 relative flex justify-center items-center">
+        <div className="lg:w-1/2 relative flex justify-center items-center w-full">
            {/* Phone Mockup with Overview (Planning, Clients, Services) - Floating Animation */}
-           <div className="relative z-10">
-             <PhoneMockup type="overview" className="shadow-2xl animate-float scale-105" />
+           <div className="relative z-10 transform scale-90 md:scale-100 origin-center">
+             <PhoneMockup type="overview" className="shadow-2xl animate-float" />
            </div>
            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-pink-100/40 blur-[80px] -z-10 rounded-full"></div>
         </div>
@@ -606,37 +655,37 @@ export const DownloadAppSection: React.FC = () => {
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/10 rounded-full text-xs font-bold uppercase tracking-wider mb-6 border border-white/10">
               <Smartphone size={12} className="text-[#eb5e9d]" /> Disponible sur iOS & Android
             </div>
-            <h2 className="text-5xl md:text-7xl font-serif-elegant italic mb-6 leading-tight">
+            <h2 className="text-4xl md:text-7xl font-serif-elegant italic mb-6 leading-tight">
               Tout votre empire <br/><span className="text-[#eb5e9d]">dans votre poche.</span>
             </h2>
-            <p className="text-gray-400 text-lg mb-8 font-light">
+            <p className="text-gray-400 text-base md:text-lg mb-8 font-light max-w-lg mx-auto">
               Retrouvez toutes les fonctionnalités de Blyss où que vous soyez. 
               Gérez votre planning, encaissez vos clientes et suivez vos stats en temps réel.
             </p>
-            <div className="flex gap-4 justify-center">
-                <button className="bg-white text-[#1a1a1a] px-8 py-3 rounded-xl font-bold flex items-center gap-2 hover:scale-105 transition-transform">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <button className="bg-white text-[#1a1a1a] px-8 py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:scale-105 transition-transform w-full sm:w-auto">
                     <Apple size={20} /> App Store
                 </button>
-                <button className="bg-white/10 text-white border border-white/20 px-8 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-white/20 transition-all">
+                <button className="bg-white/10 text-white border border-white/20 px-8 py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-white/20 transition-all w-full sm:w-auto">
                     <Play size={20} /> Google Play
                 </button>
             </div>
           </div>
 
           {/* 3 Phones Display */}
-          <div className="relative z-10 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-0 mt-8">
+          <div className="relative z-10 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-0 mt-8 w-full max-w-full overflow-hidden md:overflow-visible">
              {/* Phone Left - Calendar */}
-             <div className="transform md:translate-x-16 md:rotate-[-12deg] md:scale-90 z-0 opacity-90 hover:opacity-100 hover:z-20 transition-all duration-500">
+             <div className="transform scale-75 md:translate-x-16 md:rotate-[-12deg] md:scale-90 z-0 opacity-90 hover:opacity-100 hover:z-20 transition-all duration-500 -mb-24 md:mb-0">
                 <PhoneMockup type="calendar" className="shadow-2xl" />
              </div>
              
              {/* Phone Center - Home */}
-             <div className="z-10 transform md:-translate-y-12 hover:scale-105 transition-transform duration-500">
+             <div className="z-10 transform scale-90 md:-translate-y-12 hover:scale-105 transition-transform duration-500">
                 <PhoneMockup type="home" className="shadow-[0_0_50px_rgba(235,94,157,0.4)] border-4 border-[#eb5e9d]/30" />
              </div>
 
              {/* Phone Right - Stats */}
-             <div className="transform md:-translate-x-16 md:rotate-[12deg] md:scale-90 z-0 opacity-90 hover:opacity-100 hover:z-20 transition-all duration-500">
+             <div className="transform scale-75 md:-translate-x-16 md:rotate-[12deg] md:scale-90 z-0 opacity-90 hover:opacity-100 hover:z-20 transition-all duration-500 -mt-24 md:mt-0">
                 <PhoneMockup type="stats" className="shadow-2xl" />
              </div>
           </div>
@@ -658,7 +707,7 @@ interface PricingTierProps {
 }
 
 const PricingTier: React.FC<PricingTierProps> = ({ title, price, engagement, features, recommended = false, onSelect, isCustomQuote = false }) => (
-  <div className={`pricing-card flex flex-col p-8 rounded-[2.5rem] bg-white transition-all duration-700 ${recommended ? 'border-2 border-[#eb5e9d] shadow-[0_30px_60px_-10px_rgba(235,94,157,0.15)] scale-105 z-10' : 'border border-pink-50 shadow-xl shadow-gray-200/30 hover:border-pink-200'} relative group`}>
+  <div className={`pricing-card flex flex-col p-8 rounded-[2.5rem] bg-white transition-all duration-700 ${recommended ? 'border-2 border-[#eb5e9d] shadow-[0_30px_60px_-10px_rgba(235,94,157,0.15)] scale-100 md:scale-105 z-10' : 'border border-pink-50 shadow-xl shadow-gray-200/30 hover:border-pink-200'} relative group`}>
     {recommended && (
       <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#eb5e9d] text-white px-6 py-1.5 rounded-full text-[8px] font-black uppercase tracking-[0.2em] shadow-lg">
         Plus populaire
@@ -767,7 +816,7 @@ const PricingModal: React.FC<{ planType: 'start' | 'signature' | 'serenite' | 's
           </button>
           <div className="absolute -right-10 -top-10 w-40 h-40 bg-[#eb5e9d]/10 rounded-full blur-3xl"></div>
           
-          <div className="flex items-start gap-6 relative z-10">
+          <div className="flex items-start gap-6 relative z-10 flex-col md:flex-row">
             <div className="w-16 h-16 rounded-2xl bg-[#eb5e9d] flex items-center justify-center shadow-lg shadow-pink-300/50 shrink-0">
               {plan.icon}
             </div>
@@ -921,7 +970,7 @@ export const PricingSection: React.FC<{ onSeeDetails: () => void; onJoin: () => 
                     <p className="text-sm text-gray-500">Une solution sur-mesure pour les grandes structures.</p>
                  </div>
               </div>
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4 mt-4 md:mt-0">
                  <span className="text-sm font-bold text-gray-400 uppercase tracking-wider">Sur Devis</span>
                  <button className="px-6 py-2.5 rounded-xl bg-gray-50 text-gray-600 font-bold text-sm group-hover:bg-[#eb5e9d] group-hover:text-white transition-colors">
                    Nous contacter
@@ -932,7 +981,7 @@ export const PricingSection: React.FC<{ onSeeDetails: () => void; onJoin: () => 
 
         {onSeeDetails && (
           <div className="mt-12 text-center">
-            <button onClick={onSeeDetails} className="inline-flex items-center gap-2 px-8 py-4 bg-white/60 backdrop-blur-md border border-pink-100 rounded-2xl text-[#eb5e9d] font-bold hover:bg-white hover:shadow-lg transition-all group text-sm">
+            <button onClick={onSeeDetails} className="inline-flex items-center gap-2 px-8 py-4 bg-white/60 backdrop-blur-md border border-pink-100 rounded-2xl text-[#eb5e9d] font-bold hover:bg-white hover:shadow-lg transition-all group text-sm w-full md:w-auto justify-center">
               Comparer toutes les fonctionnalités <ChevronRight size={18} className="group-hover:translate-x-1" />
             </button>
           </div>
@@ -966,7 +1015,7 @@ export const PricingPage: React.FC<{ onJoin: () => void }> = ({ onJoin }) => {
          <div className="container mx-auto max-w-5xl mt-12 animate-in fade-in slide-in-from-bottom-8">
             <GlassCard className="overflow-hidden p-0">
                <div className="overflow-x-auto">
-                 <table className="w-full text-left border-collapse">
+                 <table className="w-full text-left border-collapse min-w-[600px]">
                    <thead>
                      <tr className="bg-pink-50/50 border-b border-pink-100">
                        <th className="p-6 text-gray-500 font-medium">Fonctionnalités</th>
@@ -1008,156 +1057,10 @@ export const PricingPage: React.FC<{ onJoin: () => void }> = ({ onJoin }) => {
   );
 };
 
-export const JoinUsPage: React.FC = () => {
-  const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState({
-    name: '', email: '', password: '',
-    salonName: '', role: '', instagram: ''
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
+export const DownloadPage: React.FC = () => {
   return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-white">
-      
-      {/* Left Side - Form */}
-      <div className="w-full md:w-1/2 flex flex-col justify-center px-6 py-24 md:px-16 lg:px-24 xl:px-32 relative">
-        <div className="max-w-md mx-auto w-full animate-in fade-in slide-in-from-left-8 duration-700">
-           
-           <div className="mb-10">
-              <h1 className="text-4xl md:text-5xl font-serif-elegant italic mb-3 text-gray-900">
-                Créez votre <span className="text-[#eb5e9d]">Espace.</span>
-              </h1>
-              <p className="text-gray-500 font-light text-lg">
-                Rejoignez Blyss et transformez votre activité.
-              </p>
-           </div>
-
-           {/* Simple Steps Indicator */}
-           <div className="flex items-center gap-2 mb-8">
-              <div className={`h-1.5 w-8 rounded-full transition-colors ${step >= 1 ? 'bg-[#eb5e9d]' : 'bg-gray-100'}`}></div>
-              <div className={`h-1.5 w-8 rounded-full transition-colors ${step >= 2 ? 'bg-[#eb5e9d]' : 'bg-gray-100'}`}></div>
-           </div>
-
-           {step === 1 ? (
-             <div className="space-y-5 animate-in fade-in duration-300">
-                <div className="space-y-1.5">
-                   <label className="text-xs font-bold text-gray-400 uppercase tracking-wider">Nom Complet</label>
-                   <input 
-                      type="text" 
-                      name="name"
-                      placeholder="Julie Nailartist"
-                      value={formData.name}
-                      onChange={handleChange}
-                      className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-3.5 outline-none focus:border-[#eb5e9d] focus:bg-white focus:ring-4 focus:ring-pink-50 transition-all"
-                   />
-                </div>
-                <div className="space-y-1.5">
-                   <label className="text-xs font-bold text-gray-400 uppercase tracking-wider">Email</label>
-                   <input 
-                      type="email" 
-                      name="email"
-                      placeholder="julie@exemple.com"
-                      value={formData.email}
-                      onChange={handleChange}
-                      className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-3.5 outline-none focus:border-[#eb5e9d] focus:bg-white focus:ring-4 focus:ring-pink-50 transition-all"
-                   />
-                </div>
-                <div className="space-y-1.5">
-                   <label className="text-xs font-bold text-gray-400 uppercase tracking-wider">Mot de passe</label>
-                   <input 
-                      type="password" 
-                      name="password"
-                      placeholder="••••••••"
-                      value={formData.password}
-                      onChange={handleChange}
-                      className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-3.5 outline-none focus:border-[#eb5e9d] focus:bg-white focus:ring-4 focus:ring-pink-50 transition-all"
-                   />
-                </div>
-
-                <button 
-                  onClick={() => setStep(2)}
-                  className="w-full bg-black text-white py-4 rounded-xl font-bold mt-4 hover:bg-gray-800 transition-colors flex items-center justify-center gap-2 group"
-                >
-                  Continuer <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                </button>
-             </div>
-           ) : (
-             <div className="space-y-5 animate-in fade-in duration-300">
-                <button onClick={() => setStep(1)} className="text-sm text-gray-400 hover:text-gray-600 flex items-center gap-1 mb-2 font-medium">
-                  <ArrowLeft size={14} /> Retour
-                </button>
-
-                <div className="space-y-1.5">
-                   <label className="text-xs font-bold text-gray-400 uppercase tracking-wider">Nom du Salon</label>
-                   <input 
-                      type="text" 
-                      name="salonName"
-                      placeholder="Institut Blyss"
-                      value={formData.salonName}
-                      onChange={handleChange}
-                      className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-3.5 outline-none focus:border-[#eb5e9d] focus:bg-white focus:ring-4 focus:ring-pink-50 transition-all"
-                   />
-                </div>
-                
-                <div className="space-y-1.5">
-                   <label className="text-xs font-bold text-gray-400 uppercase tracking-wider">Votre Niveau</label>
-                   <div className="grid grid-cols-3 gap-3">
-                      {['Débutante', 'Intermédiaire', 'Experte'].map((lvl) => (
-                        <div 
-                          key={lvl}
-                          onClick={() => setFormData({...formData, role: lvl})}
-                          className={`cursor-pointer border rounded-xl py-3 text-center text-xs font-bold transition-all ${formData.role === lvl ? 'border-[#eb5e9d] bg-pink-50 text-[#eb5e9d]' : 'border-gray-100 bg-white text-gray-500 hover:border-gray-200'}`}
-                        >
-                          {lvl}
-                        </div>
-                      ))}
-                   </div>
-                </div>
-
-                <button 
-                  className="w-full bg-[#eb5e9d] text-white py-4 rounded-xl font-bold mt-4 hover:bg-pink-600 transition-colors shadow-lg shadow-pink-200"
-                >
-                  Commencer maintenant
-                </button>
-                <p className="text-center text-[10px] text-gray-400 mt-2">
-                  En cliquant, vous acceptez les CGU et la Politique de Confidentialité.
-                </p>
-             </div>
-           )}
-           
-           <div className="mt-10 pt-6 border-t border-gray-50 flex items-center justify-between text-xs text-gray-400 font-medium">
-              <span className="flex items-center gap-1.5"><CheckCircle2 size={14} className="text-[#eb5e9d]" /> Sans engagement</span>
-              <span className="flex items-center gap-1.5"><CheckCircle2 size={14} className="text-[#eb5e9d]" /> Données sécurisées</span>
-           </div>
-        </div>
-      </div>
-
-      {/* Right Side - Visual */}
-      <div className="hidden md:block w-1/2 relative bg-gray-100">
-         <img 
-            src="https://images.unsplash.com/photo-1519017635425-63628ee3e56c?q=80&w=1974&auto=format&fit=crop" 
-            className="absolute inset-0 w-full h-full object-cover"
-            alt="Workspace"
-         />
-         <div className="absolute inset-0 bg-black/20 backdrop-blur-[1px]"></div>
-         
-         <div className="absolute bottom-16 left-12 right-12 text-white">
-            <h2 className="text-4xl font-serif-elegant italic mb-4">"Tout est devenu plus simple."</h2>
-            <div className="flex items-center gap-4">
-               <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md p-0.5">
-                  <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100" className="w-full h-full rounded-full object-cover" alt="User" />
-               </div>
-               <div>
-                  <p className="font-bold text-sm">Clara M.</p>
-                  <p className="text-xs text-white/80">Prothésiste depuis 3 ans</p>
-               </div>
-            </div>
-         </div>
-      </div>
-
+    <div className="pt-24 min-h-screen bg-transparent">
+       <DownloadAppSection />
     </div>
   );
 };

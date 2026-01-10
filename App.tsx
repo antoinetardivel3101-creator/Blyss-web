@@ -10,12 +10,12 @@ import {
   Mission,
   Footer,
   PricingPage,
-  JoinUsPage,
+  DownloadPage,
   DownloadAppSection
 } from './components/Sections';
 import { BackgroundEffects } from './components/Visuals';
 
-export type PageView = 'home' | 'pricing' | 'join';
+export type PageView = 'home' | 'pricing' | 'download';
 
 const App: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -45,24 +45,23 @@ const App: React.FC = () => {
       <main className="transition-all duration-500 animate-in fade-in">
         {currentPage === 'home' && (
           <>
-            <Hero onJoin={() => setCurrentPage('join')} />
+            <Hero onJoin={() => setCurrentPage('download')} />
             <Mission />
             <Features />
             <AppShowcase />
             <PricingSection 
               onSeeDetails={() => setCurrentPage('pricing')} 
-              onJoin={() => setCurrentPage('join')}
+              onJoin={() => setCurrentPage('download')}
             />
-            <DownloadAppSection />
           </>
         )}
 
         {currentPage === 'pricing' && (
-          <PricingPage onJoin={() => setCurrentPage('join')} />
+          <PricingPage onJoin={() => setCurrentPage('download')} />
         )}
 
-        {currentPage === 'join' && (
-          <JoinUsPage />
+        {currentPage === 'download' && (
+          <DownloadPage />
         )}
       </main>
 
