@@ -23,39 +23,34 @@
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            scrollbar-width: none;
             -webkit-tap-highlight-color: transparent; /* Supprime le flash bleu au clic sur mobile */
         }
-        body::-webkit-scrollbar {
-            display: none;
-        }
 
-        /* Barre de défilement personnalisée Premium "Floating" - Visible uniquement sur Desktop */
+        /* Barre de défilement globale personnalisée Premium */
         @media (min-width: 768px) {
-            .custom-scrollbar {
+            html {
                 scrollbar-width: thin;
-                scrollbar-color: rgba(235, 94, 157, 0.3) transparent;
+                scrollbar-color: #eb5e9d #fff5f9;
             }
             
-            .custom-scrollbar::-webkit-scrollbar {
-                width: 10px;
+            ::-webkit-scrollbar {
+                width: 12px;
             }
 
-            .custom-scrollbar::-webkit-scrollbar-track {
-                background: transparent;
-                margin-block: 10px;
+            ::-webkit-scrollbar-track {
+                background: #fff5f9;
             }
 
-            .custom-scrollbar::-webkit-scrollbar-thumb {
-                background-color: rgba(235, 94, 157, 0.4);
+            ::-webkit-scrollbar-thumb {
+                background-color: #eb5e9d;
                 border-radius: 20px;
-                border: 3px solid transparent;
+                border: 3px solid #fff5f9;
                 background-clip: content-box;
                 transition: background-color 0.3s ease;
             }
 
-            .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-                background-color: #eb5e9d;
+            ::-webkit-scrollbar-thumb:hover {
+                background-color: #d14d86;
             }
         }
 
