@@ -678,8 +678,8 @@ export const AppShowcase: React.FC = () => {
             {[
               { label: "Planning", icon: <Calendar size={24} />, color: "text-[#eb5e9d]", bg: "bg-pink-50 border-pink-200" },
               { label: "Clientes", icon: <User size={24} />, color: "text-[#eb5e9d]", bg: "bg-pink-50 border-pink-200" },
-              { label: "Profile", icon: <Zap size={24} />, color: "text-[#eb5e9d]", bg: "bg-pink-50 border-pink-200" },
-              { label: "Planning", icon: <Heart size={24} />, color: "text-[#eb5e9d]", bg: "bg-pink-50 border-pink-200" }
+              { label: "Profiles", icon: <Zap size={24} />, color: "text-[#eb5e9d]", bg: "bg-pink-50 border-pink-200" },
+              { label: "Fidélité", icon: <Heart size={24} />, color: "text-[#eb5e9d]", bg: "bg-pink-50 border-pink-200" }
             ].map((item, i) => (
               <GlassCard key={i} className={`p-6 md:p-8 flex flex-col items-center text-center hover:bg-white transition-all border-2 ${item.bg.includes('border') ? '' : 'border-pink-50'} hover:border-pink-200 hover:shadow-xl hover:shadow-pink-100/50 group bg-white/60 active:scale-95 duration-200`}>
                 <div className={`${item.color} ${item.bg} p-3 md:p-4 rounded-2xl mb-3 md:mb-4 transition-transform duration-500 group-hover:scale-[1.2] shadow-sm border`}>{item.icon}</div>
@@ -1380,12 +1380,12 @@ export const DownloadAppSection: React.FC = () => {
           <div className="flex flex-row items-end justify-center -space-x-24 md:-space-x-16 mt-8 lg:mt-20 pb-10 md:pb-0 perspective-1000 h-[280px] md:h-auto z-10 w-full overflow-visible">
 
             {/* Phone 1: Clients - Left Wing */}
-            <div className="transform transition-all duration-500 hover:scale-105 z-20 scale-[0.4] md:scale-95 opacity-90 hover:opacity-100 origin-bottom-right translate-y-16 -rotate-12 lg:-translate-y-8 lg:-rotate-6 relative">
+            <div className="transform transition-all duration-500 z-20 scale-[0.4] md:scale-95 opacity-90 hover:opacity-100 origin-bottom-right translate-y-16 -rotate-12 lg:-translate-y-8 lg:-rotate-6 relative">
               <PhoneMockup type="clients" imageSrc="/screen_left_v2.png" className="shadow-2xl shadow-black/50" />
             </div>
 
             {/* Phone 2: Dashboard - Center Hero (Prominent) */}
-            <div className="transform transition-all duration-500 hover:scale-110 z-30 scale-[0.5] md:scale-110 hover:z-50 origin-bottom mb-10 md:mb-0 relative translate-y-24 lg:translate-y-0">
+            <div className="transform transition-all duration-500 z-30 scale-[0.5] md:scale-110 hover:z-50 origin-bottom mb-10 md:mb-0 relative translate-y-24 lg:translate-y-0">
               <div className="relative">
                 <div className="absolute -inset-4 bg-pink-500/20 blur-3xl rounded-[60px] animate-pulse"></div>
                 <PhoneMockup type="dashboard" imageSrc="/screen_center_v2.png" className="shadow-[0_0_80px_rgba(235,94,157,0.4)] border border-[#eb5e9d]/30" />
@@ -1393,7 +1393,7 @@ export const DownloadAppSection: React.FC = () => {
             </div>
 
             {/* Phone 3: Calendar Month - Right Wing */}
-            <div className="transform transition-all duration-500 hover:scale-105 z-10 md:z-10 scale-[0.4] md:scale-95 opacity-90 hover:opacity-100 origin-bottom-left translate-y-16 rotate-12 lg:-translate-y-8 lg:rotate-6 relative">
+            <div className="transform transition-all duration-500 z-10 md:z-10 scale-[0.4] md:scale-95 opacity-90 hover:opacity-100 origin-bottom-left translate-y-16 rotate-12 lg:-translate-y-8 lg:rotate-6 relative">
               <PhoneMockup type="calendar-month" imageSrc="/screen_right_v3.png" className="shadow-2xl shadow-black/50" />
             </div>
 
