@@ -76,7 +76,9 @@ const BlyssLogo: React.FC<{ onClick?: () => void }> = ({ onClick }) => (
 );
 
 /* --- PHONE MOCKUP COMPONENT IPHONE 17 STYLE --- */
-const PhoneMockup: React.FC<{ type: 'dashboard' | 'calendar-month' | 'calendar-day' | 'clients' | 'overview' | 'screenshot'; className?: string }> = ({ type, className = "" }) => {
+const PhoneMockup: React.FC<{ type: 'dashboard' | 'calendar-month' | 'calendar-day' | 'clients' | 'overview' | 'screenshot'; className?: string; imageSrc?: string; imageClassName?: string }> = ({ type, className = "", imageSrc, imageClassName = "" }) => {
+  const isCustomScreen = !!imageSrc;
+
   return (
     // Base width reduced to 280px for better mobile fit on small screens, expands on md
     <div className={`relative w-[280px] md:w-[300px] h-[580px] md:h-[620px] bg-[#e3e3e3] rounded-[45px] md:rounded-[55px] p-[4px] shadow-[0_0_2px_rgba(0,0,0,0.1),0_20px_40px_-10px_rgba(0,0,0,0.2)] ring-1 ring-white/50 shrink-0 select-none ${className}`}>
@@ -90,10 +92,10 @@ const PhoneMockup: React.FC<{ type: 'dashboard' | 'calendar-month' | 'calendar-d
       {/* Titanium Frame Bezel */}
       <div className="w-full h-full bg-[#1c1c1c] rounded-[42px] md:rounded-[52px] p-[8px] shadow-inner">
         {/* Screen */}
-        <div className={`w-full h-full ${type === 'screenshot' ? 'bg-[#fff0f6]' : 'bg-[#FDFBFD]'} rounded-[34px] md:rounded-[44px] overflow-hidden flex flex-col font-inter relative isolate`}>
+        <div className={`w-full h-full ${type === 'screenshot' || isCustomScreen ? 'bg-[#fff0f6]' : 'bg-[#FDFBFD]'} rounded-[34px] md:rounded-[44px] overflow-hidden flex flex-col font-inter relative isolate`}>
 
-          {/* Background Decorative Elements for Screenshot Type */}
-          {type === 'screenshot' && (
+          {/* Background Decorative Elements for Screenshot Type - Only if NO custom screen */}
+          {(type === 'screenshot' || isCustomScreen) && (
             <>
               <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[#eb5e9d]/10 to-transparent"></div>
               <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#eb5e9d]/10 to-transparent"></div>
@@ -108,431 +110,278 @@ const PhoneMockup: React.FC<{ type: 'dashboard' | 'calendar-month' | 'calendar-d
             </div>
           </div>
 
-          {/* Status Bar */}
+          {/* Status Bar - Always render spacer for layout consistency */}
           <div className="h-9 md:h-12 w-full flex items-end justify-between pl-5 md:pl-7 pr-8 md:pr-12 pb-4 md:pb-7 z-40 text-gray-900 select-none">
-            {/* Left side: Empty for screenshot type as requested */}
             <div className="flex-1">
-              {type !== 'screenshot' && (
+              {type !== 'screenshot' && !isCustomScreen && (
                 <span className="text-[12px] md:text-[14px] font-semibold tracking-wide">12:35</span>
               )}
             </div>
-
-            {/* Center: Notch space (already handled by Dynamic Island absolute pos) */}
             <div className="flex-1"></div>
-
-            {/* Right side: Empty as requested */}
             <div className="flex-1"></div>
           </div>
 
           {/* Content Area */}
           <div
-            className={`flex-1 relative ${type === 'screenshot' ? 'h-full w-full overflow-hidden' : 'overflow-y-auto px-4 md:px-5 pt-2 pb-24 space-y-4 md:space-y-5 [&::-webkit-scrollbar]:hidden'}`}
-            style={type !== 'screenshot' ? { scrollbarWidth: 'none', msOverflowStyle: 'none' } : {}}
+            className={`flex-1 relative ${type === 'screenshot' || isCustomScreen ? 'h-full w-full overflow-hidden' : 'overflow-y-auto px-4 md:px-5 pt-2 pb-24 space-y-4 md:space-y-5 [&::-webkit-scrollbar]:hidden'}`}
+            style={type !== 'screenshot' && !isCustomScreen ? { scrollbarWidth: 'none', msOverflowStyle: 'none' } : {}}
           >
-            {type === 'screenshot' && (
+            {isCustomScreen ? (
               <img
-                src="/dashboard_new.png"
-                className="absolute inset-x-0 bottom-0 w-full h-full object-cover object-bottom"
-                alt="App Dashboard"
+                src={imageSrc}
+                className={`absolute inset-x-0 bottom-0 w-full h-full object-cover object-bottom ${imageClassName}`}
+                alt="App Screen"
               />
-            )}
 
-            {/* SCREEN 1: DASHBOARD */}
-            {type === 'dashboard' && (
+            ) : (
               <>
-                <div className="bg-[#eb5e9d] rounded-[2rem] p-6 text-white shadow-lg shadow-pink-200/50 relative overflow-hidden">
-                  <div className="relative z-10">
-                    <div className="text-pink-100 text-sm mb-1">Cette semaine</div>
-                    <div className="flex justify-between items-end mb-1">
-                      <div className="text-4xl font-bold">24</div>
-                      <div className="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
-                        <TrendingUp size={12} /> +12%
-                      </div>
-                    </div>
-                    <div className="text-pink-100 text-sm mb-4">prestations</div>
-                    <div className="text-right text-xs text-pink-200">vs semaine dernière</div>
-                  </div>
-                </div>
+                {type === 'screenshot' && (
+                  <img
+                    src="/dashboard_new.png"
+                    className="absolute inset-x-0 bottom-0 w-full h-full object-cover object-bottom"
+                    alt="App Dashboard"
+                  />
+                )}
 
-                <div className="flex gap-3">
-                  <div className="flex-1 bg-white rounded-3xl p-4 flex flex-col items-center gap-2 shadow-sm border border-gray-50">
-                    <div className="w-12 h-12 rounded-full bg-pink-100 text-[#eb5e9d] flex items-center justify-center">
-                      <Plus size={24} />
-                    </div>
-                    <span className="text-xs font-medium text-gray-600">Créneaux</span>
-                  </div>
-                  <div className="flex-1 bg-white rounded-3xl p-4 flex flex-col items-center gap-2 shadow-sm border border-gray-50">
-                    <div className="w-12 h-12 rounded-full bg-pink-100 text-[#eb5e9d] flex items-center justify-center">
-                      <Ban size={24} />
-                    </div>
-                    <span className="text-xs font-medium text-gray-600">Bloquer</span>
-                  </div>
-                  <div className="flex-1 bg-white rounded-3xl p-4 flex flex-col items-center gap-2 shadow-sm border border-gray-50">
-                    <div className="w-12 h-12 rounded-full bg-pink-100 text-[#eb5e9d] flex items-center justify-center">
-                      <Eye size={24} />
-                    </div>
-                    <span className="text-xs font-medium text-gray-600">Planning</span>
-                  </div>
-                </div>
-
-                <div className="bg-white rounded-[2rem] p-5 flex justify-between items-center shadow-sm border border-gray-50">
-                  <span className="text-gray-600 font-medium">Estimation du jour</span>
-                  <span className="text-2xl font-bold text-gray-900">320€</span>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-center px-1 mb-3">
-                    <h4 className="font-bold text-gray-900">Prochaines clientes</h4>
-                    <span className="text-xs text-[#eb5e9d] font-medium">Voir tout</span>
-                  </div>
-
-                  <div className="space-y-3">
-                    <div className="bg-white p-4 rounded-[1.5rem] shadow-sm flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-full bg-[#eb5e9d] text-white flex items-center justify-center font-bold text-sm">MD</div>
-                      <div className="flex-1">
-                        <div className="flex justify-between items-start">
-                          <div className="font-bold text-gray-900">Marie Dupont</div>
-                          <span className="bg-[#eb5e9d] text-white text-[10px] px-2 py-0.5 rounded-full">En cours</span>
+                {type === 'dashboard' && (
+                  <>
+                    <div className="bg-[#eb5e9d] rounded-[2rem] p-6 text-white shadow-lg shadow-pink-200/50 relative overflow-hidden">
+                      <div className="relative z-10">
+                        <div className="text-pink-100 text-sm mb-1">Cette semaine</div>
+                        <div className="flex justify-between items-end mb-1">
+                          <div className="text-4xl font-bold">24</div>
+                          <div className="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
+                            <TrendingUp size={12} /> +12%
+                          </div>
                         </div>
-                        <div className="text-xs text-gray-500 mb-1">Pose complète gel</div>
-                        <div className="flex justify-between items-center">
-                          <span className="text-xs text-gray-400">14:00</span>
-                          <span className="font-bold text-gray-900">65€</span>
-                        </div>
+                        <div className="text-pink-100 text-sm mb-4">prestations</div>
+                        <div className="text-right text-xs text-pink-200">vs semaine dernière</div>
                       </div>
                     </div>
 
-                    <div className="bg-white p-4 rounded-[1.5rem] shadow-sm flex items-center gap-4 opacity-80">
-                      <div className="w-12 h-12 rounded-full bg-[#eb5e9d]/80 text-white flex items-center justify-center font-bold text-sm">SM</div>
-                      <div className="flex-1">
-                        <div className="flex justify-between items-start">
-                          <div className="font-bold text-gray-900">Sophie Martin</div>
-                          <span className="bg-[#f3f0ea] text-[#8e8b85] text-[10px] px-2 py-0.5 rounded-full">À venir</span>
+                    <div className="flex gap-3">
+                      <div className="flex-1 bg-white rounded-3xl p-4 flex flex-col items-center gap-2 shadow-sm border border-gray-50">
+                        <div className="w-12 h-12 rounded-full bg-pink-100 text-[#eb5e9d] flex items-center justify-center">
+                          <Plus size={24} />
                         </div>
-                        <div className="text-xs text-gray-500 mb-1">Remplissage</div>
-                        <div className="flex justify-between items-center">
-                          <span className="text-xs text-gray-400">15:30</span>
-                          <span className="font-bold text-gray-900">45€</span>
+                        <span className="text-xs font-medium text-gray-600">Créneaux</span>
+                      </div>
+                      <div className="flex-1 bg-white rounded-3xl p-4 flex flex-col items-center gap-2 shadow-sm border border-gray-50">
+                        <div className="w-12 h-12 rounded-full bg-pink-100/50 text-[#eb5e9d] flex items-center justify-center">
+                          <Ban size={24} />
                         </div>
+                        <span className="text-xs font-medium text-gray-600">Bloquer</span>
+                      </div>
+                      <div className="flex-1 bg-white rounded-3xl p-4 flex flex-col items-center gap-2 shadow-sm border border-gray-50">
+                        <div className="w-12 h-12 rounded-full bg-pink-100/50 text-[#eb5e9d] flex items-center justify-center">
+                          <Eye size={24} />
+                        </div>
+                        <span className="text-xs font-medium text-gray-600">Planning</span>
                       </div>
                     </div>
 
-                    <div className="bg-white p-4 rounded-[1.5rem] shadow-sm flex items-center gap-4 opacity-80">
-                      <div className="w-12 h-12 rounded-full bg-[#eb5e9d]/80 text-white flex items-center justify-center font-bold text-sm">EB</div>
-                      <div className="flex-1">
-                        <div className="flex justify-between items-start">
-                          <div className="font-bold text-gray-900">Emma Bernard</div>
-                          <span className="bg-[#f3f0ea] text-[#8e8b85] text-[10px] px-2 py-0.5 rounded-full">À venir</span>
+                    <div className="bg-white rounded-[2rem] p-5 shadow-sm border border-gray-50 flex justify-between items-center">
+                      <div className="text-sm font-medium text-gray-500">Estimation du jour</div>
+                      <div className="text-xl font-bold text-gray-900">320€</div>
+                    </div>
+
+                    <div>
+                      <div className="flex justify-between items-center px-1 mb-3">
+                        <h4 className="text-xs font-bold text-gray-800">Prochaines clientes</h4>
+                        <span className="text-[10px] text-[#eb5e9d] font-bold">Voir tout</span>
+                      </div>
+                      <div className="space-y-3">
+                        <div className="bg-white p-4 rounded-3xl shadow-sm border border-gray-50 flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-full bg-[#eb5e9d] text-white flex items-center justify-center text-xs font-bold">MD</div>
+                            <div>
+                              <div className="font-bold text-gray-900 text-sm">Marie Dupont</div>
+                              <div className="text-xs text-gray-400">Pose complète gel</div>
+                            </div>
+                          </div>
+                          <div className="flex flex-col items-end">
+                            <span className="text-[10px] bg-[#eb5e9d] text-white px-2 py-0.5 rounded-full font-bold mb-1">En cours</span>
+                            <span className="font-bold text-sm">65€</span>
+                          </div>
                         </div>
-                        <div className="text-xs text-gray-500 mb-1">Manucure simple</div>
-                        <div className="flex justify-between items-center">
-                          <span className="text-xs text-gray-400">17:00</span>
-                          <span className="font-bold text-gray-900">35€</span>
+
+                        <div className="bg-white p-4 rounded-3xl shadow-sm border border-gray-50 flex items-center justify-between opacity-60">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-full bg-[#ffadd6] text-white flex items-center justify-center text-xs font-bold">SM</div>
+                            <div>
+                              <div className="font-bold text-gray-900 text-sm">Sophie Martin</div>
+                              <div className="text-xs text-gray-400">Remplissage</div>
+                            </div>
+                          </div>
+                          <div className="flex flex-col items-end">
+                            <span className="text-[10px] bg-[#fce4ec] text-[#eb5e9d] px-2 py-0.5 rounded-full font-bold mb-1">À venir</span>
+                            <span className="font-bold text-sm">45€</span>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
+                  </>
+                )}
+
+                {type === 'calendar-month' && (
+                  <>
+                    <div className="flex justify-between items-center mb-6 pt-2">
+                      <h3 className="text-2xl font-bold">Calendrier</h3>
+                      <div className="flex gap-2">
+                        <button className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm text-gray-600"><Search size={20} /></button>
+                        <button className="w-10 h-10 rounded-full bg-[#eb5e9d] flex items-center justify-center shadow-sm text-white"><Plus size={24} /></button>
+                      </div>
+                    </div>
+
+                    <div className="bg-white rounded-[2rem] p-6 shadow-sm border border-gray-50">
+                      <div className="flex justify-between items-center mb-6">
+                        <ChevronLeft size={20} className="text-gray-400" />
+                        <span className="font-bold text-lg">Janvier 2026</span>
+                        <ChevronRight size={20} className="text-gray-400" />
+                      </div>
+                      <div className="grid grid-cols-7 gap-y-4 text-center text-sm mb-2">
+                        {['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'].map(d => (
+                          <div key={d} className="text-gray-400 text-xs font-medium">{d}</div>
+                        ))}
+                      </div>
+                      <div className="grid grid-cols-7 gap-y-4 text-center text-sm font-medium text-gray-800">
+                        <span className="text-gray-200">29</span><span className="text-gray-200">30</span><span className="text-gray-200">31</span>
+                        <span>1</span><span>2</span><span>3</span><span>4</span>
+                        <span>5</span><span>6</span><span>7</span><span>8</span><span>9</span>
+                        <span className="relative flex justify-center">
+                          <span className="absolute -inset-2 bg-[#eb5e9d] rounded-xl z-0 shadow-md"></span>
+                          <span className="relative z-10 text-white font-bold">10</span>
+                        </span>
+                        <span>11</span>
+                        <span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span>
+                        <span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span>
+                        <span>26</span><span>27</span><span>28</span><span>29</span><span>30</span><span>31</span>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="flex justify-between items-center px-1 mb-3">
+                        <h4 className="text-xs font-bold text-gray-800">Rendez-vous du jour</h4>
+                      </div>
+                      <div className="space-y-3">
+                        <div className="bg-white p-4 rounded-3xl shadow-sm border border-gray-50 flex gap-4">
+                          <div className="flex flex-col items-center justify-center border-r border-gray-100 pr-4">
+                            <span className="text-lg font-bold text-gray-900">09:00</span>
+                            <span className="text-xs text-gray-400">1h30</span>
+                          </div>
+                          <div>
+                            <div className="font-bold text-gray-900">Claire Petit</div>
+                            <div className="text-xs text-gray-500 mb-1">Pose complète</div>
+                            <span className="text-[10px] font-bold text-[#eb5e9d] bg-pink-50 px-2 py-0.5 rounded-full">65€</span>
+                          </div>
+                        </div>
+
+                        <div className="bg-white p-4 rounded-3xl shadow-sm border border-gray-50 flex gap-4">
+                          <div className="flex flex-col items-center justify-center border-r border-gray-100 pr-4">
+                            <span className="text-lg font-bold text-gray-900">11:00</span>
+                            <span className="text-xs text-gray-400">1h</span>
+                          </div>
+                          <div>
+                            <div className="font-bold text-gray-900">Julie Moreau</div>
+                            <div className="text-xs text-gray-500 mb-1">Remplissage</div>
+                            <span className="text-[10px] font-bold text-[#eb5e9d] bg-pink-50 px-2 py-0.5 rounded-full">45€</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                {(type === 'clients' || type === 'overview') && (
+                  <>
+                    <div className="flex justify-between items-center mb-6 pt-2">
+                      <h3 className="text-2xl font-bold">Clientes</h3>
+                      <button className="w-10 h-10 rounded-full bg-[#eb5e9d] flex items-center justify-center shadow-sm text-white"><Plus size={24} /></button>
+                    </div>
+
+                    <div className="relative mb-6">
+                      <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                      <input type="text" placeholder="Rechercher..." className="w-full bg-white border border-gray-100 rounded-2xl py-3 pl-12 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-pink-100 transition-all font-medium" />
+                    </div>
+
+                    <div className="space-y-2 mb-6">
+                      <div className="flex justify-between items-center px-1">
+                        <h4 className="text-xs font-bold text-gray-800">Récents</h4>
+                      </div>
+                      <div className="flex gap-4 overflow-x-auto pb-4 pl-1 no-scrollbar">
+                        {['MD', 'SM', 'EB', 'LM', 'CP'].map((initials, i) => (
+                          <div key={i} className="flex flex-col items-center gap-2 shrink-0">
+                            <div className={`w-14 h-14 rounded-full ${i === 0 ? 'border-2 border-[#eb5e9d] p-[2px]' : ''}`}>
+                              <div className={`w-full h-full rounded-full flex items-center justify-center text-sm font-bold text-white ${['bg-pink-400', 'bg-purple-400', 'bg-orange-400', 'bg-blue-400', 'bg-green-400'][i]}`}>
+                                {initials}
+                              </div>
+                            </div>
+                            <span className="text-[10px] font-medium text-gray-600">Marie D.</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="flex justify-between items-center px-1 mb-3">
+                        <h4 className="text-xs font-bold text-gray-800">Liste (142)</h4>
+                      </div>
+                      <div className="bg-white rounded-[2rem] p-2 shadow-sm border border-gray-50">
+                        {['Emma Bernard', 'Léa Martin', 'Camille Thomas', 'Manon Richard'].map((name, i) => (
+                          <div key={i} className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-2xl transition-colors cursor-pointer group">
+                            <div className="flex items-center gap-3">
+                              <div className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold text-white ${['bg-orange-400', 'bg-blue-400', 'bg-green-400', 'bg-purple-400'][i]}`}>
+                                {name.split(' ').map(n => n[0]).join('')}
+                              </div>
+                              <div>
+                                <div className="font-bold text-gray-900 text-sm">{name}</div>
+                                <div className="text-[10px] text-gray-400">Dernière visite: Il y a 3j</div>
+                              </div>
+                            </div>
+                            <div className="w-8 h-8 rounded-full bg-white border border-gray-100 flex items-center justify-center text-gray-300 group-hover:text-[#eb5e9d] group-hover:border-pink-100 transition-all">
+                              <ChevronRight size={14} />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Services Preview for Clients/Overview */}
+                    <div>
+                      <div className="flex justify-between items-center px-1 mb-3">
+                        <h4 className="text-xs font-bold text-gray-800 flex items-center gap-2">
+                          <Sparkles size={12} className="text-[#eb5e9d]" /> Prestations
+                        </h4>
+                      </div>
+                      <div className="grid grid-cols-2 gap-2">
+                        <div className="bg-gradient-to-br from-pink-50 to-white p-3 rounded-2xl border border-pink-100 flex flex-col gap-2 hover:shadow-md transition-shadow cursor-pointer">
+                          <div className="text-[10px] font-bold text-gray-800">Babyboomer</div>
+                          <div className="flex justify-between items-end">
+                            <span className="text-[11px] font-black text-[#eb5e9d]">45€</span>
+                            <div className="w-5 h-5 rounded-full bg-white flex items-center justify-center text-gray-400 shadow-sm">
+                              <ChevronRight size={10} />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="bg-white p-3 rounded-2xl border border-gray-100 flex flex-col gap-2 hover:border-pink-200 transition-colors cursor-pointer">
+                          <div className="text-[10px] font-bold text-gray-800">Nail Art</div>
+                          <div className="flex justify-between items-end">
+                            <span className="text-[11px] font-black text-gray-800">15€</span>
+                            <div className="w-5 h-5 rounded-full bg-gray-50 flex items-center justify-center text-gray-400">
+                              <ChevronRight size={10} />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
               </>
             )}
-
-            {/* SCREEN 2: CALENDAR MONTH */}
-            {type === 'calendar-month' && (
-              <>
-                <div className="flex justify-between items-center mb-6">
-                  <h1 className="text-2xl font-bold text-gray-900">Calendrier</h1>
-                  <div className="flex gap-2">
-                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-gray-600 shadow-sm"><Calendar size={20} /></div>
-                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-gray-600 shadow-sm"><Search size={20} /></div>
-                    <div className="w-10 h-10 rounded-full bg-[#eb5e9d] flex items-center justify-center text-white shadow-sm"><Plus size={20} /></div>
-                  </div>
-                </div>
-
-                <div className="bg-white rounded-[2rem] p-6 shadow-sm mb-6">
-                  <div className="flex justify-between items-center mb-6">
-                    <ChevronLeft size={20} className="text-gray-400" />
-                    <span className="font-bold text-lg">Janvier 2026</span>
-                    <ChevronRight size={20} className="text-gray-400" />
-                  </div>
-
-                  <div className="grid grid-cols-7 gap-y-4 text-center text-sm mb-2">
-                    {['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'].map(d => <span key={d} className="text-gray-400 text-xs">{d}</span>)}
-                  </div>
-                  <div className="grid grid-cols-7 gap-y-4 gap-x-2 text-center text-sm font-medium">
-                    {/* Empty cells */}
-                    <span></span><span></span><span></span>
-                    {/* Days */}
-                    {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(d => <span key={d} className="py-2">{d}<div className="h-1 w-1 bg-[#eb5e9d] rounded-full mx-auto mt-1"></div></span>)}
-                    <span className="bg-[#eb5e9d] text-white rounded-2xl py-2 shadow-lg shadow-pink-200">10</span>
-                    {[11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31].map(d => <span key={d} className="py-2">{d}<div className="h-1 w-1 bg-[#eb5e9d] rounded-full mx-auto mt-1"></div></span>)}
-                  </div>
-                </div>
-
-                <div>
-                  <h3 className="font-bold text-gray-900 mb-4">Rendez-vous</h3>
-                  <div className="space-y-3">
-                    <div className="bg-white p-4 rounded-[1.5rem] flex items-center gap-4 shadow-sm">
-                      <div className="text-center min-w-[3rem]">
-                        <div className="font-bold text-gray-900">09:00</div>
-                        <div className="text-xs text-gray-400">1h30</div>
-                      </div>
-                      <div className="h-8 w-[1px] bg-gray-100"></div>
-                      <div className="flex-1">
-                        <div className="font-bold text-gray-900">Claire Petit</div>
-                        <div className="text-xs text-gray-500">Pose complète</div>
-                      </div>
-                      <div className="font-bold text-gray-900">65€</div>
-                    </div>
-                    <div className="bg-white p-4 rounded-[1.5rem] flex items-center gap-4 shadow-sm">
-                      <div className="text-center min-w-[3rem]">
-                        <div className="font-bold text-gray-900">11:00</div>
-                        <div className="text-xs text-gray-400">1h</div>
-                      </div>
-                      <div className="h-8 w-[1px] bg-gray-100"></div>
-                      <div className="flex-1">
-                        <div className="font-bold text-gray-900">Julie Moreau</div>
-                        <div className="text-xs text-gray-500">Remplissage</div>
-                      </div>
-                      <div className="font-bold text-gray-900">45€</div>
-                    </div>
-                  </div>
-                </div>
-              </>
-            )}
-
-            {/* SCREEN 3: CALENDAR DAY */}
-            {type === 'calendar-day' && (
-              <>
-                <div className="flex justify-between items-center mb-6">
-                  <h1 className="text-2xl font-bold text-gray-900">Calendrier</h1>
-                  <div className="flex gap-2">
-                    <div className="w-10 h-10 rounded-full bg-[#eb5e9d] flex items-center justify-center text-white shadow-sm"><Calendar size={20} /></div>
-                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-gray-600 shadow-sm"><Search size={20} /></div>
-                    <div className="w-10 h-10 rounded-full bg-[#eb5e9d] flex items-center justify-center text-white shadow-sm"><Plus size={20} /></div>
-                  </div>
-                </div>
-
-                <div className="flex justify-between mb-8 overflow-x-hidden">
-                  {[
-                    { d: 'Jeu', n: '8', active: false },
-                    { d: 'Ven', n: '9', active: false },
-                    { d: 'Sam', n: '10', active: true },
-                    { d: 'Dim', n: '11', active: false },
-                    { d: 'Lun', n: '12', active: false },
-                  ].map((day, i) => (
-                    <div key={i} className={`flex flex-col items-center justify-center w-14 h-16 rounded-2xl ${day.active ? 'bg-[#eb5e9d] text-white shadow-lg shadow-pink-200' : 'bg-white text-gray-600'}`}>
-                      <span className="text-xs mb-1 opacity-80">{day.d}</span>
-                      <span className="font-bold text-lg">{day.n}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <h3 className="font-bold text-gray-900 mb-4">Rendez-vous du jour</h3>
-                <div className="space-y-3">
-                  {[
-                    { time: '09:00', duration: '1h30', name: 'Claire Petit', type: 'Pose complète', price: '65€' },
-                    { time: '11:00', duration: '1h', name: 'Julie Moreau', type: 'Remplissage', price: '45€' },
-                    { time: '14:00', duration: '45min', name: 'Marie Dupont', type: 'Manucure', price: '35€' },
-                    { time: '16:00', duration: '2h', name: 'Sophie Martin', type: 'Nail art', price: '85€' },
-                  ].map((rdv, i) => (
-                    <div key={i} className="bg-white p-4 rounded-[1.5rem] flex items-center gap-4 shadow-sm">
-                      <div className="text-center min-w-[3rem]">
-                        <div className="font-bold text-gray-900">{rdv.time}</div>
-                        <div className="text-xs text-gray-400">{rdv.duration}</div>
-                      </div>
-                      <div className="h-8 w-[1px] bg-gray-100"></div>
-                      <div className="flex-1">
-                        <div className="font-bold text-gray-900">{rdv.name}</div>
-                        <div className="text-xs text-gray-500">{rdv.type}</div>
-                      </div>
-                      <div className="font-bold text-gray-900">{rdv.price}</div>
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
-
-            {/* SCREEN 4: CLIENTS */}
-            {type === 'clients' && (
-              <>
-                <h1 className="text-2xl font-bold text-gray-900 mb-6">Mes clientes</h1>
-
-                <div className="bg-white rounded-2xl p-3 flex items-center gap-3 shadow-sm mb-6">
-                  <Search size={20} className="text-gray-400 ml-2" />
-                  <span className="text-gray-400 text-sm">Rechercher une cliente...</span>
-                </div>
-
-                <div className="bg-white rounded-[2rem] p-6 flex justify-between text-center shadow-sm mb-6">
-                  <div>
-                    <div className="text-2xl font-bold">5</div>
-                    <div className="text-xs text-gray-400 mt-1">Total</div>
-                  </div>
-                  <div className="w-[1px] bg-gray-100 h-10"></div>
-                  <div>
-                    <div className="text-2xl font-bold">3</div>
-                    <div className="text-xs text-gray-400 mt-1">Cette semaine</div>
-                  </div>
-                  <div className="w-[1px] bg-gray-100 h-10"></div>
-                  <div>
-                    <div className="text-2xl font-bold">12</div>
-                    <div className="text-xs text-gray-400 mt-1">Ce mois</div>
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <div className="bg-white p-4 rounded-[1.5rem] flex items-center gap-4 shadow-sm">
-                    <div className="w-12 h-12 rounded-full bg-[#eb5e9d] text-white flex items-center justify-center font-bold text-sm">MD</div>
-                    <div className="flex-1">
-                      <div className="font-bold text-gray-900">Marie Dupont</div>
-                      <div className="text-xs text-gray-500 mb-1">06 12 34 56 78</div>
-                      <div className="flex gap-2 text-[10px] text-gray-400">
-                        <span>Il y a 2 jours</span> • <span className="text-[#eb5e9d]">12 visites</span>
-                      </div>
-                      <div className="text-[10px] text-gray-400 italic mt-1">"Préfère les couleurs nude"</div>
-                    </div>
-                    <div className="w-8 h-8 rounded-full bg-pink-50 flex items-center justify-center text-[#eb5e9d]"><Pencil size={14} /></div>
-                  </div>
-
-                  <div className="bg-white p-4 rounded-[1.5rem] flex items-center gap-4 shadow-sm">
-                    <div className="w-12 h-12 rounded-full bg-[#eb5e9d] text-white flex items-center justify-center font-bold text-sm">SM</div>
-                    <div className="flex-1">
-                      <div className="font-bold text-gray-900">Sophie Martin</div>
-                      <div className="text-xs text-gray-500 mb-1">06 23 45 67 89</div>
-                      <div className="flex gap-2 text-[10px] text-gray-400">
-                        <span>Il y a 1 semaine</span> • <span className="text-[#eb5e9d]">8 visites</span>
-                      </div>
-                      <div className="text-[10px] text-gray-400 italic mt-1">"Allergique au gel"</div>
-                    </div>
-                    <div className="w-8 h-8 rounded-full bg-pink-50 flex items-center justify-center text-[#eb5e9d]"><Pencil size={14} /></div>
-                  </div>
-
-                  <div className="bg-white p-4 rounded-[1.5rem] flex items-center gap-4 shadow-sm">
-                    <div className="w-12 h-12 rounded-full bg-[#eb5e9d] text-white flex items-center justify-center font-bold text-sm">EB</div>
-                    <div className="flex-1">
-                      <div className="font-bold text-gray-900">Emma Bernard</div>
-                      <div className="text-xs text-gray-500 mb-1">06 34 56 78 90</div>
-                      <div className="flex gap-2 text-[10px] text-gray-400">
-                        <span>Il y a 3 jours</span> • <span className="text-[#eb5e9d]">15 visites</span>
-                      </div>
-                    </div>
-                    <div className="w-8 h-8 rounded-full bg-pink-50 flex items-center justify-center text-[#eb5e9d]"><Pencil size={14} /></div>
-                  </div>
-
-                  <div className="bg-white p-4 rounded-[1.5rem] flex items-center gap-4 shadow-sm">
-                    <div className="w-12 h-12 rounded-full bg-[#eb5e9d] text-white flex items-center justify-center font-bold text-sm">CP</div>
-                    <div className="flex-1">
-                      <div className="font-bold text-gray-900">Claire Petit</div>
-                      <div className="text-xs text-gray-500 mb-1">06 45 67 89 01</div>
-                      <div className="flex gap-2 text-[10px] text-gray-400">
-                        <span>Il y a 2 semaines</span> • <span className="text-[#eb5e9d]">5 visites</span>
-                      </div>
-                      <div className="text-[10px] text-gray-400 italic mt-1">"Aime le nail art"</div>
-                    </div>
-                    <div className="w-8 h-8 rounded-full bg-pink-50 flex items-center justify-center text-[#eb5e9d]"><Pencil size={14} /></div>
-                  </div>
-                </div>
-              </>
-            )}
-
-            {/* SCREEN 5: OVERVIEW (ORIGINAL APP SHOWCASE - NOW UNUSED IN FAVOR OF DASHBOARD, BUT KEPT FOR REFERENCE) */}
-            {type === 'overview' && (
-              <>
-                {/* Planning Preview */}
-                <div className="mb-6">
-                  <div className="flex justify-between items-center px-1 mb-3">
-                    <h4 className="text-xs font-bold text-gray-800 flex items-center gap-2">
-                      <Calendar size={12} className="text-[#eb5e9d]" /> Planning
-                    </h4>
-                    <span className="text-[10px] text-gray-400">Aujourd'hui</span>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-3 bg-white p-2.5 rounded-xl border border-gray-100 shadow-sm hover:scale-[1.02] transition-transform cursor-pointer">
-                      <div className="w-1.5 h-8 rounded-full bg-[#eb5e9d]"></div>
-                      <div className="flex-1">
-                        <div className="flex justify-between">
-                          <span className="text-xs font-bold text-gray-800">14:00</span>
-                          <span className="text-[10px] font-medium text-gray-500">1h30</span>
-                        </div>
-                        <div className="text-[10px] text-gray-500">Sophie Marceau • Pose Complète</div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3 bg-white p-2.5 rounded-xl border border-gray-100 shadow-sm opacity-60 hover:opacity-100 transition-opacity cursor-pointer">
-                      <div className="w-1.5 h-8 rounded-full bg-purple-400"></div>
-                      <div className="flex-1">
-                        <div className="flex justify-between">
-                          <span className="text-xs font-bold text-gray-800">16:00</span>
-                          <span className="text-[10px] font-medium text-gray-500">45min</span>
-                        </div>
-                        <div className="text-[10px] text-gray-500">Julie Gayet • Remplissage</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Clients Preview */}
-                <div className="mb-6">
-                  <div className="flex justify-between items-center px-1 mb-3">
-                    <h4 className="text-xs font-bold text-gray-800 flex items-center gap-2">
-                      <User size={12} className="text-[#eb5e9d]" /> Clients Récents
-                    </h4>
-                  </div>
-                  <div className="flex gap-3 overflow-x-auto pb-2 -mx-5 px-5 no-scrollbar" style={{ scrollbarWidth: 'none' }}>
-                    {[
-                      { img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100", name: "Léa" },
-                      { img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100", name: "Sarah" },
-                      { img: "https://images.unsplash.com/photo-1521119989659-a83eee488058?w=100", name: "Marc" },
-                      { img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100", name: "Emma" }
-                    ].map((c, i) => (
-                      <div key={i} className="flex flex-col items-center gap-1.5 min-w-[50px] cursor-pointer group/client">
-                        <div className="w-10 h-10 rounded-full p-0.5 bg-gradient-to-tr from-pink-200 to-white group-hover/client:scale-110 transition-transform">
-                          <img src={c.img} alt={c.name} className="w-full h-full rounded-full object-cover border border-white" />
-                        </div>
-                        <span className="text-[9px] font-medium text-gray-600">{c.name}</span>
-                      </div>
-                    ))}
-                    <div className="flex flex-col items-center gap-1.5 min-w-[50px]">
-                      <div className="w-10 h-10 rounded-full border border-dashed border-gray-300 flex items-center justify-center text-gray-400 bg-gray-50 hover:bg-white hover:border-[#eb5e9d] hover:text-[#eb5e9d] transition-colors cursor-pointer">
-                        <Plus size={14} />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Services Preview */}
-                <div>
-                  <div className="flex justify-between items-center px-1 mb-3">
-                    <h4 className="text-xs font-bold text-gray-800 flex items-center gap-2">
-                      <Sparkles size={12} className="text-[#eb5e9d]" /> Prestations
-                    </h4>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    <div className="bg-gradient-to-br from-pink-50 to-white p-3 rounded-2xl border border-pink-100 flex flex-col gap-2 hover:shadow-md transition-shadow cursor-pointer">
-                      <div className="text-[10px] font-bold text-gray-800">Babyboomer</div>
-                      <div className="flex justify-between items-end">
-                        <span className="text-[11px] font-black text-[#eb5e9d]">45€</span>
-                        <div className="w-5 h-5 rounded-full bg-white flex items-center justify-center text-gray-400 shadow-sm">
-                          <ChevronRight size={10} />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="bg-white p-3 rounded-2xl border border-gray-100 flex flex-col gap-2 hover:border-pink-200 transition-colors cursor-pointer">
-                      <div className="text-[10px] font-bold text-gray-800">Nail Art</div>
-                      <div className="flex justify-between items-end">
-                        <span className="text-[11px] font-black text-gray-800">15€</span>
-                        <div className="w-5 h-5 rounded-full bg-gray-50 flex items-center justify-center text-gray-400">
-                          <ChevronRight size={10} />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </>
-            )}
-
           </div>
 
           {/* Bottom Nav */}
-          {type !== 'screenshot' && (
+          {type !== 'screenshot' && !isCustomScreen && (
             <div className="absolute bottom-6 left-4 right-4 h-16 bg-white rounded-[2.5rem] shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] flex justify-around items-center px-4 z-40">
               <div className={`p-2 transition-all cursor-pointer ${type === 'dashboard' ? 'text-[#eb5e9d] bg-pink-50 rounded-full' : 'text-gray-400'}`}>
                 <Home size={24} strokeWidth={type === 'dashboard' ? 2.5 : 2} />
@@ -550,13 +399,13 @@ const PhoneMockup: React.FC<{ type: 'dashboard' | 'calendar-month' | 'calendar-d
           )}
 
           {/* Home Indicator */}
-          {type !== 'screenshot' && (
+          {type !== 'screenshot' && !isCustomScreen && (
             <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1.5 bg-black/80 rounded-full z-50 pointer-events-none"></div>
           )}
 
         </div>
       </div>
-    </div >
+    </div>
   );
 };
 
@@ -622,96 +471,82 @@ export const Navbar: React.FC<{ scrolled: boolean; currentPage: PageView; setCur
             <div className="hidden md:flex items-center gap-6">
               <button
                 onClick={() => handleNav('home')}
-                className={`text-sm font-medium transition-colors ${currentPage === 'home' ? 'text-black font-bold' : 'text-gray-800 hover:text-black'}`}
+                className={`text-sm font-medium transition-colors ${currentPage === 'download'
+                  ? 'text-white/90 hover:text-white'
+                  : currentPage === 'home' ? 'text-black font-bold' : 'text-gray-800 hover:text-black'}`}
               >
                 Découvrir
               </button>
               <button
                 onClick={() => handleNav('pricing')}
-                className={`text-sm font-medium transition-colors ${currentPage === 'pricing' ? 'text-black font-bold' : 'text-gray-800 hover:text-black'}`}
+                className={`text-sm font-medium transition-colors ${currentPage === 'download'
+                  ? 'text-white/90 hover:text-white'
+                  : currentPage === 'pricing' ? 'text-black font-bold' : 'text-gray-800 hover:text-black'}`}
               >
                 Tarifs
               </button>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 relative">
               {/* CTA (Right) */}
               <button
                 onClick={() => handleNav('download')}
-                className="bg-[#eb5e9d] text-white px-5 py-2.5 rounded-full text-sm font-bold hover:bg-pink-600 transition-colors whitespace-nowrap shadow-lg shadow-pink-500/30"
+                className="hidden md:block bg-[#eb5e9d] text-white px-5 py-2.5 rounded-full text-sm font-bold hover:bg-pink-600 transition-colors whitespace-nowrap shadow-lg shadow-pink-500/30"
               >
                 Télécharger l'app
               </button>
 
               {/* Mobile Menu Trigger */}
               <button
-                className="md:hidden w-10 h-10 rounded-full text-white hover:bg-white/10 flex items-center justify-center transition-colors"
-                onClick={() => setIsMobileMenuOpen(true)}
+                className={`md:hidden w-10 h-10 flex items-center justify-center transition-colors ${currentPage === 'download' ? 'text-white' : 'text-gray-900'}`}
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               >
-                <Menu size={20} />
+                {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
               </button>
+
+              {/* Mobile Dropdown Menu */}
+              <div className={`absolute top-full right-0 mt-2 w-64 bg-white rounded-[1.5rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border border-gray-100 p-3 flex flex-col gap-2 transform transition-all duration-300 ease-out origin-top-right z-[100] ${isMobileMenuOpen ? 'scale-100 opacity-100 translate-y-0 pointer-events-auto' : 'scale-95 opacity-0 -translate-y-2 pointer-events-none'}`}>
+
+                <button
+                  onClick={() => handleNav('home')}
+                  className={`group flex items-center justify-between w-full p-4 rounded-2xl transition-all duration-300 border backdrop-blur-md ${currentPage === 'home' ? 'bg-[#eb5e9d]/10 border-[#eb5e9d]/10 text-[#eb5e9d] shadow-sm' : 'bg-white/80 border-gray-100 hover:bg-[#eb5e9d]/10 hover:border-[#eb5e9d]/20 hover:text-[#eb5e9d] text-gray-700 hover:scale-[1.02] active:scale-[0.98]'}`}
+                >
+                  <span className={`font-bold text-sm ${currentPage === 'home' ? '' : 'group-hover:translate-x-1 transition-transform'}`}>Découvrir</span>
+                  {currentPage === 'home' && <div className="w-1.5 h-1.5 rounded-full bg-[#eb5e9d] shadow-[0_0_10px_rgba(235,94,157,0.5)]"></div>}
+                </button>
+
+                <button
+                  onClick={() => handleNav('pricing')}
+                  className={`group flex items-center justify-between w-full p-4 rounded-2xl transition-all duration-300 border backdrop-blur-md ${currentPage === 'pricing' ? 'bg-[#eb5e9d]/10 border-[#eb5e9d]/10 text-[#eb5e9d] shadow-sm' : 'bg-white/80 border-gray-100 hover:bg-[#eb5e9d]/10 hover:border-[#eb5e9d]/20 hover:text-[#eb5e9d] text-gray-700 hover:scale-[1.02] active:scale-[0.98]'}`}
+                >
+                  <span className={`font-bold text-sm ${currentPage === 'pricing' ? '' : 'group-hover:translate-x-1 transition-transform'}`}>Tarifs</span>
+                  {currentPage === 'pricing' && <div className="w-1.5 h-1.5 rounded-full bg-[#eb5e9d] shadow-[0_0_10px_rgba(235,94,157,0.5)]"></div>}
+                </button>
+
+                <div className="h-px bg-gray-100 mx-2 my-1"></div>
+
+                <button
+                  onClick={() => handleNav('download')}
+                  className="flex items-center gap-3 w-full p-4 rounded-2xl bg-[#eb5e9d]/90 backdrop-blur-md text-white font-black transition-all duration-300 hover:bg-[#eb5e9d] hover:shadow-[0_10px_20px_-5px_rgba(235,94,157,0.4)] hover:scale-105 active:scale-95 shadow-lg shadow-pink-500/20"
+                >
+                  <Download size={18} />
+                  <span className="text-sm">Télécharger l'app</span>
+                </button>
+              </div>
             </div>
           </div>
 
         </nav>
       </div>
 
-      {/* Mobile Menu Overlay */}
-      <div
-        className={`fixed inset-0 z-[60] bg-white/95 backdrop-blur-3xl transition-all duration-500 md:hidden flex flex-col ${isMobileMenuOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-4 pointer-events-none'}`}
-      >
-        <div className="flex justify-end p-6">
-          <button
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="w-12 h-12 rounded-full bg-gray-50 text-gray-900 flex items-center justify-center hover:bg-gray-100 transition-colors"
-          >
-            <X size={24} />
-          </button>
-        </div>
 
-        <div className="flex-1 flex flex-col justify-center px-6 gap-4 -mt-10">
-          <button
-            onClick={() => handleNav('home')}
-            className={`flex items-center justify-between p-6 rounded-3xl border transition-all active:scale-[0.98] ${currentPage === 'home' ? 'bg-pink-50 border-pink-100 text-[#eb5e9d]' : 'bg-white border-gray-100 shadow-sm'}`}
-          >
-            <span className="text-xl font-bold">Découvrir</span>
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center ${currentPage === 'home' ? 'bg-[#eb5e9d] text-white' : 'bg-gray-100 text-gray-400'}`}>
-              <ArrowRight size={16} />
-            </div>
-          </button>
-
-          <button
-            onClick={() => handleNav('pricing')}
-            className={`flex items-center justify-between p-6 rounded-3xl border transition-all active:scale-[0.98] ${currentPage === 'pricing' ? 'bg-pink-50 border-pink-100 text-[#eb5e9d]' : 'bg-white border-gray-100 shadow-sm'}`}
-          >
-            <span className="text-xl font-bold">Tarifs</span>
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center ${currentPage === 'pricing' ? 'bg-[#eb5e9d] text-white' : 'bg-gray-100 text-gray-400'}`}>
-              <ArrowRight size={16} />
-            </div>
-          </button>
-
-          <button
-            onClick={() => handleNav('download')}
-            className="bg-[#eb5e9d] text-white p-6 rounded-3xl font-bold shadow-xl shadow-pink-200 mt-4 active:scale-95 transition-transform text-xl flex items-center justify-center gap-3"
-          >
-            <Download size={24} /> Télécharger l'app
-          </button>
-        </div>
-
-        <div className="pb-10 px-6">
-          <div className="text-center">
-            <p className="font-serif-elegant italic text-2xl text-gray-800 mb-1">Blyss</p>
-            <p className="text-gray-400 text-sm">Élevez votre art.</p>
-          </div>
-        </div>
-      </div>
     </>
   );
 };
 
 export const Hero: React.FC<{ onJoin?: () => void }> = ({ onJoin }) => {
   return (
-    <section className="relative pt-28 md:pt-32 pb-12 px-6 overflow-hidden bg-gradient-to-b from-pink-100/40 via-pink-50/30 to-white">
+    <section className="relative pt-28 md:pt-32 pb-12 px-6 overflow-hidden bg-gradient-to-b from-pink-100/40 via-pink-50/30 to-pink-50/20">
       {/* Maximum Pink Atmosphere */}
       <div className="absolute top-[-15%] left-[-10%] w-[1000px] h-[1000px] bg-[#eb5e9d]/15 rounded-full blur-[160px] pointer-events-none z-0"></div>
       <div className="absolute bottom-[-10%] right-[-5%] w-[800px] h-[800px] bg-pink-200/40 rounded-full blur-[140px] pointer-events-none z-0"></div>
@@ -744,7 +579,7 @@ export const Hero: React.FC<{ onJoin?: () => void }> = ({ onJoin }) => {
 };
 
 export const Mission: React.FC = () => (
-  <section className="py-16 md:py-20 px-6 bg-white overflow-hidden relative">
+  <section className="pt-16 pb-8 md:py-20 px-6 bg-gradient-to-b from-pink-50/20 via-white to-pink-50/30 overflow-hidden relative">
     <div className="container mx-auto max-w-7xl">
       <div className="flex flex-col md:flex-row gap-12 md:gap-16 items-center">
         <div className="md:w-1/2 relative z-10 order-2 md:order-1 text-center md:text-left">
@@ -762,9 +597,9 @@ export const Mission: React.FC = () => (
           </div>
         </div>
         <div className="md:w-1/2 relative group order-1 md:order-2 w-full px-4 md:px-0">
-          <div className="grid grid-cols-2 gap-3 md:gap-6 relative z-10">
+          <div className="grid grid-cols-2 gap-2 md:gap-6 relative z-10">
             <img src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=800&auto=format&fit=crop" className="rounded-[1.5rem] md:rounded-[3rem] shadow-2xl transform -rotate-2 md:-rotate-3 group-hover:rotate-0 transition-all duration-1000 ease-out" alt="Nail Studio" />
-            <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=800&auto=format&fit=crop" className="rounded-[1.5rem] md:rounded-[3rem] shadow-2xl mt-6 md:mt-12 transform rotate-2 md:rotate-3 group-hover:rotate-0 transition-all duration-1000 delay-100 ease-out" alt="Manicure" />
+            <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=800&auto=format&fit=crop" className="rounded-[1.5rem] md:rounded-[3rem] shadow-2xl mt-3 md:mt-12 transform rotate-2 md:rotate-3 group-hover:rotate-0 transition-all duration-1000 delay-100 ease-out" alt="Manicure" />
           </div>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[130%] h-[130%] bg-pink-100/30 blur-[60px] md:blur-[100px] -z-0 rounded-full"></div>
         </div>
@@ -773,56 +608,89 @@ export const Mission: React.FC = () => (
   </section>
 );
 
-export const Features: React.FC = () => (
-  <section className="py-16 md:py-20 px-6 bg-white" id="features">
-    <div className="container mx-auto max-w-7xl">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-12">
-        {[
-          { icon: <Calendar size={32} className="md:w-10 md:h-10" />, title: "Agenda Predictif", desc: "La réservation intelligente qui s'adapte à vos pauses et optimise chaque créneau.", color: "bg-pink-100/80 text-[#eb5e9d]" },
-          { icon: <Sparkles size={32} className="md:w-10 md:h-10" />, title: "Galerie Inédite", desc: "Exposez vos chefs-d'œuvre avec un rendu professionnel qui convertit vos abonnés.", color: "bg-pink-100/80 text-[#eb5e9d]" },
-          { icon: <ShieldCheck size={32} className="md:w-10 md:h-10" />, title: "Sécurité Totale", desc: "Terminé les 'No-shows'. Vos revenus sont garantis grâce aux acomptes automatisés.", color: "bg-pink-100/80 text-[#eb5e9d]" }
-        ].map((feature, i) => (
-          <div key={i} className="flex flex-col items-center text-center group cursor-default p-4 md:p-0">
-            <div className={`w-16 h-16 md:w-20 md:h-20 ${feature.color} rounded-[1.5rem] md:rounded-[1.75rem] flex items-center justify-center mb-5 md:mb-6 transition-all duration-700 group-hover:scale-110 group-hover:rotate-[15deg] shadow-sm`}>
-              {feature.icon}
+export const Features: React.FC = () => {
+  const [activeFeature, setActiveFeature] = useState<number | null>(null);
+
+  return (
+    <section className="pt-4 pb-12 md:py-20 px-6 bg-gradient-to-b from-pink-50/30 via-white to-pink-100/20" id="features">
+      <div className="container mx-auto max-w-7xl">
+        {/* Desktop Grid */}
+        <div className="hidden md:grid grid-cols-3 gap-12">
+          {[
+            { icon: <Calendar size={32} className="w-10 h-10" />, title: "Notifications Instantanées", desc: "Soyez alertée immédiatement pour chaque réservation ou annulation.", color: "bg-pink-100/80 text-[#eb5e9d]" },
+            { icon: <Sparkles size={32} className="w-10 h-10" />, title: "Portfolio Photo", desc: "Liez votre profil instagram pour présenter vos réalisations.", color: "bg-pink-100/80 text-[#eb5e9d]" },
+            { icon: <ShieldCheck size={32} className="w-10 h-10" />, title: "Sécurité Totale", desc: "Terminé les 'No-shows'. Vos revenus sont garantis grâce aux acomptes automatisés.", color: "bg-pink-100/80 text-[#eb5e9d]" }
+          ].map((feature, i) => (
+            <div key={i} className="flex flex-col items-center text-center group cursor-default">
+              <div className={`w-20 h-20 ${feature.color} rounded-[1.75rem] flex items-center justify-center mb-6 transition-all duration-700 group-hover:scale-110 group-hover:rotate-[15deg] shadow-sm`}>
+                {feature.icon}
+              </div>
+              <h3 className="text-2xl font-bold mb-3 text-gray-800 tracking-tight">{feature.title}</h3>
+              <p className="text-gray-500 leading-relaxed max-w-xs text-base font-light">{feature.desc}</p>
             </div>
-            <h3 className="text-xl md:text-2xl font-bold mb-2 md:mb-3 text-gray-800 tracking-tight">{feature.title}</h3>
-            <p className="text-gray-500 leading-relaxed max-w-xs text-sm md:text-base font-light">{feature.desc}</p>
+          ))}
+        </div>
+
+        {/* Mobile Horizontal Interactive Layout */}
+        <div className="md:hidden flex flex-col items-center">
+          <div className="flex justify-between w-full max-w-sm gap-4">
+            {[
+              { icon: <Calendar size={20} />, title: "Notifications", fullTitle: "Notifications Instantanées", desc: "Soyez alertée immédiatement pour chaque réservation ou annulation.", color: "bg-pink-100/80 text-[#eb5e9d]" },
+              { icon: <Sparkles size={20} />, title: "Portfolio", fullTitle: "Portfolio Photo", desc: "Liez votre profil instagram pour présenter vos réalisations.", color: "bg-pink-100/80 text-[#eb5e9d]" },
+              { icon: <ShieldCheck size={20} />, title: "Sécurité", fullTitle: "Sécurité Totale", desc: "Terminé les 'No-shows'. Vos revenus sont garantis grâce aux acomptes automatisés.", color: "bg-pink-100/80 text-[#eb5e9d]" }
+            ].map((feature, i) => (
+              <div key={i} className="flex flex-col items-center w-1/3" onClick={() => setActiveFeature(activeFeature === i ? null : i)}>
+                <div className={`w-14 h-14 ${feature.color} rounded-2xl flex items-center justify-center mb-2 transition-all duration-300 ${activeFeature === i ? 'scale-110 ring-2 ring-pink-100 shadow-lg' : 'shadow-sm'}`}>
+                  {feature.icon}
+                </div>
+                <h3 className={`text-xs font-bold text-center leading-tight transition-colors ${activeFeature === i ? 'text-[#eb5e9d]' : 'text-gray-600'}`}>
+                  {feature.title}
+                </h3>
+                {/* Mobile Description Popup */}
+                <div className={`mt-4 absolute left-6 right-6 p-4 bg-white rounded-2xl border border-pink-100 shadow-xl z-20 transition-all duration-300 transform origin-top ${activeFeature === i ? 'opacity-100 translate-y-20 scale-100' : 'opacity-0 translate-y-16 scale-95 pointer-events-none'}`}>
+                  <h4 className="font-bold text-gray-900 mb-2">{feature.fullTitle}</h4>
+                  <p className="text-sm text-gray-500">{feature.desc}</p>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
+          {/* Spacer for the popup */}
+          <div className={`transition-all duration-300 ${activeFeature !== null ? 'h-32' : 'h-4'}`}></div>
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
+
 
 export const AppShowcase: React.FC = () => {
   return (
-    <section className="py-16 md:py-24 relative overflow-hidden bg-gradient-to-b from-pink-100/40 via-pink-50/30 to-white">
+    <section className="py-12 md:py-24 relative overflow-hidden bg-gradient-to-b from-pink-100/20 via-pink-50/10 to-white">
       {/* Maximum Pink Atmosphere - Same as Hero */}
-      <div className="absolute top-[-15%] left-[-10%] w-[1000px] h-[1000px] bg-[#eb5e9d]/15 rounded-full blur-[160px] pointer-events-none z-0"></div>
-      <div className="absolute bottom-[-10%] right-[-5%] w-[800px] h-[800px] bg-pink-200/40 rounded-full blur-[140px] pointer-events-none z-0"></div>
-      <div className="absolute top-1/4 right-[10%] w-[400px] h-[400px] bg-[#eb5e9d]/10 rounded-full blur-[100px] pointer-events-none z-0"></div>
+      <div className="absolute top-[-15%] left-[-10%] w-[500px] md:w-[1000px] h-[500px] md:h-[1000px] bg-[#eb5e9d]/15 rounded-full blur-[100px] md:blur-[160px] pointer-events-none z-0"></div>
+      <div className="absolute bottom-[-10%] right-[-5%] w-[400px] md:w-[800px] h-[400px] md:h-[800px] bg-pink-200/40 rounded-full blur-[80px] md:blur-[140px] pointer-events-none z-0"></div>
+      <div className="absolute top-1/4 right-[10%] w-[200px] md:w-[400px] h-[200px] md:h-[400px] bg-[#eb5e9d]/10 rounded-full blur-[60px] md:blur-[100px] pointer-events-none z-0"></div>
 
       <div className="container mx-auto px-6 md:px-12 flex flex-col lg:flex-row items-center gap-12 md:gap-16 max-w-7xl">
         <div className="lg:w-1/2 relative z-10 text-center lg:text-left order-2 lg:order-1">
           <h2 className="text-4xl md:text-7xl font-serif-elegant italic mb-8 leading-tight">Tout votre salon <br /> dans votre <span className="text-[#eb5e9d]">poche.</span></h2>
           <div className="grid grid-cols-2 gap-3 md:gap-6">
             {[
-              { label: "Planning", icon: <Calendar size={24} />, color: "text-[#eb5e9d]", bg: "bg-white border-pink-100" },
+              { label: "Planning", icon: <Calendar size={24} />, color: "text-[#eb5e9d]", bg: "bg-pink-50 border-pink-200" },
               { label: "Clientes", icon: <User size={24} />, color: "text-[#eb5e9d]", bg: "bg-pink-50 border-pink-200" },
-              { label: "Services", icon: <Zap size={24} />, color: "text-[#eb5e9d]", bg: "bg-white border-pink-100" },
-              { label: "Fidélité", icon: <Heart size={24} />, color: "text-[#eb5e9d]", bg: "bg-pink-50 border-pink-200" }
+              { label: "Profile", icon: <Zap size={24} />, color: "text-[#eb5e9d]", bg: "bg-pink-50 border-pink-200" },
+              { label: "Planning", icon: <Heart size={24} />, color: "text-[#eb5e9d]", bg: "bg-pink-50 border-pink-200" }
             ].map((item, i) => (
-              <GlassCard key={i} className={`p-4 md:p-8 flex flex-col items-center text-center hover:bg-white transition-all border-2 ${item.bg.includes('border') ? '' : 'border-pink-50'} hover:border-pink-200 hover:shadow-xl hover:shadow-pink-100/50 group bg-white/60 active:scale-95 duration-200`}>
+              <GlassCard key={i} className={`p-6 md:p-8 flex flex-col items-center text-center hover:bg-white transition-all border-2 ${item.bg.includes('border') ? '' : 'border-pink-50'} hover:border-pink-200 hover:shadow-xl hover:shadow-pink-100/50 group bg-white/60 active:scale-95 duration-200`}>
                 <div className={`${item.color} ${item.bg} p-3 md:p-4 rounded-2xl mb-3 md:mb-4 transition-transform duration-500 group-hover:scale-[1.2] shadow-sm border`}>{item.icon}</div>
-                <span className="font-bold text-gray-800 text-sm md:text-lg group-hover:text-[#eb5e9d] transition-colors">Votre {item.label}</span>
+                <span className="font-bold text-gray-800 text-sm md:text-lg group-hover:text-[#eb5e9d] transition-colors">Vos {item.label}</span>
               </GlassCard>
             ))}
           </div>
         </div>
-        <div className="lg:w-1/2 relative flex justify-center items-center w-full order-1 lg:order-2 mb-8 lg:mb-0">
+        <div className="hidden lg:flex lg:w-1/2 relative justify-center items-center w-full order-1 lg:order-2 mb-8 lg:mb-0">
           {/* Static Phone Mockup with Custom Screenshot */}
-          <div className="relative z-10 transform scale-100 origin-center">
+          <div className="relative z-10 transform scale-90 md:scale-100 origin-center">
             <PhoneMockup type="screenshot" className="shadow-2xl" />
           </div>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-[#eb5e9d]/20 blur-[100px] -z-10 rounded-full animate-pulse-slow"></div>
@@ -1022,7 +890,7 @@ const PricingModal: React.FC<{
         <div className="flex items-center justify-end gap-4 pt-6 border-t border-gray-100 mt-auto">
           <button onClick={onClose} className="px-6 py-3 rounded-xl font-bold text-gray-500 hover:bg-gray-50 transition-colors">Fermer</button>
           <button onClick={onJoin} className="bg-[#eb5e9d] text-white px-8 py-3 rounded-xl font-bold shadow-lg shadow-pink-200 hover:bg-pink-600 transition-colors flex items-center gap-2">
-            Choisir cette offre <ArrowRight size={18} />
+            Choisir cette offre
           </button>
         </div>
       </div>
@@ -1110,43 +978,73 @@ const SalonsModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpe
 }
 
 const ComparisonTable: React.FC = () => {
-  const checkIcon = <div className="flex justify-center"><div className="bg-green-100 p-1.5 rounded-full"><Check size={14} className="text-green-600" strokeWidth={3} /></div></div>;
-  const minusIcon = <div className="flex justify-center"><div className="w-6 h-1 bg-gray-200 rounded-full"></div></div>;
+  const checkIcon = <div className="flex justify-center"><div className="bg-green-100 p-1 rounded-full"><Check size={12} className="text-green-600" strokeWidth={3} /></div></div>;
+  const minusIcon = <div className="flex justify-center text-gray-300">—</div>;
 
   const rows = [
-    { label: "Nombre de RDV", start: "50/mois", signature: "Illimité", serenite: "Illimité", highlight: true },
-    { label: "Fiches Clients", start: "Illimité", signature: "Illimité", serenite: "Illimité" },
-    { label: "Rappels SMS", start: minusIcon, signature: checkIcon, serenite: checkIcon },
-    { label: "Acomptes en ligne", start: minusIcon, signature: checkIcon, serenite: checkIcon },
-    { label: "Site de réservation", start: "Basique", signature: "Personnalisé", serenite: "Premium" },
-    { label: "Statistiques", start: "Basiques", signature: "Avancées", serenite: "Expert" },
-    { label: "Campagnes Marketing", start: minusIcon, signature: minusIcon, serenite: checkIcon },
-    { label: "Facturation Automatique", start: minusIcon, signature: minusIcon, serenite: checkIcon },
-    { label: "Support Client", start: "Email", signature: "VIP 7j/7", serenite: "Prioritaire" },
+    { label: "Réservation en ligne pour les clients", start: checkIcon, serenite: checkIcon, signature: checkIcon },
+    { label: "Gestion des rendez-vous", start: checkIcon, serenite: checkIcon, signature: checkIcon },
+    { label: "Notifications clients (Push notifications)", start: checkIcon, serenite: checkIcon, signature: checkIcon },
+    { label: "Tableau de bord des rendez-vous", start: checkIcon, serenite: checkIcon, signature: checkIcon },
+    { label: "Module finance : Statistique & Facturation", start: minusIcon, serenite: checkIcon, signature: checkIcon },
+    { label: "Portfolio photos intégré au profil", start: minusIcon, serenite: checkIcon, signature: checkIcon },
+    { label: "Rappels automatiques des rendez-vous", start: minusIcon, serenite: checkIcon, signature: checkIcon },
+    { label: "Rappels client post-prestation", start: minusIcon, serenite: minusIcon, signature: checkIcon },
+    { label: "Visibilité premium dans les résultats", start: minusIcon, serenite: minusIcon, signature: checkIcon },
+    { label: "Encaissement en ligne des prestations *", start: minusIcon, serenite: minusIcon, signature: checkIcon },
   ];
 
   return (
     <div className="mt-16 animate-in fade-in slide-in-from-bottom-8 duration-700">
-      <div className="overflow-x-auto pb-4 -mx-6 px-6 md:mx-0 md:px-0 scroll-indicator-mask">
-        <div className="min-w-[700px] md:min-w-full bg-white rounded-[2rem] p-8 border border-gray-100 shadow-xl shadow-pink-100/20">
+      <div className="overflow-x-auto pb-4 -mx-6 px-6 md:mx-0 md:px-0 no-scrollbar">
+        <div className="min-w-[800px] md:min-w-full bg-white rounded-[2rem] p-4 md:p-8 border border-gray-100 shadow-xl shadow-pink-100/20">
           {/* Header */}
-          <div className="grid grid-cols-4 gap-6 mb-8 text-center pb-6 border-b border-gray-100">
-            <div className="text-left font-serif-elegant text-2xl text-gray-400 italic pt-2">Fonctionnalités</div>
-            <div className="font-bold text-gray-900 text-lg">Start</div>
-            <div className="font-bold text-[#eb5e9d] text-xl">Signature</div>
-            <div className="font-bold text-gray-900 text-lg">Sérénité</div>
+          <div className="grid grid-cols-4 gap-4 mb-4 text-center pb-6 border-b border-gray-100">
+            <div className="text-left font-serif-elegant text-2xl text-gray-400 italic self-center">Fonctionnalités</div>
+
+            {/* Start */}
+            <div className="flex flex-col items-center">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="font-bold text-gray-900">Formule <span className="text-pink-400">Start</span></span>
+                <span className="bg-[#eb5e9d] text-white text-[11px] font-bold px-3 py-1 rounded-full">39,90€</span>
+              </div>
+              <span className="text-[11px] text-gray-400">Sans engagement</span>
+            </div>
+
+            {/* Sérénité */}
+            <div className="flex flex-col items-center">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="font-bold text-gray-900">Formule <span className="text-pink-400">Sérénité</span></span>
+                <span className="bg-[#eb5e9d] text-white text-[11px] font-bold px-3 py-1 rounded-full">29,90€</span>
+              </div>
+              <span className="text-[11px] text-gray-400">Engagement 3 mois</span>
+            </div>
+
+            {/* Signature */}
+            <div className="flex flex-col items-center">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="font-bold text-gray-900">Formule <span className="text-pink-400">Signature</span></span>
+                <span className="bg-[#eb5e9d] text-white text-[11px] font-bold px-3 py-1 rounded-full">24,90€</span>
+              </div>
+              <span className="text-[11px] text-gray-400">Engagement 12 mois</span>
+            </div>
           </div>
 
           {/* Rows */}
-          <div className="space-y-4">
+          <div className="space-y-1">
             {rows.map((row, i) => (
-              <div key={i} className={`grid grid-cols-4 gap-6 items-center text-center py-4 px-4 rounded-xl transition-colors ${i % 2 === 0 ? 'bg-gray-50/50' : 'bg-white'} hover:bg-pink-50/30`}>
-                <div className="text-left font-medium text-gray-700 text-sm md:text-base">{row.label}</div>
-                <div className="text-sm font-medium text-gray-500">{row.start}</div>
-                <div className={`text-sm font-bold ${typeof row.signature === 'string' ? 'text-gray-900' : ''}`}>{row.signature}</div>
-                <div className="text-sm font-medium text-gray-500">{row.serenite}</div>
+              <div key={i} className={`grid grid-cols-4 gap-4 items-center text-center py-4 px-4 rounded-xl transition-colors ${i % 2 === 0 ? 'bg-gray-50/50' : 'bg-white'} hover:bg-pink-50/30`}>
+                <div className="text-left font-medium text-gray-700 text-xs md:text-sm">{row.label}</div>
+                <div>{row.start}</div>
+                <div>{row.serenite}</div>
+                <div>{row.signature}</div>
               </div>
             ))}
+          </div>
+
+          {/* Footer Note */}
+          <div className="mt-8 text-left text-[11px] text-gray-400 italic border-t border-gray-50 pt-4">
+            *Encaissement en ligne soumis à conditions.
           </div>
         </div>
       </div>
@@ -1158,139 +1056,216 @@ const PricingCards = ({ onJoin }: { onJoin: () => void }) => {
   const [selectedPlan, setSelectedPlan] = useState<{ title: string, price: string, description: string, features: string[] } | null>(null);
   const [isSalonsModalOpen, setIsSalonsModalOpen] = useState(false);
   const [showComparison, setShowComparison] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(1); // Signature par défaut
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (scrollRef.current && window.innerWidth < 768) {
+      const container = scrollRef.current;
+      const cards = container.children;
+      if (cards.length >= 2) {
+        const signatureCard = cards[1] as HTMLElement;
+        const scrollLeft = signatureCard.offsetLeft - (container.offsetWidth - signatureCard.offsetWidth) / 2;
+        container.scrollLeft = scrollLeft;
+      }
+    }
+  }, []);
+
+  const scrollToIndex = (index: number) => {
+    if (scrollRef.current) {
+      const container = scrollRef.current;
+      const cardWidth = container.offsetWidth * 0.8;
+      const gap = 24;
+      const scrollLeft = index * (cardWidth + gap);
+      container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+      setActiveIndex(index);
+    }
+  };
+
+  const handleScroll = () => {
+    if (scrollRef.current) {
+      const container = scrollRef.current;
+      const scrollPos = container.scrollLeft;
+      const containerWidth = container.offsetWidth;
+      const cardWidth = containerWidth * 0.8;
+      const gap = 24;
+
+      const newIndex = Math.round(scrollPos / (cardWidth + gap));
+
+      if (newIndex !== activeIndex && newIndex >= 0 && newIndex < plans.length) {
+        setActiveIndex(newIndex);
+      }
+    }
+  };
 
   const plans = [
     {
       title: "Start",
-      price: "34,90",
-      description: "Pour démarrer votre activité sans pression.",
+      price: "39,90",
+      description: "L'essentiel pour lancer votre activité sereinement.",
       features: [
-        "Réservation 24/7 illimitée",
-        "Agenda intelligent",
-        "Fichier clients complet",
-        "Rappels automatiques Mail"
-      ]
+        "Réservation en ligne 24/7",
+        "Gestion des Rendez-vous",
+        "Notifications clients App",
+        "Tableau de bord complet"
+      ],
+      icon: <Zap size={28} />
     },
     {
       title: "Signature",
       price: "24,90",
-      description: "La formule complète pour propulser votre salon et sécuriser vos revenus.",
+      description: "Le boost ultime : visibilité premium et automatisation complète.",
       features: [
-        "Toutes les fonctions Start",
-        "Statistiques de performance",
-        "Acomptes CB sécurisés",
-        "Portfolio HD illimité",
-        "Support VIP 7j/7"
+        "Visibilité résultats Premium",
+        "Rappels post-prestation",
+        "Encaissement en ligne",
+        "+ fonctionnalités Start et Sérénité"
       ],
       isPopular: true,
-      commitment: "Engagement 12 mois"
+      commitment: "Engagement 12 mois",
+      icon: <Sparkles size={32} />
     },
     {
       title: "Sérénité",
       price: "29,90",
-      description: "L'équilibre parfait pour les pros.",
+      description: "Gagnez du temps avec une gestion financière et photo intégrée.",
       features: [
-        "Toutes les fonctions Start",
-        "Factures automatisées",
-        "Historique photos poses",
-        "Support prioritaire"
+        "Module Finance & Stats",
+        "Portfolio photos intégré",
+        "Rappels rdv automatiques",
+        "+ fonctionnalités de la formule Start"
       ],
-      commitment: "Engagement 3 mois"
+      commitment: "Engagement 3 mois",
+      icon: <ShieldCheck size={28} />
     }
   ];
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto items-center">
-        {/* Start */}
-        <div className="bg-[#fff5f9] p-8 rounded-[2rem] border border-pink-100/50 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center h-full relative group">
-          <div className="w-14 h-14 bg-white/50 backdrop-blur-sm rounded-2xl flex items-center justify-center mb-6 text-gray-400 group-hover:bg-[#eb5e9d] group-hover:text-white transition-colors border border-white/50">
-            <Zap size={28} />
-          </div>
-          <h3 className="text-xl font-bold text-gray-900 mb-2">Start</h3>
-          <div className="flex items-baseline gap-1 mb-1">
-            <span className="text-5xl font-black text-[#eb5e9d]">34,90</span>
-            <span className="text-gray-400 font-medium">€/mois</span>
-          </div>
-          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-8">Sans engagement</p>
-          <ul className="space-y-4 text-left w-full mb-8 flex-1 pl-4">
-            {plans[0].features.map((f, i) => (
-              <li key={i} className="flex items-center gap-3 text-sm text-gray-600">
-                <div className="bg-white/60 p-1 rounded-full border border-pink-100/50"><Check size={12} className="text-[#eb5e9d]" /></div> {f}
-              </li>
-            ))}
-          </ul>
-          <button onClick={() => setSelectedPlan(plans[0])} className="w-full py-4 rounded-xl bg-white backdrop-blur-md border border-white/50 font-bold text-[#eb5e9d] hover:bg-[#eb5e9d] hover:text-white hover:scale-[1.02] active:scale-[0.98] transition-all shadow-sm">Choisir</button>
+      <div className="relative">
+        {/* Navigation Arrows (Mobile only) */}
+        <div className="md:hidden flex items-center justify-between absolute top-1/2 -translate-y-1/2 w-full px-2 z-30 pointer-events-none">
+          <button
+            onClick={() => scrollToIndex(Math.max(0, activeIndex - 1))}
+            className={`w-10 h-10 rounded-full bg-white/90 backdrop-blur-md shadow-lg flex items-center justify-center text-[#eb5e9d] pointer-events-auto transition-opacity ${activeIndex === 0 ? 'opacity-0' : 'opacity-100'}`}
+          >
+            <ChevronLeft size={24} />
+          </button>
+          <button
+            onClick={() => scrollToIndex(Math.min(plans.length - 1, activeIndex + 1))}
+            className={`w-10 h-10 rounded-full bg-white/90 backdrop-blur-md shadow-lg flex items-center justify-center text-[#eb5e9d] pointer-events-auto transition-opacity ${activeIndex === plans.length - 1 ? 'opacity-0' : 'opacity-100'}`}
+          >
+            <ChevronRight size={24} />
+          </button>
         </div>
 
-        {/* Signature (Center) */}
-        <div className="relative bg-[#fff0f6] p-8 rounded-[2rem] border-2 border-[#eb5e9d] shadow-2xl shadow-pink-200/50 flex flex-col items-center text-center transform scale-105 z-10 group">
-          <div className="absolute -top-4 bg-[#eb5e9d] text-white text-[10px] font-bold px-6 py-1.5 rounded-full uppercase tracking-wider shadow-md">Plus Populaire</div>
-          <div className="w-16 h-16 bg-[#eb5e9d] rounded-2xl flex items-center justify-center mb-6 text-white shadow-lg shadow-pink-200">
-            <Sparkles size={32} />
-          </div>
-          <h3 className="text-2xl font-bold text-gray-900 mb-2">Signature</h3>
-          <div className="flex items-baseline gap-1 mb-1">
-            <span className="text-6xl font-black text-[#eb5e9d]">24,90</span>
-            <span className="text-gray-400 font-medium">€/mois</span>
-          </div>
-          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-8">Engagement 12 mois</p>
-          <ul className="space-y-4 text-left w-full mb-8 flex-1 pl-4">
-            {plans[1].features.map((f, i) => (
-              <li key={i} className="flex items-center gap-3 text-sm text-gray-800 font-medium">
-                <div className="bg-white/60 p-1 rounded-full border border-pink-100/50"><Check size={12} className="text-[#eb5e9d]" /></div> {f}
-              </li>
-            ))}
-          </ul>
-          <button onClick={() => setSelectedPlan(plans[1])} className="w-full py-4 rounded-xl bg-white backdrop-blur-md border border-white/50 font-bold text-[#eb5e9d] hover:bg-[#eb5e9d] hover:text-white hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg shadow-pink-100">Choisir</button>
-        </div>
+        <div
+          ref={scrollRef}
+          onScroll={handleScroll}
+          className="flex md:grid md:grid-cols-3 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none gap-6 md:gap-8 max-w-6xl mx-auto items-center md:items-stretch pt-20 md:pt-0 pb-12 md:pb-0 scroll-smooth px-[10vw] md:px-0 no-scrollbar scroll-px-[10vw]"
+        >
+          {plans.map((plan, i) => (
+            <div
+              key={i}
+              className={`relative group min-w-[80vw] md:min-w-0 snap-center transition-all duration-500 ease-out
+              ${activeIndex === i ? 'scale-105 z-20 opacity-100' : 'scale-[0.85] z-10 opacity-40 blur-[0.5px]'}
+              md:scale-100 md:opacity-100 md:z-0 md:blur-none
+              ${plan.isPopular ? 'md:scale-105 md:z-10' : ''}
+            `}
+            >
+              <div className={`flex flex-col relative min-h-[550px] md:h-full rounded-2xl md:rounded-[3rem] border transition-all duration-500 
+              ${plan.isPopular
+                  ? 'bg-[#fff0f6] border-[#eb5e9d] shadow-xl md:shadow-2xl md:shadow-pink-200/50 md:hover:shadow-pink-200/80'
+                  : 'bg-[#fff5f9] border-pink-100/50 md:shadow-sm md:hover:shadow-xl md:hover:shadow-pink-100/50 md:hover:border-[#eb5e9d]/30'
+                } 
+              md:hover:-translate-y-2 px-5 py-10 md:p-8 items-center text-center`}
+              >
 
-        {/* Sérénité */}
-        <div className="bg-[#fff5f9] p-8 rounded-[2rem] border border-pink-100/50 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center h-full relative group">
-          <div className="w-14 h-14 bg-white/50 backdrop-blur-sm rounded-2xl flex items-center justify-center mb-6 text-gray-400 group-hover:bg-[#eb5e9d] group-hover:text-white transition-colors border border-white/50">
-            <ShieldCheck size={28} />
-          </div>
-          <h3 className="text-xl font-bold text-gray-900 mb-2">Sérénité</h3>
-          <div className="flex items-baseline gap-1 mb-1">
-            <span className="text-5xl font-black text-[#eb5e9d]">29,90</span>
-            <span className="text-gray-400 font-medium">€/mois</span>
-          </div>
-          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-8">Engagement 3 mois</p>
-          <ul className="space-y-4 text-left w-full mb-8 flex-1 pl-4">
-            {plans[2].features.map((f, i) => (
-              <li key={i} className="flex items-center gap-3 text-sm text-gray-600">
-                <div className="bg-white/60 p-1 rounded-full border border-pink-100/50"><Check size={12} className="text-[#eb5e9d]" /></div> {f}
-              </li>
-            ))}
-          </ul>
-          <button onClick={() => setSelectedPlan(plans[2])} className="w-full py-4 rounded-xl bg-white backdrop-blur-md border border-white/50 font-bold text-[#eb5e9d] hover:bg-[#eb5e9d] hover:text-white hover:scale-[1.02] active:scale-[0.98] transition-all shadow-sm">Choisir</button>
+                {plan.isPopular && (
+                  <div className="block absolute -top-3 md:-top-4 bg-[#eb5e9d] text-white text-[7px] md:text-[10px] font-bold px-3 md:px-6 py-1 md:py-1.5 rounded-full uppercase tracking-wider shadow-md">
+                    Plus Populaire
+                  </div>
+                )}
+
+                <div className={`flex w-14 h-14 md:w-16 md:h-16 rounded-2xl items-center justify-center mb-6 transition-colors border ${plan.isPopular
+                  ? 'bg-[#eb5e9d] text-white shadow-lg shadow-pink-200'
+                  : 'bg-white/50 backdrop-blur-sm text-gray-400 border-white/50'
+                  }`}>
+                  {plan.icon}
+                </div>
+
+                <h3 className={`text-base md:text-xl font-bold text-gray-900 mb-1 md:mb-2`}>
+                  {plan.title}
+                </h3>
+
+                <div className="flex flex-col md:flex-row items-center md:items-baseline md:gap-1 mb-2 md:mb-1">
+                  <span className={`text-4xl md:text-5xl font-black text-[#eb5e9d]`}>
+                    {plan.price}
+                  </span>
+                  <span className="text-xs md:text-base text-gray-400 font-medium">€/mois</span>
+                </div>
+
+                <p className="text-[10px] md:text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-4 md:mb-8">
+                  {plan.commitment || "Sans engagement"}
+                </p>
+
+                <p className="text-[13px] md:text-sm text-gray-500 mb-6 flex-1 px-2">
+                  {plan.description}
+                </p>
+
+                <ul className="space-y-3 text-left w-full mb-8 flex-1 pl-2 md:pl-4">
+                  {plan.features.slice(0, 4).map((f, featureIdx) => {
+                    const isHighlighted = f.startsWith('+');
+                    return (
+                      <li key={featureIdx} className={`flex items-center gap-3 text-[12px] md:text-sm ${isHighlighted ? 'text-[#eb5e9d] font-bold' : 'text-gray-600'}`}>
+                        <div className={`bg-white/60 p-1 rounded-full border ${isHighlighted ? 'border-[#eb5e9d]/30' : 'border-pink-100/50'}`}>
+                          <Check size={10} className="text-[#eb5e9d]" />
+                        </div>
+                        {f}
+                      </li>
+                    );
+                  })}
+                </ul>
+
+                <button
+                  onClick={() => setSelectedPlan(plan)}
+                  className={`w-full py-3 md:py-4 rounded-xl font-bold transition-all shadow-md text-sm md:text-base ${plan.isPopular
+                    ? 'bg-[#eb5e9d] text-white hover:bg-pink-600 shadow-pink-100'
+                    : 'bg-white text-[#eb5e9d] border border-white/50 hover:bg-[#eb5e9d] hover:text-white'
+                    } hover:scale-[1.02] active:scale-[0.98]`}
+                >
+                  Choisir cette offre
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
-      <div className="mt-16 max-w-3xl mx-auto bg-white rounded-2xl p-6 border border-gray-100 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6 hover:shadow-md transition-shadow cursor-pointer" onClick={() => setIsSalonsModalOpen(true)}>
-        <div className="flex items-center gap-5">
-          <div className="w-14 h-14 bg-gray-50 rounded-2xl border border-gray-100 flex items-center justify-center text-gray-600">
-            <Building2 size={28} strokeWidth={1.5} />
+      <div className="mt-4 md:mt-12 max-w-2xl mx-auto bg-[#fff5f9] rounded-[2rem] py-3 px-6 md:p-5 border border-pink-100 shadow-sm flex flex-col md:flex-row items-center justify-between gap-5 hover:shadow-lg hover:shadow-pink-100 transition-all cursor-pointer group" onClick={() => setIsSalonsModalOpen(true)}>
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 bg-white rounded-2xl border border-pink-100 flex items-center justify-center text-[#eb5e9d] group-hover:scale-110 transition-transform">
+            <Building2 size={24} strokeWidth={1.5} />
           </div>
           <div className="text-left">
-            <h4 className="font-bold text-gray-900 text-lg">Salons & Franchises</h4>
-            <p className="text-sm text-gray-500">Une solution sur-mesure pour les grandes structures.</p>
+            <h4 className="font-bold text-gray-900 text-base group-hover:text-[#eb5e9d] transition-colors">Salons & Franchises</h4>
+            <p className="text-[13px] text-gray-500">Une solution sur-mesure.</p>
           </div>
         </div>
-        <div className="flex items-center gap-6">
-          <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">Sur devis</span>
-          <button className="bg-gray-50 hover:bg-gray-100 text-gray-900 px-6 py-3 rounded-xl font-bold transition-colors text-sm">Nous contacter</button>
+        <div className="flex items-center gap-5">
+          <span className="text-[10px] font-bold text-[#eb5e9d] uppercase tracking-wider">Sur devis</span>
+          <button className="bg-white text-[#eb5e9d] border border-pink-100 px-5 py-2.5 rounded-xl font-bold transition-colors text-xs hover:bg-[#eb5e9d] hover:text-white shadow-sm">Nous contacter</button>
         </div>
       </div>
 
       {/* Comparison Toggle */}
-      <div className="mt-12 text-center">
+      <div className="mt-8 md:mt-12 text-center hidden md:block">
         <button
           onClick={() => setShowComparison(!showComparison)}
-          className="inline-flex items-center gap-2 bg-white border border-pink-100 text-gray-600 px-8 py-3 rounded-full font-bold shadow-sm hover:shadow-md hover:text-[#eb5e9d] transition-all hover:-translate-y-0.5 active:translate-y-0"
+          className="inline-flex items-center gap-2 bg-white border border-pink-100 text-gray-500 px-5 md:px-8 py-2 md:py-3 rounded-full font-bold shadow-sm hover:shadow-md hover:text-[#eb5e9d] transition-all text-xs md:text-sm"
         >
           {showComparison ? 'Masquer le comparatif' : 'Comparer toutes les fonctionnalités'}
-          {showComparison ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+          {showComparison ? <ChevronUp size={14} className="md:w-[18px]" /> : <ChevronDown size={14} className="md:w-[18px]" />}
         </button>
       </div>
 
@@ -1319,7 +1294,7 @@ export const PricingSection: React.FC<{ onSeeDetails: () => void; onJoin: () => 
     <section className="py-20 px-6 bg-white" id="pricing">
       <div className="container mx-auto max-w-7xl text-center">
         <h2 className="text-4xl md:text-7xl font-serif-elegant italic mb-6">Libérez votre <span className="text-[#eb5e9d]">Potentiel.</span></h2>
-        <p className="text-gray-500 text-lg mb-16 max-w-xl mx-auto font-light">Un abonnement clair, sans frais cachés, pour transformer votre passion en business rentable.</p>
+        <p className="text-gray-500 text-lg mb-8 md:mb-16 max-w-xl mx-auto font-light">Un abonnement clair, sans frais cachés, pour transformer votre passion en business rentable.</p>
 
         <PricingCards onJoin={onJoin} />
 
@@ -1334,7 +1309,7 @@ export const PricingPage: React.FC<{ onJoin: () => void }> = ({ onJoin }) => {
     <div className="pt-32 pb-20 px-6 bg-white min-h-screen">
       <div className="container mx-auto max-w-7xl text-center">
         <h1 className="text-4xl md:text-7xl font-serif-elegant italic mb-6">Libérez votre <span className="text-[#eb5e9d]">Potentiel.</span></h1>
-        <p className="text-gray-500 text-lg mb-16 max-w-xl mx-auto font-light">Un abonnement clair, sans frais cachés, pour transformer votre passion en business rentable.</p>
+        <p className="text-gray-500 text-lg mb-8 md:mb-16 max-w-xl mx-auto font-light">Un abonnement clair, sans frais cachés, pour transformer votre passion en business rentable.</p>
 
         <PricingCards onJoin={onJoin} />
       </div>
@@ -1349,27 +1324,28 @@ export const DownloadAppSection: React.FC = () => {
       <div className="container mx-auto max-w-7xl px-6 relative z-10">
         <div className="flex flex-col items-center text-center mb-16 pt-32 md:pt-0">
           <h2 className="text-4xl md:text-7xl font-serif-elegant italic mb-6 leading-tight">
-            Tout votre empire <br /><span className="text-[#eb5e9d]">dans votre poche.</span>
+            Gérez votre salon <br /><span className="text-[#eb5e9d]">depuis votre smartphone.</span>
           </h2>
           <p className="text-gray-400 text-sm md:text-lg max-w-2xl mx-auto leading-relaxed font-light mb-10">
             Retrouvez toutes les fonctionnalités de Blyss où que vous soyez. Gérez votre planning, encaissez vos clientes et suivez vos stats en temps réel.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 mb-12">
+          <div className="flex flex-row justify-center gap-3 mb-8 md:mb-12 w-full px-2">
             <button
               className="
-      w-48 h-14
+      flex-1 max-w-[160px] h-12
       bg-black/80 backdrop-blur-xl
       text-white font-semibold
-      flex items-center justify-center gap-3
+      flex items-center justify-center gap-2
       rounded-xl
       border border-white/10
       transition-all duration-300
       hover:scale-105
       shadow-[0_8px_32px_0_rgba(0,0,0,0.37)]
       hover:shadow-[0_8px_32px_0_rgba(0,0,0,0.5)]
+      text-xs sm:text-sm
     "
             >
-              <svg viewBox="0 0 24 24" className="w-6 h-6" fill="currentColor">
+              <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor">
                 <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
               </svg>
               <span>App Store</span>
@@ -1377,54 +1353,55 @@ export const DownloadAppSection: React.FC = () => {
 
             <button
               className="
-      w-48 h-14
+      flex-1 max-w-[160px] h-12
       bg-white/20 backdrop-blur-xl
       text-white font-semibold
-      flex items-center justify-center gap-3
+      flex items-center justify-center gap-2
       rounded-xl
       border border-white/30
       transition-all duration-300
       hover:scale-105
       shadow-[0_8px_32px_0_rgba(255,255,255,0.1)]
       hover:shadow-[0_8px_32px_0_rgba(255,255,255,0.2)]
+      text-xs sm:text-sm
     "
             >
               <img
                 src="/google_play_icon.webp"
                 alt="Google Play"
-                className="w-6 h-6"
+                className="w-5 h-5"
               />
               <span>Google Play</span>
             </button>
           </div>
 
 
-          {/* 3 Phones Display Grid - Simplified Balanced Layout */}
-          <div className="flex flex-col lg:flex-row items-center lg:items-end justify-center gap-12 lg:gap-0 lg:-space-x-16 mt-8 pb-20 md:pb-0 perspective-1000">
+          {/* 3 Phones Display Grid - PC Layout Mirrored on Mobile */}
+          <div className="flex flex-row items-end justify-center -space-x-24 md:-space-x-16 mt-8 lg:mt-20 pb-10 md:pb-0 perspective-1000 h-[280px] md:h-auto z-10 w-full overflow-visible">
 
             {/* Phone 1: Clients - Left Wing */}
-            <div className="transform transition-all duration-500 hover:scale-105 lg:translate-y-16 lg:-rotate-6 z-10 scale-95 opacity-90 hover:opacity-100 hover:z-30">
-              <PhoneMockup type="clients" className="shadow-2xl shadow-black/50" />
+            <div className="transform transition-all duration-500 hover:scale-105 z-20 scale-[0.4] md:scale-95 opacity-90 hover:opacity-100 origin-bottom-right translate-y-16 -rotate-12 lg:-translate-y-8 lg:-rotate-6 relative">
+              <PhoneMockup type="clients" imageSrc="/screen_left_v2.png" className="shadow-2xl shadow-black/50" />
             </div>
 
-            {/* Phone 2: Dashboard - Center Hero */}
-            <div className="transform transition-all duration-500 hover:scale-110 lg:-translate-y-8 z-30 scale-100 lg:scale-110 hover:z-40">
+            {/* Phone 2: Dashboard - Center Hero (Prominent) */}
+            <div className="transform transition-all duration-500 hover:scale-110 z-30 scale-[0.5] md:scale-110 hover:z-50 origin-bottom mb-10 md:mb-0 relative translate-y-24 lg:translate-y-0">
               <div className="relative">
                 <div className="absolute -inset-4 bg-pink-500/20 blur-3xl rounded-[60px] animate-pulse"></div>
-                <PhoneMockup type="dashboard" className="shadow-[0_0_80px_rgba(235,94,157,0.4)] border border-[#eb5e9d]/30" />
+                <PhoneMockup type="dashboard" imageSrc="/screen_center_v2.png" className="shadow-[0_0_80px_rgba(235,94,157,0.4)] border border-[#eb5e9d]/30" />
               </div>
             </div>
 
             {/* Phone 3: Calendar Month - Right Wing */}
-            <div className="transform transition-all duration-500 hover:scale-105 lg:translate-y-16 lg:rotate-6 z-10 scale-95 opacity-90 hover:opacity-100 hover:z-30">
-              <PhoneMockup type="calendar-month" className="shadow-2xl shadow-black/50" />
+            <div className="transform transition-all duration-500 hover:scale-105 z-10 md:z-10 scale-[0.4] md:scale-95 opacity-90 hover:opacity-100 origin-bottom-left translate-y-16 rotate-12 lg:-translate-y-8 lg:rotate-6 relative">
+              <PhoneMockup type="calendar-month" imageSrc="/screen_right_v3.png" className="shadow-2xl shadow-black/50" />
             </div>
 
           </div>
 
           {/* Background Glows */}
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#eb5e9d]/10 rounded-full blur-[120px] pointer-events-none"></div>
-          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-[#eb5e9d]/10 rounded-full blur-[80px] md:blur-[120px] pointer-events-none"></div>
+          <div className="absolute bottom-0 left-0 w-[200px] md:w-[500px] h-[200px] md:h-[500px] bg-purple-500/10 rounded-full blur-[60px] md:blur-[100px] pointer-events-none"></div>
         </div>
       </div>
     </section>
@@ -1450,9 +1427,9 @@ export const Footer: React.FC<{ setCurrentPage: (page: PageView) => void }> = ({
               La première plateforme tout-en-un conçue pour l'excellence des prothésistes ongulaires.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 rounded-full bg-white border border-gray-100 flex items-center justify-center text-gray-400 hover:border-[#eb5e9d] hover:text-[#eb5e9d] transition-colors"><Instagram size={18} /></a>
-              <a href="#" className="w-10 h-10 rounded-full bg-white border border-gray-100 flex items-center justify-center text-gray-400 hover:border-[#eb5e9d] hover:text-[#eb5e9d] transition-colors"><Twitter size={18} /></a>
-              <a href="#" className="w-10 h-10 rounded-full bg-white border border-gray-100 flex items-center justify-center text-gray-400 hover:border-[#eb5e9d] hover:text-[#eb5e9d] transition-colors"><Mail size={18} /></a>
+              <a href="https://www.instagram.com/blyss_app/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white border border-gray-100 flex items-center justify-center text-gray-400 hover:border-[#eb5e9d] hover:text-[#eb5e9d] transition-colors"><Instagram size={18} /></a>
+              <a href="https://www.linkedin.com/company/blysapp/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white border border-gray-100 flex items-center justify-center text-gray-400 hover:border-[#eb5e9d] hover:text-[#eb5e9d] transition-colors"><Linkedin size={18} /></a>
+              <a href="mailto:contact@blyssapp.fr" className="w-10 h-10 rounded-full bg-white border border-gray-100 flex items-center justify-center text-gray-400 hover:border-[#eb5e9d] hover:text-[#eb5e9d] transition-colors"><Mail size={18} /></a>
             </div>
           </div>
 
