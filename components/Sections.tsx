@@ -599,7 +599,7 @@ export const Hero: React.FC<{ onJoin?: () => void }> = ({ onJoin }) => {
         <div className="flex flex-col sm:flex-row gap-4 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300 z-20 relative w-full sm:w-auto px-4 sm:px-0">
           <button
             onClick={onJoin}
-            className="bg-[#d84382] text-white px-8 md:px-10 py-4 rounded-xl font-bold text-base shadow-xl shadow-pink-200/50 flex items-center justify-center gap-3 group transition-all hover:scale-105 hover:bg-pink-700 active:scale-95 cursor-pointer w-full sm:w-auto"
+            className="bg-[#c73a74] text-white px-8 md:px-10 py-4 rounded-xl font-bold text-base shadow-xl shadow-pink-200/50 flex items-center justify-center gap-3 group transition-all hover:scale-105 hover:bg-pink-700 active:scale-95 cursor-pointer w-full sm:w-auto"
           >
             Commencer l'aventure <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
           </button>
@@ -867,7 +867,7 @@ const SalonsModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpe
           </div>
           <h2 className="text-4xl font-serif-elegant italic mb-2">Salons & Franchises</h2>
           <p className="text-gray-500 text-sm mb-4 max-w-md mx-auto">Une solution sur-mesure pour les grandes structures et les réseaux de salons.</p>
-          <div className="text-3xl font-black text-[#d84382]">Sur Devis</div>
+          <div className="text-3xl font-black text-[#c73a74]">Sur Devis</div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8 mb-12">
@@ -1224,8 +1224,8 @@ const PricingCards = ({ onJoin }: { onJoin: () => void }) => {
           </div>
         </div>
         <div className="flex items-center gap-5">
-          <span className="text-[10px] font-bold text-[#d84382] uppercase tracking-wider">Sur devis</span>
-          <button className="bg-white text-[#d84382] border border-pink-100 px-5 py-2.5 rounded-xl font-bold transition-colors text-xs hover:bg-[#d84382] hover:text-white shadow-sm">Nous contacter</button>
+          <span className="text-[10px] font-bold text-[#c73a74] uppercase tracking-wider">Sur devis</span>
+          <button className="bg-white text-[#c73a74] border border-pink-100 px-5 py-2.5 rounded-xl font-bold transition-colors text-xs hover:bg-[#c73a74] hover:text-white shadow-sm">Nous contacter</button>
         </div>
       </div>
 
@@ -1803,7 +1803,7 @@ export const Footer: React.FC<{ setCurrentPage: (page: PageView) => void }> = ({
               />
               <span className="font-serif-elegant italic text-2xl">Blyss</span>
             </div>
-            <p className="text-gray-400 text-sm leading-relaxed mb-6">
+            <p className="text-gray-500 text-sm leading-relaxed mb-6">
               La première plateforme tout-en-un conçue pour l'excellence des prothésistes ongulaires.
             </p>
             <div className="flex gap-4">

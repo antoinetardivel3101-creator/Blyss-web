@@ -12,7 +12,7 @@ export const SEO: React.FC<SEOProps> = ({
     title = 'Blyss - La plateforme dédiée aux professionnels ongulaires',
     description = 'La plateforme de gestion intuitive conçue exclusivement pour les prothésistes ongulaires. Réservation en ligne, gestion de planning, notifications automatiques et bien plus.',
     image = 'https://i.ibb.co/1YVVTQTc/B3-B2.png',
-    canonical = 'https://blyss.app'
+    canonical = 'https://blyssapp.fr'
 }) => {
     const fullTitle = title.includes('Blyss') ? title : `${title} | Blyss`;
 
