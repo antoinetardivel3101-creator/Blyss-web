@@ -522,6 +522,7 @@ export const Navbar: React.FC<{ scrolled: boolean; currentPage: PageView; setCur
               <button
                 className={`md:hidden w-10 h-10 flex items-center justify-center transition-colors ${currentPage === 'download' ? 'text-white' : 'text-gray-900'}`}
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                aria-label={isMobileMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
               >
                 {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
               </button>
@@ -577,7 +578,15 @@ export const Hero: React.FC<{ onJoin?: () => void }> = ({ onJoin }) => {
 
       {/* Background Giant Logo - Watermark style with increased opacity */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[140vw] md:w-[80vw] max-w-[800px] opacity-[0.06] md:opacity-[0.12] pointer-events-none z-0 select-none mix-blend-multiply transform -translate-y-10 md:translate-y-0">
-        <img src="https://i.ibb.co/1YVVTQTc/B3-B2.png" alt="" className="w-full h-auto" />
+        <img
+          src="https://i.ibb.co/1YVVTQTc/B3-B2.png"
+          alt=""
+          width="800"
+          height="800"
+          fetchPriority="high"
+          decoding="async"
+          className="w-full h-auto"
+        />
       </div>
 
       <div className="container mx-auto flex flex-col items-center text-center max-w-7xl relative z-10">
@@ -590,7 +599,7 @@ export const Hero: React.FC<{ onJoin?: () => void }> = ({ onJoin }) => {
         <div className="flex flex-col sm:flex-row gap-4 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300 z-20 relative w-full sm:w-auto px-4 sm:px-0">
           <button
             onClick={onJoin}
-            className="bg-[#eb5e9d] text-white px-8 md:px-10 py-4 rounded-xl font-bold text-base shadow-xl shadow-pink-200/50 flex items-center justify-center gap-3 group transition-all hover:scale-105 hover:bg-pink-600 active:scale-95 cursor-pointer w-full sm:w-auto"
+            className="bg-[#d84382] text-white px-8 md:px-10 py-4 rounded-xl font-bold text-base shadow-xl shadow-pink-200/50 flex items-center justify-center gap-3 group transition-all hover:scale-105 hover:bg-pink-700 active:scale-95 cursor-pointer w-full sm:w-auto"
           >
             Commencer l'aventure <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
           </button>
@@ -610,7 +619,7 @@ export const Mission: React.FC = () => (
           <h2 className="text-4xl md:text-7xl font-serif-elegant italic mb-6 leading-tight">Élevez la <br /> <span className="text-[#eb5e9d] drop-shadow-sm">beauté</span> de votre métier.</h2>
           <div className="space-y-6 md:space-y-8">
             <div>
-              <h4 className="font-bold text-xl md:text-2xl mb-2 text-gray-900 tracking-tight">Le temps de créer</h4>
+              <h3 className="font-bold text-xl md:text-2xl mb-2 text-gray-900 tracking-tight">Le temps de créer</h3>
               <p className="text-gray-500 text-base md:text-lg font-light leading-relaxed">Nous pensons que votre énergie doit être dédiée à votre art, pas à vos relances. Blyss est votre assistant invisible qui gère tout en arrière-plan.</p>
             </div>
             <div className="relative p-6 md:p-8 bg-pink-50/40 rounded-[2rem] md:rounded-[2.5rem] border border-pink-100/50 italic text-gray-700 text-base md:text-lg shadow-sm">
@@ -621,8 +630,8 @@ export const Mission: React.FC = () => (
         </div>
         <div className="md:w-1/2 relative group order-1 md:order-2 w-full px-4 md:px-0">
           <div className="grid grid-cols-2 gap-2 md:gap-6 relative z-10">
-            <img src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=800&auto=format&fit=crop" className="rounded-[1.5rem] md:rounded-[3rem] shadow-2xl transform -rotate-2 md:-rotate-3 group-hover:rotate-0 transition-all duration-1000 ease-out" alt="Nail Studio" />
-            <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=800&auto=format&fit=crop" className="rounded-[1.5rem] md:rounded-[3rem] shadow-2xl mt-3 md:mt-12 transform rotate-2 md:rotate-3 group-hover:rotate-0 transition-all duration-1000 delay-100 ease-out" alt="Manicure" />
+            <img src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=400&auto=format&fit=crop" width="400" height="600" loading="lazy" className="rounded-[1.5rem] md:rounded-[3rem] shadow-2xl transform -rotate-2 md:-rotate-3 group-hover:rotate-0 transition-all duration-1000 ease-out" alt="Nail Studio" />
+            <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=400&auto=format&fit=crop" width="400" height="600" loading="lazy" className="rounded-[1.5rem] md:rounded-[3rem] shadow-2xl mt-3 md:mt-12 transform rotate-2 md:rotate-3 group-hover:rotate-0 transition-all duration-1000 delay-100 ease-out" alt="Manicure" />
           </div>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[130%] h-[130%] bg-pink-100/30 blur-[60px] md:blur-[100px] -z-0 rounded-full"></div>
         </div>
@@ -751,7 +760,7 @@ const PricingModal: React.FC<{
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity" onClick={onClose}></div>
       <div className="bg-white w-full max-w-4xl rounded-[2.5rem] p-8 md:p-12 relative z-10 shadow-2xl animate-in zoom-in-95 duration-300 flex flex-col max-h-[90vh] overflow-y-auto">
-        <button onClick={onClose} className="absolute top-6 right-6 p-2 bg-gray-50 rounded-full hover:bg-gray-100 transition-colors">
+        <button onClick={onClose} className="absolute top-6 right-6 p-2 bg-gray-50 rounded-full hover:bg-gray-100 transition-colors" aria-label="Fermer">
           <X size={20} className="text-gray-500" />
         </button>
 
@@ -848,7 +857,7 @@ const SalonsModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpe
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity" onClick={onClose}></div>
       <div className="bg-white w-full max-w-4xl rounded-[2.5rem] p-8 md:p-12 relative z-10 shadow-2xl animate-in zoom-in-95 duration-300 flex flex-col max-h-[90vh] overflow-y-auto">
-        <button onClick={onClose} className="absolute top-6 right-6 p-2 bg-gray-50 rounded-full hover:bg-gray-100 transition-colors">
+        <button onClick={onClose} className="absolute top-6 right-6 p-2 bg-gray-50 rounded-full hover:bg-gray-100 transition-colors" aria-label="Fermer">
           <X size={20} className="text-gray-500" />
         </button>
 
@@ -858,7 +867,7 @@ const SalonsModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpe
           </div>
           <h2 className="text-4xl font-serif-elegant italic mb-2">Salons & Franchises</h2>
           <p className="text-gray-500 text-sm mb-4 max-w-md mx-auto">Une solution sur-mesure pour les grandes structures et les réseaux de salons.</p>
-          <div className="text-3xl font-black text-[#eb5e9d]">Sur Devis</div>
+          <div className="text-3xl font-black text-[#d84382]">Sur Devis</div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8 mb-12">
@@ -1107,12 +1116,14 @@ const PricingCards = ({ onJoin }: { onJoin: () => void }) => {
           <button
             onClick={() => scrollToIndex(Math.max(0, activeIndex - 1), true)}
             className={`w-10 h-10 rounded-full bg-white/90 backdrop-blur-md shadow-lg flex items-center justify-center text-[#eb5e9d] pointer-events-auto transition-opacity ${activeIndex === 0 ? 'opacity-0' : 'opacity-100'}`}
+            aria-label="Offre précédente"
           >
             <ChevronLeft size={24} />
           </button>
           <button
             onClick={() => scrollToIndex(Math.min(plans.length - 1, activeIndex + 1), true)}
             className={`w-10 h-10 rounded-full bg-white/90 backdrop-blur-md shadow-lg flex items-center justify-center text-[#eb5e9d] pointer-events-auto transition-opacity ${activeIndex === plans.length - 1 ? 'opacity-0' : 'opacity-100'}`}
+            aria-label="Offre suivante"
           >
             <ChevronRight size={24} />
           </button>
@@ -1213,8 +1224,8 @@ const PricingCards = ({ onJoin }: { onJoin: () => void }) => {
           </div>
         </div>
         <div className="flex items-center gap-5">
-          <span className="text-[10px] font-bold text-[#eb5e9d] uppercase tracking-wider">Sur devis</span>
-          <button className="bg-white text-[#eb5e9d] border border-pink-100 px-5 py-2.5 rounded-xl font-bold transition-colors text-xs hover:bg-[#eb5e9d] hover:text-white shadow-sm">Nous contacter</button>
+          <span className="text-[10px] font-bold text-[#d84382] uppercase tracking-wider">Sur devis</span>
+          <button className="bg-white text-[#d84382] border border-pink-100 px-5 py-2.5 rounded-xl font-bold transition-colors text-xs hover:bg-[#d84382] hover:text-white shadow-sm">Nous contacter</button>
         </div>
       </div>
 
@@ -1424,8 +1435,8 @@ export const ContactPage: React.FC = () => {
               <h3 className="font-bold text-gray-900 mb-1">Réseaux Sociaux</h3>
               <p className="text-gray-500 text-sm mb-4">Suivez nos actualités et coulisses.</p>
               <div className="flex gap-4">
-                <a href="https://www.instagram.com/blyss_app/" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-[#eb5e9d] hover:text-white transition-all"><Instagram size={16} /></a>
-                <a href="https://www.linkedin.com/company/blysapp/" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-[#0077b5] hover:text-white transition-all"><Linkedin size={16} /></a>
+                <a href="https://www.instagram.com/blyss_app/" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-[#eb5e9d] hover:text-white transition-all" aria-label="Instagram"><Instagram size={16} /></a>
+                <a href="https://www.linkedin.com/company/blysapp/" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-[#0077b5] hover:text-white transition-all" aria-label="LinkedIn"><Linkedin size={16} /></a>
               </div>
             </div>
           </div>
@@ -1796,14 +1807,14 @@ export const Footer: React.FC<{ setCurrentPage: (page: PageView) => void }> = ({
               La première plateforme tout-en-un conçue pour l'excellence des prothésistes ongulaires.
             </p>
             <div className="flex gap-4">
-              <a href="https://www.instagram.com/blyss_app/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white border border-gray-100 flex items-center justify-center text-gray-400 hover:border-[#eb5e9d] hover:text-[#eb5e9d] transition-colors"><Instagram size={18} /></a>
-              <a href="https://www.linkedin.com/company/blysapp/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white border border-gray-100 flex items-center justify-center text-gray-400 hover:border-[#eb5e9d] hover:text-[#eb5e9d] transition-colors"><Linkedin size={18} /></a>
-              <a href="mailto:contact@blyssapp.fr" className="w-10 h-10 rounded-full bg-white border border-gray-100 flex items-center justify-center text-gray-400 hover:border-[#eb5e9d] hover:text-[#eb5e9d] transition-colors"><Mail size={18} /></a>
+              <a href="https://www.instagram.com/blyss_app/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white border border-gray-100 flex items-center justify-center text-gray-400 hover:border-[#eb5e9d] hover:text-[#eb5e9d] transition-colors" aria-label="Instagram"><Instagram size={18} /></a>
+              <a href="https://www.linkedin.com/company/blysapp/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white border border-gray-100 flex items-center justify-center text-gray-400 hover:border-[#eb5e9d] hover:text-[#eb5e9d] transition-colors" aria-label="LinkedIn"><Linkedin size={18} /></a>
+              <a href="mailto:contact@blyssapp.fr" className="w-10 h-10 rounded-full bg-white border border-gray-100 flex items-center justify-center text-gray-400 hover:border-[#eb5e9d] hover:text-[#eb5e9d] transition-colors" aria-label="Email"><Mail size={18} /></a>
             </div>
           </div>
 
           <div>
-            <h4 className="font-bold text-gray-900 mb-6">Produit</h4>
+            <h3 className="font-bold text-gray-900 mb-6">Produit</h3>
             <ul className="space-y-4 text-sm text-gray-500">
               <li><button onClick={() => setCurrentPage('home')} className="hover:text-[#eb5e9d] transition-colors">Fonctionnalités</button></li>
               <li><button onClick={() => setCurrentPage('pricing')} className="hover:text-[#eb5e9d] transition-colors">Tarifs</button></li>
@@ -1812,7 +1823,7 @@ export const Footer: React.FC<{ setCurrentPage: (page: PageView) => void }> = ({
           </div>
 
           <div>
-            <h4 className="font-bold text-gray-900 mb-6">Entreprise</h4>
+            <h3 className="font-bold text-gray-900 mb-6">Entreprise</h3>
             <ul className="space-y-4 text-sm text-gray-500">
               <li><button onClick={() => setCurrentPage('about')} className="hover:text-[#eb5e9d] transition-colors">À propos</button></li>
               <li><button onClick={() => setCurrentPage('contact')} className="hover:text-[#eb5e9d] transition-colors">Contact</button></li>
@@ -1820,7 +1831,7 @@ export const Footer: React.FC<{ setCurrentPage: (page: PageView) => void }> = ({
           </div>
 
           <div>
-            <h4 className="font-bold text-gray-900 mb-6">Légal</h4>
+            <h3 className="font-bold text-gray-900 mb-6">Légal</h3>
             <ul className="space-y-4 text-sm text-gray-500">
               <li><button onClick={() => setCurrentPage('legal')} className="hover:text-[#eb5e9d] transition-colors">Mentions légales</button></li>
               <li><button onClick={() => setCurrentPage('privacy')} className="hover:text-[#eb5e9d] transition-colors">Politique de confidentialité</button></li>
@@ -1830,8 +1841,8 @@ export const Footer: React.FC<{ setCurrentPage: (page: PageView) => void }> = ({
         </div>
 
         <div className="pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-gray-400 text-xs">© 2026 Blyss App. Tous droits réservés.</p>
-          <div className="flex gap-6 text-xs text-gray-400">
+          <p className="text-gray-600 text-xs">© 2026 Blyss App. Tous droits réservés.</p>
+          <div className="flex gap-6 text-xs text-gray-600">
             <span>Fait avec ❤️ à Annecy</span>
           </div>
         </div>
