@@ -151,6 +151,7 @@ const PhoneMockup: React.FC<{ type: 'dashboard' | 'calendar-month' | 'calendar-d
             {isCustomScreen ? (
               <img
                 src={imageSrc}
+                loading="lazy"
                 className={`absolute inset-x-0 bottom-0 w-full h-full object-cover object-bottom ${imageClassName}`}
                 alt="App Screen"
               />
@@ -160,6 +161,7 @@ const PhoneMockup: React.FC<{ type: 'dashboard' | 'calendar-month' | 'calendar-d
                 {type === 'screenshot' && (
                   <img
                     src="/dashboard_final_v2.jpg"
+                    loading="lazy"
                     className="absolute inset-x-0 -top-[5%] w-full h-[105%] object-cover object-top"
                     alt="App Dashboard"
                   />
@@ -1374,6 +1376,7 @@ export const AboutPage: React.FC = () => {
                 <img
                   src="/noah_profile.jpg"
                   alt="Noah Dekeyzer"
+                  loading="lazy"
                   className="w-12 h-12 rounded-full object-cover shadow-md"
                 />
                 <div>
@@ -1748,6 +1751,7 @@ export const DownloadAppSection: React.FC = () => {
                 <img
                   src="/google_play_icon.webp"
                   alt="Google Play"
+                  loading="lazy"
                   className="w-5 h-5"
                 />
                 <span>Google Play</span>
