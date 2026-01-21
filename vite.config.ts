@@ -1,13 +1,14 @@
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig(({ mode }) => {
   // Charge les variables d'environnement (système ou .env)
   // Fix: Property 'cwd' does not exist on type 'Process' - use '.' instead
   const env = loadEnv(mode, '.', '');
-  
+
   return {
-    plugins: [react()],
+    plugins: [react(), tailwindcss()],
     // Remplace process.env.API_KEY par sa valeur lors du build pour le client
     define: {
       'process.env.API_KEY': JSON.stringify(env.API_KEY)
@@ -24,7 +25,26 @@ export default defineConfig(({ mode }) => {
       target: 'esnext',
       outDir: 'dist',
       assetsDir: 'assets',
-      sourcemap: false
+      sourcemap: false,
+      minify: 'terser',
+      terserOptions: {
+        compress: {
+          drop_console: true,
+          drop_debugger: true
+        }
+      },
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'react-vendor': ['react', 'react-dom'],
+            'icons': ['lucide-react']
+          }
+        }
+      },
+      cssCodeSplit: true
+    },
+    optimizeDeps: {
+      include: ['react', 'react-dom', 'lucide-react']
     }
   };
 });
